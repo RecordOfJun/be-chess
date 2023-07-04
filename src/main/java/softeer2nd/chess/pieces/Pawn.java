@@ -7,6 +7,10 @@ public class Pawn {
     private String color;
 
     private char representation;
+
+    public Pawn(){
+        this.color= WHITE_COLOR;
+    }
     public Pawn(String color){
         this.color=color;
     }
@@ -14,10 +18,6 @@ public class Pawn {
     public Pawn(String color,char representation){
         this.color=color;
         this.representation=representation;
-    }
-
-    public Pawn(){
-        this.color= WHITE_COLOR;
     }
 
     public String getColor(){
