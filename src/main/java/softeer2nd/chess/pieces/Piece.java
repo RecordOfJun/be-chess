@@ -1,5 +1,5 @@
 package softeer2nd.chess.pieces;
-public class Pawn {
+public class Piece {
     public final static String WHITE_COLOR="white";
     public final static String BLACK_COLOR="black";
     public final static char WHITE_REPRESENTATION='p';
@@ -8,14 +8,12 @@ public class Pawn {
 
     private char representation;
 
-    public Pawn(){
-        this.color= WHITE_COLOR;
-    }
-    public Pawn(String color){
-        this.color=color;
+    private Piece(){
+        this.color=WHITE_COLOR;
+        this.representation=WHITE_REPRESENTATION;
     }
 
-    public Pawn(String color,char representation){
+    private Piece(String color, char representation){
         this.color=color;
         this.representation=representation;
     }
@@ -26,5 +24,13 @@ public class Pawn {
 
     public char getRepresentation(){
         return this.representation;
+    }
+
+    public static Piece createWhitePawn(){
+        return new Piece(WHITE_COLOR,WHITE_REPRESENTATION);
+    }
+
+    public static Piece createBlackPawn(){
+        return new Piece(BLACK_COLOR,BLACK_REPRESENTATION);
     }
 }

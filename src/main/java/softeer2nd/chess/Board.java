@@ -1,24 +1,29 @@
 package softeer2nd.chess;
 
-import softeer2nd.chess.pieces.Pawn;
+import softeer2nd.chess.pieces.Piece;
 
 import java.util.ArrayList;
 
 public class Board {
-    private ArrayList<Pawn> blackPawnList=new ArrayList<>();
-    private ArrayList<Pawn> whitePawnList=new ArrayList<>();
+    private ArrayList<Piece> blackPawnList=new ArrayList<>();
+    private ArrayList<Piece> whitePawnList=new ArrayList<>();
 
     private final static String emptyLine="........";
 
     public void initialize(){
-        initPawns(blackPawnList, Pawn.BLACK_COLOR, Pawn.BLACK_REPRESENTATION);
-        initPawns(whitePawnList, Pawn.WHITE_COLOR, Pawn.WHITE_REPRESENTATION);
+        addBlackPawns();
+        addWhitePawns();
     }
 
-    private void initPawns(ArrayList<Pawn> pawnList,String color, char representaion){
+    private void addBlackPawns(){
         for(int i=0;i<8;i++){
-            Pawn pawn=new Pawn(color,representaion);
-            pawnList.add(pawn);
+            blackPawnList.add(Piece.createBlackPawn());
+        }
+    }
+
+    private void addWhitePawns(){
+        for(int i=0;i<8;i++){
+            whitePawnList.add(Piece.createWhitePawn());
         }
     }
 
@@ -30,10 +35,10 @@ public class Board {
         return getPawnsResult(whitePawnList);
     }
 
-    private String getPawnsResult(ArrayList<Pawn> pawnList){
+    private String getPawnsResult(ArrayList<Piece> pawnList){
         StringBuilder pawnsResult=new StringBuilder("");
 
-        for (Pawn pawn : pawnList) {
+        for (Piece pawn : pawnList) {
             pawnsResult.append(pawn.getRepresentation());
         }
         return pawnsResult.toString();
