@@ -40,8 +40,8 @@ class BoardTest {
     public void initialize() throws Exception{
         Board board = new Board();
         board.initialize();
-        assertEquals("pppppppp", board.getWhitePawnsResult());
-        assertEquals("PPPPPPPP", board.getBlackPawnsResult());
+        assertEquals("pppppppp", board.getWhitePawnsResult().toString());
+        assertEquals("PPPPPPPP", board.getBlackPawnsResult().toString());
     }
 
 }

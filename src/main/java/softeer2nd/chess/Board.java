@@ -9,6 +9,8 @@ public class Board {
     private ArrayList<Pawn> blackPawnList=new ArrayList<>();
     private ArrayList<Pawn> whitePawnList=new ArrayList<>();
 
+    private final static String emptyLine="........";
+
     public void add(Pawn pawn){
         pawnList.add(pawn);
     }
@@ -43,9 +45,33 @@ public class Board {
 
     private String getPawnsResult(ArrayList<Pawn> pawnList){
         StringBuilder pawnsResult=new StringBuilder("");
+
         for (Pawn pawn : pawnList) {
             pawnsResult.append(pawn.getRepresentation());
         }
         return pawnsResult.toString();
     }
+
+    public void printBoard(){
+        System.out.println(buildBoard());
+    }
+
+    private String buildBoard(){
+        StringBuilder board=new StringBuilder();
+        appendLine(board,emptyLine);
+        appendLine(board,getBlackPawnsResult());
+        appendLine(board,emptyLine);
+        appendLine(board,emptyLine);
+        appendLine(board,emptyLine);
+        appendLine(board,emptyLine);
+        appendLine(board,getWhitePawnsResult());
+        appendLine(board,emptyLine);
+
+        return board.toString();
+    }
+
+    private void appendLine(StringBuilder board, String line){
+        board.append(line+"\n");
+    }
+
 }
