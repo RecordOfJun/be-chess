@@ -15,11 +15,17 @@ class BoardTest {
     }
 
     @Test
-    public void initialize() throws Exception{
-        Board board = new Board();
+    public void create() throws Exception{
         board.initialize();
-        assertEquals("pppppppp", board.getWhitePawnsResult().toString());
-        assertEquals("PPPPPPPP", board.getBlackPawnsResult().toString());
+        assertEquals(32, board.pieceCount());
+        String blankRank = appendNewLine("........");
+        assertEquals(
+                appendNewLine("RNBQKBNR") +
+                        appendNewLine("PPPPPPPP") +
+                        blankRank + blankRank + blankRank + blankRank +
+                        appendNewLine("pppppppp") +
+                        appendNewLine("rnbqkbnr"),
+                board.showBoard());
     }
 
 }
