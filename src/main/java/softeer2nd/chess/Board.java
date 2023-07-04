@@ -5,23 +5,10 @@ import softeer2nd.chess.pieces.Pawn;
 import java.util.ArrayList;
 
 public class Board {
-    private ArrayList<Pawn> pawnList=new ArrayList<>();
     private ArrayList<Pawn> blackPawnList=new ArrayList<>();
     private ArrayList<Pawn> whitePawnList=new ArrayList<>();
 
     private final static String emptyLine="........";
-
-    public void add(Pawn pawn){
-        pawnList.add(pawn);
-    }
-
-    public int size(){
-        return pawnList.size();
-    }
-
-    public Pawn findPawn(int index){
-        return pawnList.get(index);
-    }
 
     public void initialize(){
         initPawns(blackPawnList, Pawn.BLACK_COLOR, Pawn.BLACK_REPRESENTATION);
