@@ -11,29 +11,23 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class BoardTest {
     Board board;
-    int boardSize;
-    int boardLastIndex;
 
     @BeforeEach
     public void initBoard(){
         board = new Board();
-        boardSize=0;
-        boardLastIndex=-1;
     }
 
     @Test
     public void create() throws Exception {
-        verifyPawn(Pawn.WHITE_COLOR);
-        verifyPawn(Pawn.BLACK_COLOR);
+        verifyBoard(Pawn.WHITE_COLOR, 1, 0);
+        verifyBoard(Pawn.BLACK_COLOR, 2, 1);
     }
 
-    private void verifyPawn(final String color){
+    private void verifyBoard(final String color,final int boardSize,final int index){
         Pawn pawn = new Pawn(color);
         board.add(pawn);
-        boardSize+=1;
-        boardLastIndex+=1;
         assertEquals(boardSize, board.size());
-        assertEquals(pawn, board.findPawn(boardLastIndex));
+        assertEquals(pawn, board.findPawn(index));
     }
 
     @Test

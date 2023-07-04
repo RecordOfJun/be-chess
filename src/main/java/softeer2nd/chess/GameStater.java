@@ -3,16 +3,18 @@ package softeer2nd.chess;
 import java.util.Scanner;
 
 public class GameStater {
-    Scanner scanner;
-    Board board;
+    private Scanner scanner;
+    private Board board;
+
+    private boolean isContinue;
 
 
     public void playGame(){
         initialize();
-        boolean isContinue=true;
+        isContinue=true;
 
         while (isContinue){
-            isContinue=selectFunction(getCommand());
+            selectFunction(getCommand());
         }
     }
 
@@ -22,6 +24,7 @@ public class GameStater {
     }
 
     private String getCommand(){
+        System.out.println("---------------------");
         System.out.print("명령어를 입력해주세요 : ");
         scanner=new Scanner(System.in);
         String command=scanner.nextLine();
@@ -29,20 +32,20 @@ public class GameStater {
         return command;
     }
 
-    private boolean selectFunction(String command){
+    private void selectFunction(String command){
 
         switch (command){
             case "start":
                 board.printBoard();
-                return true;
+                isContinue=true;
 
             case "end":
                 System.out.println("게임이 종료되었습니다");
-                return false;
+                isContinue=false;
 
             default:
                 System.out.println("다시 입력해주세요.");
-                return true;
+                isContinue=true;
         }
 
     }
