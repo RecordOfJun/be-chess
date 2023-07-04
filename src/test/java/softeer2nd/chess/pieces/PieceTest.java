@@ -10,8 +10,8 @@ class PieceTest {
     @Test
     @DisplayName("pawn 생성 테스트")
     public void create() {
-        verifyPawn(Piece.createWhitePawn(), Piece.WHITE_COLOR, Piece.WHITE_REPRESENTATION);
-        verifyPawn(Piece.createBlackPawn(), Piece.BLACK_COLOR, Piece.BLACK_REPRESENTATION);
+        verifyPawn(Piece.createWhitePawn(), Piece.WHITE_COLOR, Piece.WHITE_PAWN_REPRESENTATION);
+        verifyPawn(Piece.createBlackPawn(), Piece.BLACK_COLOR, Piece.BLACK_PAWN_REPRESENTATION);
     }
 
     void verifyPawn(final Piece piece, final String color, final char representation) {

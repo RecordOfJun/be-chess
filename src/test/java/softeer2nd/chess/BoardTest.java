@@ -1,7 +1,6 @@
 package softeer2nd.chess;
 
-
-
+import static softeer2nd.chess.utils.StringUtils.appendNewLine;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
