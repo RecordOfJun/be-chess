@@ -3,12 +3,13 @@ package softeer2nd.chess.pieces;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import softeer2nd.chess.pieces.Pawn;
-
+import static org.junit.jupiter.api.Assertions.*;
 import static org.assertj.core.api.Assertions.*;
 
 class PawnTest {
 
     @Test
+    @DisplayName("pawn 생성 테스트")
     public void create() {
         verifyPawn(Pawn.WHITE_COLOR, Pawn.WHITE_REPRESENTATION);
         verifyPawn(Pawn.BLACK_COLOR, Pawn.BLACK_REPRESENTATION);
