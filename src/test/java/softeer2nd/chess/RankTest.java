@@ -13,9 +13,9 @@ class RankTest {
     public void createRank(){
         verifyRank(Rank.createEmpty(),appendNewLine("........"));
         verifyRank(Rank.createBlackPawns(),appendNewLine("PPPPPPPP"));
-        verifyRank(Rank.createBlackPieces,appendNewLine("RNBQKBNR"));
+        verifyRank(Rank.createBlackPieces(),appendNewLine("RNBQKBNR"));
         verifyRank(Rank.createWhitePawns(),appendNewLine("pppppppp"));
-        verifyRank(Rank.createWhitePieces,appendNewLine("rnbqkbnr"));
+        verifyRank(Rank.createWhitePieces(),appendNewLine("rnbqkbnr"));
     }
 
     private void verifyRank(Rank rank,String rankRepresentation){
