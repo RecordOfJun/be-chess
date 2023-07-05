@@ -4,6 +4,8 @@ import softeer2nd.chess.pieces.Piece;
 
 import java.util.ArrayList;
 
+import static softeer2nd.chess.utils.StringUtils.appendNewLine;
+
 public class Rank {
     private ArrayList<Piece> row;
 
@@ -19,5 +21,16 @@ public class Rank {
         }
 
         return count;
+    }
+
+    public String getRankRepresentation(){
+
+        StringBuilder lineBuilder=new StringBuilder();
+
+        for (Piece piece : row) {
+            lineBuilder.append(piece.getRepresentation());
+        }
+
+        return appendNewLine(lineBuilder.toString());
     }
 }

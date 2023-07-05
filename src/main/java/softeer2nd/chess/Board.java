@@ -7,15 +7,10 @@ import java.util.ArrayList;
 import static softeer2nd.chess.utils.StringUtils.appendNewLine;
 
 public class Board {
-    private ArrayList<ArrayList<Piece>> pieceList=new ArrayList<ArrayList<Piece>>();
-
+    private ArrayList<Rank> rankList;
     private final static String EMPTY_LINE ="........";
     private final static int EMPTY_SIZE=0;
     private final static int BOARD_LINE_SIZE=8;
-    private final static int BLACK_PIECES_LINE=0;
-    private final static int BLACK_PAWNS_LINE=1;
-    private final static int WHITE_PIECES_LINE=7;
-    private final static int WHITE_PAWNS_LINE=6;
     private final static int ROOK_SEQUENCE=0;
     private final static int KNIGHT_SEQUENCE=1;
     private final static int BISHOP_SEQUENCE=2;
@@ -29,94 +24,129 @@ public class Board {
     }
 
     private void initList(){
-        for (int i = BLACK_PIECES_LINE; i <=WHITE_PIECES_LINE; i++) {
-            pieceList.add(new ArrayList<Piece>());
-        }
+        rankList=new ArrayList<>();
     }
 
     private void addBlackPieces(){//하드코딩 스러움,0 1 별로
-        addBlackRook();
-        addBlackKnight();
-        addBlackBishop();
-        addBlackQueenAndKing();
+        addBlackPiecesWithoutPawn();
         addBlackPawns();
     }
 
     private void addWhitePieces(){
-        addWhiteRook();
-        addWhiteKnight();
-        addWhiteBishop();
-        addWhiteQueenAndKing();
         addWhitePawns();
+        addWhitePiecesWithoutPawn();
     }
 
     private void addBlanks(){
+
         for (int i = 2; i < 6; i++) {
+
+            ArrayList<Piece> pieces=new ArrayList<>();
+
             for (int j = 0; j < 8; j++) {
-                pieceList.get(i).add(Piece.createBlank());
+                pieces.add(Piece.createBlank());
             }
+
+            Rank rank=new Rank(pieces);
+            rankList.add(rank);
         }
     }
 
-    private void addBlackRook(){
-        pieceList.get(BLACK_PIECES_LINE).add(ROOK_SEQUENCE,Piece.createBlackRook());
-        pieceList.get(BLACK_PIECES_LINE).add(ROOK_SEQUENCE,Piece.createBlackRook());
+    private void addBlackPiecesWithoutPawn(){
+
+        ArrayList<Piece> rankOne=new ArrayList<>();
+
+        addBlackRook(rankOne);
+        addBlackKnight(rankOne);
+        addBlackBishop(rankOne);
+        addBlackQueenAndKing(rankOne);
+
+        Rank rank=new Rank(rankOne);
+        rankList.add(rank);
     }
 
-    private void addBlackKnight(){
-        pieceList.get(BLACK_PIECES_LINE).add(KNIGHT_SEQUENCE,Piece.createBlackKnight());
-        pieceList.get(BLACK_PIECES_LINE).add(KNIGHT_SEQUENCE,Piece.createBlackKnight());
+    private void addWhitePiecesWithoutPawn(){
+
+        ArrayList<Piece> rankEight=new ArrayList<>();
+
+        addWhiteRook(rankEight);
+        addWhiteKnight(rankEight);
+        addWhiteBishop(rankEight);
+        addWhiteQueenAndKing(rankEight);
+
+        Rank rank=new Rank(rankEight);
+        rankList.add(rank);
     }
 
-    private void addBlackBishop(){
-        pieceList.get(BLACK_PIECES_LINE).add(BISHOP_SEQUENCE,Piece.createBlackBishop());
-        pieceList.get(BLACK_PIECES_LINE).add(BISHOP_SEQUENCE,Piece.createBlackBishop());
+    private void addBlackRook(ArrayList<Piece> rankOne){
+        rankOne.add(ROOK_SEQUENCE,Piece.createBlackRook());
+        rankOne.add(ROOK_SEQUENCE,Piece.createBlackRook());
     }
 
-    private void addBlackQueenAndKing(){
-        pieceList.get(BLACK_PIECES_LINE).add(QUEEN_SEQUENCE,Piece.createBlackQueen());
-        pieceList.get(BLACK_PIECES_LINE).add(KING_SEQUENCE,Piece.createBlackKing());
+    private void addBlackKnight(ArrayList<Piece> rankOne){
+        rankOne.add(KNIGHT_SEQUENCE,Piece.createBlackKnight());
+        rankOne.add(KNIGHT_SEQUENCE,Piece.createBlackKnight());
     }
 
-    private void addWhiteRook(){
-        pieceList.get(WHITE_PIECES_LINE).add(ROOK_SEQUENCE,Piece.createWhiteRook());
-        pieceList.get(WHITE_PIECES_LINE).add(ROOK_SEQUENCE,Piece.createWhiteRook());
+    private void addBlackBishop(ArrayList<Piece> rankOne){
+        rankOne.add(BISHOP_SEQUENCE,Piece.createBlackBishop());
+        rankOne.add(BISHOP_SEQUENCE,Piece.createBlackBishop());
     }
 
-    private void addWhiteKnight(){
-        pieceList.get(WHITE_PIECES_LINE).add(KNIGHT_SEQUENCE,Piece.createWhiteKnight());
-        pieceList.get(WHITE_PIECES_LINE).add(KNIGHT_SEQUENCE,Piece.createWhiteKnight());
+    private void addBlackQueenAndKing(ArrayList<Piece> rankOne){
+        rankOne.add(QUEEN_SEQUENCE,Piece.createBlackQueen());
+        rankOne.add(KING_SEQUENCE,Piece.createBlackKing());
     }
 
-    private void addWhiteBishop(){
-        pieceList.get(WHITE_PIECES_LINE).add(BISHOP_SEQUENCE,Piece.createWhiteBishop());
-        pieceList.get(WHITE_PIECES_LINE).add(BISHOP_SEQUENCE,Piece.createWhiteBishop());
+    private void addWhiteRook(ArrayList<Piece> rankEight){
+        rankEight.add(ROOK_SEQUENCE,Piece.createWhiteRook());
+        rankEight.add(ROOK_SEQUENCE,Piece.createWhiteRook());
     }
 
-    private void addWhiteQueenAndKing(){
-        pieceList.get(WHITE_PIECES_LINE).add(QUEEN_SEQUENCE,Piece.createWhiteQueen());
-        pieceList.get(WHITE_PIECES_LINE).add(KING_SEQUENCE,Piece.createWhiteKing());
+    private void addWhiteKnight(ArrayList<Piece> rankEight){
+        rankEight.add(KNIGHT_SEQUENCE,Piece.createWhiteKnight());
+        rankEight.add(KNIGHT_SEQUENCE,Piece.createWhiteKnight());
+    }
+
+    private void addWhiteBishop(ArrayList<Piece> rankEight){
+        rankEight.add(BISHOP_SEQUENCE,Piece.createWhiteBishop());
+        rankEight.add(BISHOP_SEQUENCE,Piece.createWhiteBishop());
+    }
+
+    private void addWhiteQueenAndKing(ArrayList<Piece> rankEight){
+        rankEight.add(QUEEN_SEQUENCE,Piece.createWhiteQueen());
+        rankEight.add(KING_SEQUENCE,Piece.createWhiteKing());
     }
 
 
 
     private void addBlackPawns(){
+        ArrayList<Piece> rankTwo=new ArrayList<>();
+
         for(int i=EMPTY_SIZE; i<BOARD_LINE_SIZE;i++){
-            pieceList.get(BLACK_PAWNS_LINE).add(Piece.createBlackPawn());
+            rankTwo.add(Piece.createBlackPawn());
         }
+
+        Rank rank=new Rank(rankTwo);
+        rankList.add(rank);
     }
 
     private void addWhitePawns(){
+        ArrayList<Piece> rankSeven=new ArrayList<>();
+
         for(int i=EMPTY_SIZE; i<BOARD_LINE_SIZE;i++){
-            pieceList.get(WHITE_PAWNS_LINE).add(Piece.createWhitePawn());
+            rankSeven.add(Piece.createWhitePawn());
         }
+
+        Rank rank=new Rank(rankSeven);
+        rankList.add(rank);
     }
     
     public int pieceCount(){
         int count=EMPTY_SIZE;
 
-        for (ArrayList<Piece> line : pieceList) {
-            count+=line.size();
+        for (Rank rank : rankList) {
+            count+=rank.getPieceCount();
         }
 
         return count;
@@ -125,25 +155,10 @@ public class Board {
     public String showBoard(){
         StringBuilder boardBuilder=new StringBuilder();
 
-        for (ArrayList<Piece> line : pieceList) {
-            boardBuilder.append(getLine(line));
+        for (Rank rank : rankList) {
+            boardBuilder.append(rank.getRankRepresentation());
         }
 
         return  boardBuilder.toString();
     }
-
-    private String getLine(ArrayList<Piece> line){
-        if(line.size()==EMPTY_SIZE){
-            return appendNewLine(EMPTY_LINE);
-        }
-
-        StringBuilder lineBuilder=new StringBuilder();
-
-        for (Piece piece : line) {
-            lineBuilder.append(piece.getRepresentation());
-        }
-
-        return appendNewLine(lineBuilder.toString());
-    }
-
 }
