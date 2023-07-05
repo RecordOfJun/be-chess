@@ -4,18 +4,8 @@ import softeer2nd.chess.pieces.Piece;
 
 import java.util.ArrayList;
 
-import static softeer2nd.chess.utils.StringUtils.appendNewLine;
-
 public class Board {
-    private ArrayList<Rank> rankList;
-    private final static String EMPTY_LINE ="........";
-    private final static int EMPTY_SIZE=0;
-    private final static int BOARD_LINE_SIZE=8;
-    private final static int ROOK_SEQUENCE=0;
-    private final static int KNIGHT_SEQUENCE=1;
-    private final static int BISHOP_SEQUENCE=2;
-    private final static int QUEEN_SEQUENCE=3;
-    private final static int KING_SEQUENCE=4;
+    private ArrayList<Rank> board;
     public void initialize(){
         initList();
         addBlackPieces();
@@ -24,7 +14,7 @@ public class Board {
     }
 
     private void initList(){
-        rankList=new ArrayList<>();
+        board =new ArrayList<>();
     }
 
     private void addBlackPieces(){//하드코딩 스러움,0 1 별로
@@ -48,7 +38,7 @@ public class Board {
             }
 
             Rank rank=new Rank(pieces);
-            rankList.add(rank);
+            board.add(rank);
         }
     }
 
@@ -62,7 +52,7 @@ public class Board {
         addBlackQueenAndKing(rankOne);
 
         Rank rank=new Rank(rankOne);
-        rankList.add(rank);
+        board.add(rank);
     }
 
     private void addWhitePiecesWithoutPawn(){
@@ -75,7 +65,7 @@ public class Board {
         addWhiteQueenAndKing(rankEight);
 
         Rank rank=new Rank(rankEight);
-        rankList.add(rank);
+        board.add(rank);
     }
 
     private void addBlackRook(ArrayList<Piece> rankOne){
@@ -128,7 +118,7 @@ public class Board {
         }
 
         Rank rank=new Rank(rankTwo);
-        rankList.add(rank);
+        board.add(rank);
     }
 
     private void addWhitePawns(){
@@ -139,13 +129,13 @@ public class Board {
         }
 
         Rank rank=new Rank(rankSeven);
-        rankList.add(rank);
+        board.add(rank);
     }
     
     public int pieceCount(){
         int count=EMPTY_SIZE;
 
-        for (Rank rank : rankList) {
+        for (Rank rank : board) {
             count+=rank.getPieceCount();
         }
 
@@ -155,7 +145,7 @@ public class Board {
     public String showBoard(){
         StringBuilder boardBuilder=new StringBuilder();
 
-        for (Rank rank : rankList) {
+        for (Rank rank : board) {
             boardBuilder.append(rank.getRankRepresentation());
         }
 
