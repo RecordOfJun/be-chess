@@ -24,6 +24,7 @@ public class Board {
     public void initialize(){
         initList();
         addBlackPieces();
+        addBlanks();
         addWhitePieces();
     }
 
@@ -47,6 +48,14 @@ public class Board {
         addWhiteBishop();
         addWhiteQueenAndKing();
         addWhitePawns();
+    }
+
+    private void addBlanks(){
+        for (int i = 2; i < 6; i++) {
+            for (int j = 0; j < 8; j++) {
+                pieceList.get(i).add(Piece.createBlank());
+            }
+        }
     }
 
     private void addBlackRook(){
