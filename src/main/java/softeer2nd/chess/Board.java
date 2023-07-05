@@ -20,7 +20,7 @@ public class Board {
     private final static int KNIGHT_SEQUENCE=1;
     private final static int BISHOP_SEQUENCE=2;
     private final static int QUEEN_SEQUENCE=3;
-    private final static int KING_SEQUENCE=0;
+    private final static int KING_SEQUENCE=4;
     public void initialize(){
         initList();
         addBlackPieces();
