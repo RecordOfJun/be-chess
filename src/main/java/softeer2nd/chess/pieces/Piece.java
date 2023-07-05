@@ -32,6 +32,22 @@ public class Piece {
         return this.representation;
     }
 
+    public boolean isWhite(){
+        return isEqualColor(WHITE_COLOR);
+    }
+
+    public boolean isBlack(){
+        return isEqualColor(BLACK_COLOR);
+    }
+
+    private boolean isEqualColor(String color){
+        if(this.color.equals(color)){
+            return true;
+        }
+
+        return false;
+    }
+
     public static Piece createWhitePawn(){
         return new Piece(WHITE_COLOR, WHITE_PAWN_REPRESENTATION);
     }

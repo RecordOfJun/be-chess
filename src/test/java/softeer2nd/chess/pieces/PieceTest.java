@@ -28,4 +28,29 @@ class PieceTest {
         assertEquals(color, piece.getColor());
         assertEquals(representation, piece.getRepresentation());
     }
+
+    @Test
+    public void check_color(){
+        verifyWhite(Piece.createWhitePawn());
+        verifyWhite(Piece.createWhiteRook());
+        verifyWhite(Piece.createWhiteBishop());
+        verifyWhite(Piece.createWhiteQueen());
+        verifyWhite(Piece.createWhiteKing());
+        verifyWhite(Piece.createWhiteKnight());
+
+        verifyBlack(Piece.createBlackPawn());
+        verifyBlack(Piece.createBlackRook());
+        verifyBlack(Piece.createBlackBishop());
+        verifyBlack(Piece.createBlackQueen());
+        verifyBlack(Piece.createBlackKing());
+        verifyBlack(Piece.createBlackKnight());
+    }
+
+    private void verifyWhite(final Piece piece){
+        assertTrue(piece.isWhite());
+    }
+
+    private void verifyBlack(final Piece piece){
+        assertTrue(piece.isBlack());
+    }
 }
