@@ -21,6 +21,47 @@ public class Rank {
         this.row=row;
     }
 
+    public int getPieceCount(){
+        int count=0;
+
+        for (Piece piece : row) {
+            if(piece.isPiece()){ count+=1; }
+        }
+
+        return count;
+    }
+
+    public String getRankRepresentation(){
+
+        StringBuilder lineBuilder=new StringBuilder();
+
+        for (Piece piece : row) {
+            lineBuilder.append(piece.getRepresentation());
+        }
+
+        return appendNewLine(lineBuilder.toString());
+    }
+
+    public int getSpecificPieceCount(Piece.Color color, Piece.Type type){
+        int count=0;
+
+        for (Piece piece : row) {
+
+            if(piece.isEqualColorAndType(color,type)){
+                count+=1;
+            }
+
+        }
+
+        return count;
+    }
+
+    public Piece findPiece(int column){
+        return row.get(column);
+    }
+
+
+    //Rank 한줄을 생성하는 팩토리 메소드
     public static Rank createEmpty(){
         return buildEmptyRank();
     }
@@ -42,6 +83,7 @@ public class Rank {
     }
 
 
+    //팩토리 메소드 구현 부분
     private static Rank buildEmptyRank(){
         ArrayList<Piece> rankBuilder=new ArrayList<>();
 
@@ -76,6 +118,7 @@ public class Rank {
         return new Rank(rank);
     }
 
+    //기물 생성 메소드
     private static void addBlackRook(ArrayList<Piece> rank){
         rank.add(ROOK_SEQUENCE,Piece.createBlackRook());
         rank.add(ROOK_SEQUENCE,Piece.createBlackRook());
@@ -117,6 +160,7 @@ public class Rank {
     }
 
 
+    //폰 생성 메소드
     private static Rank buildBlackPawnsRank(){
         ArrayList<Piece> rankBuilder=new ArrayList<>();
 
@@ -135,44 +179,6 @@ public class Rank {
         }
 
         return new Rank(rankBuilder);
-    }
-
-
-
-
-    public int getPieceCount(){
-        int count=0;
-
-        for (Piece piece : row) {
-            if(piece.isPiece()){ count+=1; }
-        }
-
-        return count;
-    }
-
-    public String getRankRepresentation(){
-
-        StringBuilder lineBuilder=new StringBuilder();
-
-        for (Piece piece : row) {
-            lineBuilder.append(piece.getRepresentation());
-        }
-
-        return appendNewLine(lineBuilder.toString());
-    }
-
-    public int getSpecificPieceCount(Piece.Color color, Piece.Type type){
-        int count=0;
-
-        for (Piece piece : row) {
-
-            if(piece.isEqualColorAndType(color,type)){
-                count+=1;
-            }
-
-        }
-
-        return count;
     }
 
 }

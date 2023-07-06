@@ -62,4 +62,12 @@ public class Board {
 
         return count;
     }
+
+    //포지션은 항상 완벽하다고 가정
+    public Piece findPiece(String position){
+        int column=position.charAt(0) - 'a';
+        int row= '8' - position.charAt(1);
+
+        return board.get(row).findPiece(column);
+    }
 }
