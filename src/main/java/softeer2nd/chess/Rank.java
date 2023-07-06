@@ -103,6 +103,7 @@ public class Rank {
 
 
 
+
     //Rank 한줄을 생성하는 팩토리 메소드
     public static Rank createEmpty(){
         return buildEmptyRank();
@@ -123,6 +124,9 @@ public class Rank {
     public static Rank createWhitePieces(){
         return buildWhitePiecesRank();
     }
+
+
+
 
 
 

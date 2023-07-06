@@ -1,5 +1,6 @@
 package softeer2nd.chess;
 
+import softeer2nd.chess.exception.InvalidPositionException;
 import softeer2nd.chess.pieces.Piece;
 import softeer2nd.chess.utils.PositionUtils;
 
@@ -97,7 +98,7 @@ public class Board {
     }
 
     //포지션은 항상 완벽하다고 가정
-    public Piece findPiece(String position){
+    public Piece findPiece(String position) throws InvalidPositionException{
         HashMap<String,Integer> rowAndCol= PositionUtils.getRowAndCol(position);
 
         int row=rowAndCol.get("row").intValue();
@@ -106,7 +107,7 @@ public class Board {
         return board.get(row).findPiece(column);
     }
 
-    public void move(String position, Piece piece){
+    public void move(String position, Piece piece) throws InvalidPositionException {
         HashMap<String,Integer> rowAndCol= PositionUtils.getRowAndCol(position);
 
         int row=rowAndCol.get("row").intValue();
@@ -168,6 +169,8 @@ public class Board {
 
         return point;
     }
+
+    //기물 리스트 정렬
 
     public String ascendingBlackPieces(){
         getBlackPieces();

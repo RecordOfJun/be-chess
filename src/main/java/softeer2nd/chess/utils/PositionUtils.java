@@ -6,7 +6,7 @@ import java.util.HashMap;
 
 public class PositionUtils {
 
-    public static HashMap<String,Integer> getRowAndCol(String position){
+    public static HashMap<String,Integer> getRowAndCol(String position) throws InvalidPositionException{
         if(position.length() != 2){
             throw new InvalidPositionException("좌표 형식에 맞지 않습니다!");
         }

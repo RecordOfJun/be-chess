@@ -4,6 +4,7 @@ import static softeer2nd.chess.utils.StringUtils.appendNewLine;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import softeer2nd.chess.exception.InvalidPositionException;
 import softeer2nd.chess.pieces.Piece;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -58,7 +59,7 @@ class BoardTest {
 
     @Test
     @DisplayName("입력한 좌표에 해당하는 기물을 반환해야 한다.")
-    public void findPiece(){
+    public void findPiece() throws InvalidPositionException{
 
         board.initialize();
 
@@ -78,7 +79,7 @@ class BoardTest {
 
     @Test
     @DisplayName("빈 체스판을 생성하고 원하는 좌표에 기물을 배치할 수 있어야 한다.")
-    public void move(){
+    public void move() throws InvalidPositionException{
         //빈 체스판 생성
         board.emptyInitialize();
         verifyMove(Piece.createWhiteKing(),"b5");
@@ -87,14 +88,14 @@ class BoardTest {
         System.out.println(board.showBoard());
     }
 
-    private void verifyMove(Piece piece, String position){
+    private void verifyMove(Piece piece, String position) throws InvalidPositionException{
         board.move(position,piece);
         assertEquals(piece,board.findPiece(position));
     }
 
     @Test
     @DisplayName("체스판에 임의로 말을 생성하고 색깔별로 점수 계산을 할 수 있어야 한다")
-    public void calculatePoint(){
+    public void calculatePoint() throws InvalidPositionException{
 
         initEmptyBoard();
 
@@ -115,7 +116,7 @@ class BoardTest {
 
     }
 
-    private void initEmptyBoard(){
+    private void initEmptyBoard() throws InvalidPositionException {
 
         board.emptyInitialize();
 
