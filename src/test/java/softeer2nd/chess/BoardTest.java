@@ -136,11 +136,29 @@ class BoardTest {
     public void move() throws Exception {
         board.initialize();
 
+        String blankRank = appendNewLine("........");
+        assertEquals(
+                appendNewLine("RNBQKBNR") +
+                        appendNewLine("PPPPPPPP") +
+                        blankRank + blankRank + blankRank + blankRank +
+                        appendNewLine("pppppppp") +
+                        appendNewLine("rnbqkbnr"),
+                board.showBoard());
+
         String sourcePosition = "b2";
         String targetPosition = "b3";
         board.move(sourcePosition, targetPosition);
         assertEquals(Piece.createBlank(), board.findPiece(sourcePosition));
         assertEquals(Piece.createWhitePawn(), board.findPiece(targetPosition));
+        ;
+        assertEquals(
+                appendNewLine("RNBQKBNR") +
+                        appendNewLine("PPPPPPPP") +
+                        blankRank + blankRank + blankRank +
+                        appendNewLine(".p......") +
+                        appendNewLine("p.pppppp") +
+                        appendNewLine("rnbqkbnr"),
+                board.showBoard());
     }
 
 }
