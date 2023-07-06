@@ -79,7 +79,7 @@ class BoardTest {
 
     @Test
     @DisplayName("빈 체스판을 생성하고 원하는 좌표에 기물을 배치할 수 있어야 한다.")
-    public void move() throws InvalidPositionException{
+    public void add() throws InvalidPositionException{
         //빈 체스판 생성
         board.emptyInitialize();
         verifyMove(Piece.createWhiteKing(),"b5");
@@ -89,7 +89,7 @@ class BoardTest {
     }
 
     private void verifyMove(Piece piece, String position) throws InvalidPositionException{
-        board.move(position,piece);
+        board.addPiece(position,piece);
         assertEquals(piece,board.findPiece(position));
     }
 
@@ -120,15 +120,15 @@ class BoardTest {
 
         board.emptyInitialize();
 
-        board.move("b6", Piece.createBlackPawn());
-        board.move("e6", Piece.createBlackQueen());
-        board.move("b8", Piece.createBlackKing());
-        board.move("c8", Piece.createBlackRook());
+        board.addPiece("b6", Piece.createBlackPawn());
+        board.addPiece("e6", Piece.createBlackQueen());
+        board.addPiece("b8", Piece.createBlackKing());
+        board.addPiece("c8", Piece.createBlackRook());
 
-        board.move("f2", Piece.createWhitePawn());
-        board.move("g2", Piece.createWhitePawn());
-        board.move("e1", Piece.createWhiteRook());
-        board.move("f1", Piece.createWhiteKing());
+        board.addPiece("f2", Piece.createWhitePawn());
+        board.addPiece("g2", Piece.createWhitePawn());
+        board.addPiece("e1", Piece.createWhiteRook());
+        board.addPiece("f1", Piece.createWhiteKing());
     }
 
     @Test

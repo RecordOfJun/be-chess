@@ -97,8 +97,16 @@ public class Board {
         return count;
     }
 
-    //포지션은 항상 완벽하다고 가정
+    //기물 이동, 배치 관련 메소드
+
+    public void move(String sourcePosition, String targetPosition) throws InvalidPositionException {
+
+        putPieceOnTarget(targetPosition, findPiece(sourcePosition));
+        initSourcePiece(sourcePosition);
+
+    }
     public Piece findPiece(String position) throws InvalidPositionException{
+
         HashMap<String,Integer> rowAndCol= PositionUtils.getRowAndCol(position);
 
         int row=rowAndCol.get("row").intValue();
@@ -107,7 +115,8 @@ public class Board {
         return board.get(row).findPiece(column);
     }
 
-    public void move(String position, Piece piece) throws InvalidPositionException {
+    public void addPiece(String position, Piece piece) throws InvalidPositionException {
+
         HashMap<String,Integer> rowAndCol= PositionUtils.getRowAndCol(position);
 
         int row=rowAndCol.get("row").intValue();
@@ -116,11 +125,32 @@ public class Board {
         board.get(row).move(column, piece);
     }
 
+
+    private void initSourcePiece(String sourcePosition) throws InvalidPositionException{
+
+        addPiece(sourcePosition,Piece.createBlank());
+
+    }
+
+    private void putPieceOnTarget(String targetPosition, Piece piece) throws InvalidPositionException{
+
+        HashMap<String,Integer> targetRowAndCol= PositionUtils.getRowAndCol(targetPosition);
+
+        int targetRow=targetRowAndCol.get("row").intValue();
+        int targetColumn=targetRowAndCol.get("column").intValue();
+
+        board.get(targetRow).move(targetColumn, piece);
+
+    }
+
+    //점수 관련 메소드
+
     public double calculatePoint(Piece.Color color){
         return calculatePiecesPoint(color) + calculatePawnsPoint(color);
     }
 
     private double calculatePiecesPoint(Piece.Color color){
+
         double point=0;
 
         for (Rank rank : board) {
@@ -154,6 +184,7 @@ public class Board {
     }
 
     private double getPawnsPoint(ArrayList<Integer> columns){
+
         double point=0;
 
         for (Integer count : columns) {
@@ -213,6 +244,7 @@ public class Board {
     }
 
     private String getPiecesRepresentation(ArrayList<Piece> pieces){
+
         StringBuilder representationBuilder=new StringBuilder();
 
         for (Piece piece : pieces) {
