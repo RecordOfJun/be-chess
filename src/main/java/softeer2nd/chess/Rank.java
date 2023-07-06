@@ -183,7 +183,7 @@ public class Rank {
         return new Rank(rankBuilder);
     }
 
-    public double calculatePiecePoint(Piece.Color color){
+    public double calculatePiecesPoint(Piece.Color color){
 
         double point=0;
 

@@ -6,7 +6,6 @@ import softeer2nd.chess.utils.PositionUtils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 
 public class Board {
     private ArrayList<Rank> board;
@@ -94,34 +93,28 @@ public class Board {
     }
 
     public double calculatePoint(Piece.Color color){
-        double point=0;
-
-        point+=calculatePiecePoint(color);
-
-
-
-        return point;
+        return calculatePiecesPoint(color) + calculatePawnsPoint(color);
     }
 
-    private double calculatePiecePoint(Piece.Color color){
+    private double calculatePiecesPoint(Piece.Color color){
         double point=0;
 
         for (Rank rank : board) {
-            point+=rank.calculatePiecePoint(color);
+            point+=rank.calculatePiecesPoint(color);
         }
 
         return point;
     }
 
-    private double calculatePawnPoint(Piece.Color color){
-        double point=0;
+    private double calculatePawnsPoint(Piece.Color color){
 
         ArrayList<Integer> columns=new ArrayList<>(Arrays.asList(0,0,0,0,0,0,0,0));
+        findPawns(columns,color);
 
-
+        return getPawnsPoint(columns);
     }
 
-    private void findPawns(ArrayList<Integer> columns){
+    private void findPawns(ArrayList<Integer> columns, Piece.Color color){
 
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
@@ -136,15 +129,20 @@ public class Board {
         }
     }
 
-    private double getPawnPoint(ArrayList<Integer> columns){
+    private double getPawnsPoint(ArrayList<Integer> columns){
         double point=0;
 
         for (Integer count : columns) {
+            double columnPoint=count.doubleValue();
 
             if(count>1){
-                point+=count/2;
+                columnPoint/=2.0;
             }
 
+            point+=columnPoint;
+
         }
+
+        return point;
     }
 }
