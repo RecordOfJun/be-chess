@@ -131,4 +131,16 @@ class BoardTest {
         board.move("f1", Piece.createWhiteKing());
     }
 
+    @Test
+    @DisplayName("체스말이 제대로 이동하는지확인")
+    public void move() throws Exception {
+        board.initialize();
+
+        String sourcePosition = "b2";
+        String targetPosition = "b3";
+        board.move(sourcePosition, targetPosition);
+        assertEquals(Piece.createBlank(), board.findPiece(sourcePosition));
+        assertEquals(Piece.createWhitePawn(), board.findPiece(targetPosition));
+    }
+
 }
