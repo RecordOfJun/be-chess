@@ -1,8 +1,10 @@
 package softeer2nd.chess;
 
 import softeer2nd.chess.pieces.Piece;
+import softeer2nd.chess.utils.PositionUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Board {
     private ArrayList<Rank> board;
@@ -14,6 +16,7 @@ public class Board {
     }
 
     public void emptyInitialize(){
+        initList();
         for (int i = 0; i < 8; i++) {
             board.add(Rank.createEmpty());
         }
@@ -71,13 +74,20 @@ public class Board {
 
     //포지션은 항상 완벽하다고 가정
     public Piece findPiece(String position){
-        int column=position.charAt(0) - 'a';
-        int row= '8' - position.charAt(1);
+        HashMap<String,Integer> rowAndCol= PositionUtils.getRowAndCol(position);
+
+        int row=rowAndCol.get("row").intValue();
+        int column=rowAndCol.get("column").intValue();
 
         return board.get(row).findPiece(column);
     }
 
     public void move(Piece piece,String position){
+        HashMap<String,Integer> rowAndCol= PositionUtils.getRowAndCol(position);
 
+        int row=rowAndCol.get("row").intValue();
+        int column=rowAndCol.get("column").intValue();
+
+        board.get(row).move(piece,column);
     }
 }

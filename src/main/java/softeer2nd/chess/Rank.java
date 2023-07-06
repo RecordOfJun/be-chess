@@ -60,6 +60,8 @@ public class Rank {
         return row.get(column);
     }
 
+    public void move(Piece piece, int column){ row.set(column, piece); }
+
 
     //Rank 한줄을 생성하는 팩토리 메소드
     public static Rank createEmpty(){
