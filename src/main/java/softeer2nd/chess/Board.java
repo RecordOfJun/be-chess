@@ -82,12 +82,16 @@ public class Board {
         return board.get(row).findPiece(column);
     }
 
-    public void move(Piece piece,String position){
+    public void move(String position, Piece piece){
         HashMap<String,Integer> rowAndCol= PositionUtils.getRowAndCol(position);
 
         int row=rowAndCol.get("row").intValue();
         int column=rowAndCol.get("column").intValue();
 
-        board.get(row).move(piece,column);
+        board.get(row).move(column, piece);
+    }
+
+    public float calculcatePoint(Piece.Color color){
+
     }
 }

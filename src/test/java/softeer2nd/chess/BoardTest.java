@@ -88,8 +88,29 @@ class BoardTest {
     }
 
     private void verifyMove(Piece piece, String position){
-        board.move(piece,position);
+        board.move(position,piece);
         assertEquals(piece,board.findPiece(position));
+    }
+
+    @Test
+    @DisplayName("체스판에 임의로 말을 생성하고 색깔별로 점수 계산을 할 수 있어야 한다")
+    public void calculatePoint(){
+
+        board.emptyInitialize();
+
+        board.move("b6", Piece.createBlackPawn());
+        board.move("e6", Piece.createBlackQueen());
+        board.move("b8", Piece.createBlackKing());
+        board.move("c8", Piece.createBlackRook());
+
+        board.move("f2", Piece.createWhitePawn());
+        board.move("g2", Piece.createWhitePawn());
+        board.move("e1", Piece.createWhiteRook());
+        board.move("f1", Piece.createWhiteKing());
+
+        assertEquals(15.0, board.calculcatePoint(Piece.Color.BLACK), 0.01);
+        assertEquals(7.0, board.calculcatePoint(Piece.Color.WHITE), 0.01);
+
     }
 
 }
