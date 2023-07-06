@@ -15,13 +15,14 @@ class BoardTest {
     public void initBoard(){
 
         board = new Board();
-        board.initialize();
 
     }
 
     @Test
     @DisplayName("체스판 생성 확인하기")
     public void create() throws Exception{
+
+        board.initialize();
 
         assertEquals(32, board.pieceCount());
         String blankRank = appendNewLine("........");
@@ -37,6 +38,8 @@ class BoardTest {
     @Test
     @DisplayName("입력한 색깔을 가진 기물의 개수가 제대로 반환되어야 한다")
     public void countSpecificPiece(){
+
+        board.initialize();
 
         assertEquals(8,board.getSpecificPieceCount(Piece.Color.BLACK,Piece.Type.PAWN));
         assertEquals(8,board.getSpecificPieceCount(Piece.Color.WHITE,Piece.Type.PAWN));
@@ -57,6 +60,8 @@ class BoardTest {
     @DisplayName("입력한 좌표에 해당하는 기물을 반환해야 한다.")
     public void findPiece(){
 
+        board.initialize();
+
         assertEquals(Piece.createBlackRook(),board.findPiece("a8"));
         assertEquals(Piece.createBlackPawn(),board.findPiece("c7"));
         assertEquals(Piece.createWhitePawn(),board.findPiece("e2"));
@@ -69,6 +74,22 @@ class BoardTest {
         assertEquals(Piece.createBlackKing(),board.findPiece("e8"));
         assertEquals(Piece.createWhiteKing(),board.findPiece("e1"));
 
+    }
+
+    @Test
+    @DisplayName("빈 체스판을 생성하고 원하는 좌표에 기물을 배치할 수 있어야 한다.")
+    public void move(){
+        //빈 체스판 생성
+        board.emptyInitialize();
+        verifyMove(Piece.createWhiteKing(),"b5");
+        verifyMove(Piece.createWhitePawn(),"c8");
+        verifyMove(Piece.createWhiteBishop(),"d4");
+        System.out.println(board.showBoard());
+    }
+
+    private void verifyMove(Piece piece, String position){
+        board.move(piece,position);
+        assertEquals(piece,board.findPiece(position));
     }
 
 }
