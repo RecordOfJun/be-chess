@@ -96,6 +96,27 @@ class BoardTest {
     @DisplayName("체스판에 임의로 말을 생성하고 색깔별로 점수 계산을 할 수 있어야 한다")
     public void calculatePoint(){
 
+        initEmptyBoard();
+
+        assertEquals(15.0, board.calculatePoint(Piece.Color.BLACK), 0.01);
+        assertEquals(7.0, board.calculatePoint(Piece.Color.WHITE), 0.01);
+
+    }
+
+    @Test
+    @DisplayName("색깔별로 기물을 저장하고 기물의 점수별로 정렬하여 출력할 수 있어야 한다.")
+    public void divideColor(){
+        board.initialize();
+
+        assertEquals("QRRBBNNPPPPPPPPK",board.sortedBlackPieces());
+        assertEquals("qrrbbnnppppppppk",board.sortedWhitePieces());
+        assertEquals("KPPPPPPPPNNBBRRQ",board.sortedReverseBlackPieces());
+        assertEquals("kppppppppnnbbrrq",board.sortedReverseWhitePieces());
+
+    }
+
+    private void initEmptyBoard(){
+
         board.emptyInitialize();
 
         board.move("b6", Piece.createBlackPawn());
@@ -107,10 +128,6 @@ class BoardTest {
         board.move("g2", Piece.createWhitePawn());
         board.move("e1", Piece.createWhiteRook());
         board.move("f1", Piece.createWhiteKing());
-
-        assertEquals(15.0, board.calculatePoint(Piece.Color.BLACK), 0.01);
-        assertEquals(7.0, board.calculatePoint(Piece.Color.WHITE), 0.01);
-
     }
 
 }

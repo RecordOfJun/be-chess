@@ -9,6 +9,13 @@ import java.util.HashMap;
 
 public class Board {
     private ArrayList<Rank> board;
+
+    private ArrayList<Piece> whitePieces;
+
+    private ArrayList<Piece> blackPieces;
+
+
+    //보드 초기화 메소드
     public void initialize(){
         initList();
         addBlackPieces();
@@ -42,6 +49,9 @@ public class Board {
             board.add(Rank.createEmpty());
         }
     }
+
+
+    //보드의 동작 모음
     
     public int pieceCount(){
         int count=0;
@@ -144,5 +154,21 @@ public class Board {
         }
 
         return point;
+    }
+
+    public String sortedBlackPieces(){
+
+    }
+
+    public String sortedWhitePieces(){
+
+    }
+
+    public String sortedReverseBlackPieces(){
+
+    }
+
+    public String sortedReverseWhitePieces(){
+
     }
 }

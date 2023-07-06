@@ -21,6 +21,9 @@ public class Rank {
         this.row=row;
     }
 
+
+    //랭크에서 수행하는 동작 모음
+
     public int getPieceCount(){
         int count=0;
 
@@ -62,6 +65,25 @@ public class Rank {
 
     public void move(int column, Piece piece){ row.set(column, piece); }
 
+    public double calculatePiecesPoint(Piece.Color color){
+
+        double point=0;
+
+        for (Piece piece : row) {
+            Piece.Type pieceType=piece.getType();
+            Piece.Color pieceColor=piece.getColor();
+
+            if(!pieceType.equals(Piece.Type.PAWN) && pieceColor.equals(color)){
+                point+=pieceType.getPoint();
+            }
+
+        }
+
+        return point;
+    }
+
+
+
 
     //Rank 한줄을 생성하는 팩토리 메소드
     public static Rank createEmpty(){
@@ -83,6 +105,9 @@ public class Rank {
     public static Rank createWhitePieces(){
         return buildWhitePiecesRank();
     }
+
+
+
 
 
     //팩토리 메소드 구현 부분
@@ -119,6 +144,9 @@ public class Rank {
 
         return new Rank(rank);
     }
+
+
+
 
     //기물 생성 메소드
     private static void addBlackRook(ArrayList<Piece> rank){
@@ -162,6 +190,8 @@ public class Rank {
     }
 
 
+
+
     //폰 생성 메소드
     private static Rank buildBlackPawnsRank(){
         ArrayList<Piece> rankBuilder=new ArrayList<>();
@@ -181,23 +211,6 @@ public class Rank {
         }
 
         return new Rank(rankBuilder);
-    }
-
-    public double calculatePiecesPoint(Piece.Color color){
-
-        double point=0;
-
-        for (Piece piece : row) {
-            Piece.Type pieceType=piece.getType();
-            Piece.Color pieceColor=piece.getColor();
-
-            if(!pieceType.equals(Piece.Type.PAWN) && pieceColor.equals(color)){
-                point+=pieceType.getPoint();
-            }
-
-        }
-
-        return point;
     }
 
 
