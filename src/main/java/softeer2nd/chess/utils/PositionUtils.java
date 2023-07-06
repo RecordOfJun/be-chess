@@ -15,7 +15,7 @@ public class PositionUtils {
             throw new InvalidPositionException("보드의 범위를 벗어난 좌표입니다!");
         }
 
-        HashMap<String,Integer> rowAndCol=new HashMap<String,Integer>();
+        HashMap<String,Integer> rowAndCol=new HashMap<String,Integer>(2);
 
         Integer column=position.charAt(0) - 'a';
         Integer row= '8' - position.charAt(1);

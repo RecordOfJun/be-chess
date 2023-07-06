@@ -4,7 +4,9 @@ import softeer2nd.chess.pieces.Piece;
 import softeer2nd.chess.utils.PositionUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 public class Board {
     private ArrayList<Rank> board;
@@ -91,7 +93,58 @@ public class Board {
         board.get(row).move(column, piece);
     }
 
-    public float calculcatePoint(Piece.Color color){
+    public double calculatePoint(Piece.Color color){
+        double point=0;
 
+        point+=calculatePiecePoint(color);
+
+
+
+        return point;
+    }
+
+    private double calculatePiecePoint(Piece.Color color){
+        double point=0;
+
+        for (Rank rank : board) {
+            point+=rank.calculatePiecePoint(color);
+        }
+
+        return point;
+    }
+
+    private double calculatePawnPoint(Piece.Color color){
+        double point=0;
+
+        ArrayList<Integer> columns=new ArrayList<>(Arrays.asList(0,0,0,0,0,0,0,0));
+
+
+    }
+
+    private void findPawns(ArrayList<Integer> columns){
+
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+
+                Piece piece=board.get(i).findPiece(j);
+
+                if(piece.isEqualColorAndType(color, Piece.Type.PAWN)){
+
+                    columns.set(j,columns.get(j)+1);
+                }
+            }
+        }
+    }
+
+    private double getPawnPoint(ArrayList<Integer> columns){
+        double point=0;
+
+        for (Integer count : columns) {
+
+            if(count>1){
+                point+=count/2;
+            }
+
+        }
     }
 }

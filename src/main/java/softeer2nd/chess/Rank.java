@@ -183,4 +183,23 @@ public class Rank {
         return new Rank(rankBuilder);
     }
 
+    public double calculatePiecePoint(Piece.Color color){
+
+        double point=0;
+
+        for (Piece piece : row) {
+            Piece.Type pieceType=piece.getType();
+            Piece.Color pieceColor=piece.getColor();
+
+            if(!pieceType.equals(Piece.Type.PAWN) && pieceColor.equals(color)){
+                point+=pieceType.getPoint();
+            }
+
+        }
+
+        return point;
+    }
+
+
+
 }

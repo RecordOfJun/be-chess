@@ -26,13 +26,16 @@ public class Piece {
         WHITE, BLACK, NOCOLOR;
     }
     public enum Type {
-        PAWN('p'), ROOK('r'), KNIGHT('n'),
-        BISHOP('b'), QUEEN('q'), KING('k'), NO_PIECE('.');
+        PAWN('p',1), ROOK('r',5), KNIGHT('n',2.5),
+        BISHOP('b',3), QUEEN('q',9), KING('k',0), NO_PIECE('.',0);
 
         private char representation;
 
-        Type(char representation){
+        private double point;
+
+        Type(char representation, double point){
             this.representation=representation;
+            this.point=point;
         }
 
         public char getWhiteRepresentation(){
@@ -42,6 +45,9 @@ public class Piece {
         public char getBlackRepresentation(){
             return Character.toUpperCase(this.representation);
         }
+
+        public double getPoint(){ return this.point; }
+
     }
 
     private Piece(){
@@ -52,14 +58,6 @@ public class Piece {
     private Piece(Color color, Type type){
         this.color=color;
         this.type=type;
-    }
-
-    private static Piece createWhite(Type type){
-        return new Piece(Color.WHITE,type);
-    }
-
-    private static Piece createBlack(Type type){
-        return new Piece(Color.BLACK,type);
     }
 
     public Color getColor(){
@@ -109,6 +107,14 @@ public class Piece {
         }
 
         return false;
+    }
+
+    private static Piece createWhite(Type type){
+        return new Piece(Color.WHITE,type);
+    }
+
+    private static Piece createBlack(Type type){
+        return new Piece(Color.BLACK,type);
     }
 
     public static Piece createWhitePawn(){

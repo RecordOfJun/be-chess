@@ -108,8 +108,8 @@ class BoardTest {
         board.move("e1", Piece.createWhiteRook());
         board.move("f1", Piece.createWhiteKing());
 
-        assertEquals(15.0, board.calculcatePoint(Piece.Color.BLACK), 0.01);
-        assertEquals(7.0, board.calculcatePoint(Piece.Color.WHITE), 0.01);
+        assertEquals(15.0, board.calculatePoint(Piece.Color.BLACK), 0.01);
+        assertEquals(7.0, board.calculatePoint(Piece.Color.WHITE), 0.01);
 
     }
 
