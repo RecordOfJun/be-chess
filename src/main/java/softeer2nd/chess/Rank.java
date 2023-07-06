@@ -161,4 +161,18 @@ public class Rank {
         return appendNewLine(lineBuilder.toString());
     }
 
+    public int getSpecificPieceCount(Piece.Color color, Piece.Type type){
+        int count=0;
+
+        for (Piece piece : row) {
+
+            if(piece.isEqualColorAndType(color,type)){
+                count+=1;
+            }
+
+        }
+
+        return count;
+    }
+
 }

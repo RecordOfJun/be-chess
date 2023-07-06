@@ -52,4 +52,14 @@ public class Board {
 
         return  boardBuilder.toString();
     }
+
+    public int getSpecificPieceCount(Piece.Color color, Piece.Type type){
+        int count=0;
+
+        for (Rank rank : board) {
+            count+=rank.getSpecificPieceCount(color, type);
+        }
+
+        return count;
+    }
 }

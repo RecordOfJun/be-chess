@@ -86,6 +86,15 @@ public class Piece {
         return true;
     }
 
+    public boolean isEqualColorAndType(Color color,Type type){
+
+        if(this.color.equals(color) && this.type.equals(type)){
+            return true;
+        }
+
+        return false;
+    }
+
     public static Piece createWhitePawn(){
         return createWhite(Type.PAWN);
     }
