@@ -3,9 +3,22 @@ package softeer2nd.chess;
 import softeer2nd.chess.pieces.Piece;
 import softeer2nd.chess.utils.PositionUtils;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
+import java.util.*;
+
+ class PieceComparator implements Comparator<Piece> {
+    @Override
+    public int compare(Piece p1, Piece p2){
+        double point1=p1.getType().getPoint();
+        double point2=p2.getType().getPoint();
+
+        if (point1 > point2) {
+            return 1;
+        } else if (point1 < point2) {
+            return -1;
+        }
+        return 0;
+    }
+}
 
 public class Board {
     private ArrayList<Rank> board;
@@ -156,19 +169,53 @@ public class Board {
         return point;
     }
 
-    public String sortedBlackPieces(){
-
+    public String ascendingBlackPieces(){
+        getBlackPieces();
+        Collections.sort(blackPieces,new PieceComparator());
+        return getPiecesRepresentation(blackPieces);
     }
 
-    public String sortedWhitePieces(){
-
+    public String ascendingWhitePieces(){
+        getWhitePieces();
+        Collections.sort(whitePieces,new PieceComparator());
+        return getPiecesRepresentation(whitePieces);
     }
 
-    public String sortedReverseBlackPieces(){
-
+    public String descendingBlackPieces(){
+        getBlackPieces();
+        Collections.sort(blackPieces,new PieceComparator().reversed());
+        return getPiecesRepresentation(blackPieces);
     }
 
-    public String sortedReverseWhitePieces(){
+    public String descendingWhitePieces(){
+        getWhitePieces();
+        Collections.sort(whitePieces,new PieceComparator().reversed());
+        return getPiecesRepresentation(whitePieces);
+    }
 
+    private void getBlackPieces(){
+        blackPieces=new ArrayList<>();
+
+        for (Rank rank : board) {
+            blackPieces.addAll(rank.getBlackPieces());
+        }
+    }
+
+    private void getWhitePieces(){
+        whitePieces=new ArrayList<>();
+
+        for (Rank rank : board) {
+            whitePieces.addAll(rank.getWhitePieces());
+        }
+    }
+
+    private String getPiecesRepresentation(ArrayList<Piece> pieces){
+        StringBuilder representationBuilder=new StringBuilder();
+
+        for (Piece piece : pieces) {
+            representationBuilder.append(piece.getRepresentation());
+        }
+
+        return representationBuilder.toString();
     }
 }

@@ -1,5 +1,6 @@
 package softeer2nd.chess.pieces;
 
+import java.util.Comparator;
 import java.util.Objects;
 
 public class Piece {

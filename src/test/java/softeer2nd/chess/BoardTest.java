@@ -108,10 +108,10 @@ class BoardTest {
     public void divideColor(){
         board.initialize();
 
-        assertEquals("QRRBBNNPPPPPPPPK",board.sortedBlackPieces());
-        assertEquals("qrrbbnnppppppppk",board.sortedWhitePieces());
-        assertEquals("KPPPPPPPPNNBBRRQ",board.sortedReverseBlackPieces());
-        assertEquals("kppppppppnnbbrrq",board.sortedReverseWhitePieces());
+        assertEquals("QRRBBNNPPPPPPPPK",board.descendingBlackPieces());
+        assertEquals("qrrbbnnppppppppk",board.descendingWhitePieces());
+        assertEquals("KPPPPPPPPNNBBRRQ",board.ascendingBlackPieces());
+        assertEquals("kppppppppnnbbrrq",board.ascendingWhitePieces());
 
     }
 

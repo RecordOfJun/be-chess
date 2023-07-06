@@ -82,6 +82,24 @@ public class Rank {
         return point;
     }
 
+    public ArrayList<Piece> getBlackPieces(){ return  getSpecificColorPieces(Piece.Color.BLACK); }
+
+    public ArrayList<Piece> getWhitePieces(){ return getSpecificColorPieces(Piece.Color.WHITE); }
+
+    private ArrayList<Piece> getSpecificColorPieces(Piece.Color color){
+        ArrayList<Piece> pieces=new ArrayList<>();
+
+        for (Piece piece : row) {
+            if(piece.isPiece() && piece.getColor().equals(color)){
+                pieces.add(piece);
+            }
+        }
+
+        return pieces;
+    }
+
+
+
 
 
 
