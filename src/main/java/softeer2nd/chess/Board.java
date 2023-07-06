@@ -13,6 +13,12 @@ public class Board {
         addWhitePieces();
     }
 
+    public void emptyInitialize(){
+        for (int i = 0; i < 8; i++) {
+            board.add(Rank.createEmpty());
+        }
+    }
+
     private void initList(){
         board =new ArrayList<>();
     }
@@ -69,5 +75,9 @@ public class Board {
         int row= '8' - position.charAt(1);
 
         return board.get(row).findPiece(column);
+    }
+
+    public void move(Piece piece,String position){
+
     }
 }
