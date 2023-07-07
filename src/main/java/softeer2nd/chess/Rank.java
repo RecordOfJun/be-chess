@@ -3,11 +3,12 @@ package softeer2nd.chess;
 import softeer2nd.chess.pieces.Piece;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static softeer2nd.chess.utils.StringUtils.appendNewLine;
 
 public class Rank {
-    private ArrayList<Piece> row;
+    private List<Piece> row;
 
     private final static int RANK_FIRST_INDEX=0;
     private final static int RANK_SIZE=8;
@@ -17,12 +18,18 @@ public class Rank {
     private final static int QUEEN_SEQUENCE=3;
     private final static int KING_SEQUENCE=4;
 
-    public Rank(ArrayList<Piece> row){
+    public Rank(List<Piece> row){
         this.row=row;
     }
 
 
-    //랭크에서 수행하는 동작 모음
+    //get,set
+
+    public Piece getPiece(int column){
+        return row.get(column);
+    }
+
+    public void setPiece(int column, Piece piece){ row.set(column, piece); }
 
     public int getPieceCount(){
         int count=0;
@@ -32,17 +39,6 @@ public class Rank {
         }
 
         return count;
-    }
-
-    public String getRankRepresentation(){
-
-        StringBuilder lineBuilder=new StringBuilder();
-
-        for (Piece piece : row) {
-            lineBuilder.append(piece.getRepresentation());
-        }
-
-        return appendNewLine(lineBuilder.toString());
     }
 
     public int getSpecificPieceCount(Piece.Color color, Piece.Type type){
@@ -59,35 +55,23 @@ public class Rank {
         return count;
     }
 
-    public Piece findPiece(int column){
-        return row.get(column);
-    }
+    public String getRankRepresentation(){
 
-    public void move(int column, Piece piece){ row.set(column, piece); }
-
-    public double calculatePiecesPoint(Piece.Color color){
-
-        double point=0;
+        StringBuilder lineBuilder=new StringBuilder();
 
         for (Piece piece : row) {
-            Piece.Type pieceType=piece.getType();
-            Piece.Color pieceColor=piece.getColor();
-
-            if(!pieceType.equals(Piece.Type.PAWN) && pieceColor.equals(color)){
-                point+=pieceType.getPoint();
-            }
-
+            lineBuilder.append(piece.getRepresentation());
         }
 
-        return point;
+        return appendNewLine(lineBuilder.toString());
     }
 
-    public ArrayList<Piece> getBlackPieces(){ return  getSpecificColorPieces(Piece.Color.BLACK); }
+    public List<Piece> getBlackPieces(){ return  getSpecificColorPieces(Piece.Color.BLACK); }
 
-    public ArrayList<Piece> getWhitePieces(){ return getSpecificColorPieces(Piece.Color.WHITE); }
+    public List<Piece> getWhitePieces(){ return getSpecificColorPieces(Piece.Color.WHITE); }
 
-    private ArrayList<Piece> getSpecificColorPieces(Piece.Color color){
-        ArrayList<Piece> pieces=new ArrayList<>();
+    private List<Piece> getSpecificColorPieces(Piece.Color color){
+        List<Piece> pieces=new ArrayList<>();
 
         for (Piece piece : row) {
             if(piece.isPiece() && piece.getColor().equals(color)){
@@ -134,7 +118,7 @@ public class Rank {
 
     //팩토리 메소드 구현 부분
     private static Rank buildEmptyRank(){
-        ArrayList<Piece> rankBuilder=new ArrayList<>();
+        List<Piece> rankBuilder=new ArrayList<>();
 
         for(int i=RANK_FIRST_INDEX; i<RANK_SIZE;i++){
             rankBuilder.add(Piece.createBlank());
@@ -145,7 +129,7 @@ public class Rank {
 
     private static Rank buildBlackPiecesRank(){
 
-        ArrayList<Piece> rank=new ArrayList<>();
+        List<Piece> rank=new ArrayList<>();
 
         addBlackRook(rank);
         addBlackKnight(rank);
@@ -157,7 +141,7 @@ public class Rank {
 
     private static Rank buildWhitePiecesRank(){
 
-        ArrayList<Piece> rank=new ArrayList<>();
+        List<Piece> rank=new ArrayList<>();
 
         addWhiteRook(rank);
         addWhiteKnight(rank);
@@ -171,42 +155,42 @@ public class Rank {
 
 
     //기물 생성 메소드
-    private static void addBlackRook(ArrayList<Piece> rank){
+    private static void addBlackRook(List<Piece> rank){
         rank.add(ROOK_SEQUENCE,Piece.createBlackRook());
         rank.add(ROOK_SEQUENCE,Piece.createBlackRook());
     }
 
-    private static void addBlackKnight(ArrayList<Piece> rank){
+    private static void addBlackKnight(List<Piece> rank){
         rank.add(KNIGHT_SEQUENCE,Piece.createBlackKnight());
         rank.add(KNIGHT_SEQUENCE,Piece.createBlackKnight());
     }
 
-    private static void addBlackBishop(ArrayList<Piece> rank){
+    private static void addBlackBishop(List<Piece> rank){
         rank.add(BISHOP_SEQUENCE,Piece.createBlackBishop());
         rank.add(BISHOP_SEQUENCE,Piece.createBlackBishop());
     }
 
-    private static void addBlackQueenAndKing(ArrayList<Piece> rank){
+    private static void addBlackQueenAndKing(List<Piece> rank){
         rank.add(QUEEN_SEQUENCE,Piece.createBlackQueen());
         rank.add(KING_SEQUENCE,Piece.createBlackKing());
     }
 
-    private static void addWhiteRook(ArrayList<Piece> rank){
+    private static void addWhiteRook(List<Piece> rank){
         rank.add(ROOK_SEQUENCE,Piece.createWhiteRook());
         rank.add(ROOK_SEQUENCE,Piece.createWhiteRook());
     }
 
-    private static void addWhiteKnight(ArrayList<Piece> rank){
+    private static void addWhiteKnight(List<Piece> rank){
         rank.add(KNIGHT_SEQUENCE,Piece.createWhiteKnight());
         rank.add(KNIGHT_SEQUENCE,Piece.createWhiteKnight());
     }
 
-    private static void addWhiteBishop(ArrayList<Piece> rank){
+    private static void addWhiteBishop(List<Piece> rank){
         rank.add(BISHOP_SEQUENCE,Piece.createWhiteBishop());
         rank.add(BISHOP_SEQUENCE,Piece.createWhiteBishop());
     }
 
-    private static void addWhiteQueenAndKing(ArrayList<Piece> rank){
+    private static void addWhiteQueenAndKing(List<Piece> rank){
         rank.add(QUEEN_SEQUENCE,Piece.createWhiteQueen());
         rank.add(KING_SEQUENCE,Piece.createWhiteKing());
     }
@@ -216,7 +200,7 @@ public class Rank {
 
     //폰 생성 메소드
     private static Rank buildBlackPawnsRank(){
-        ArrayList<Piece> rankBuilder=new ArrayList<>();
+        List<Piece> rankBuilder=new ArrayList<>();
 
         for(int i=RANK_FIRST_INDEX; i<RANK_SIZE;i++){
             rankBuilder.add(Piece.createBlackPawn());
@@ -226,7 +210,7 @@ public class Rank {
     }
 
     private static Rank buildWhitePawnsRank(){
-        ArrayList<Piece> rankBuilder=new ArrayList<>();
+        List<Piece> rankBuilder=new ArrayList<>();
 
         for(int i=RANK_FIRST_INDEX; i<RANK_SIZE;i++){
             rankBuilder.add(Piece.createWhitePawn());

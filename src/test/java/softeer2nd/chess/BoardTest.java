@@ -1,13 +1,16 @@
 package softeer2nd.chess;
 
-import static softeer2nd.chess.utils.StringUtils.appendNewLine;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import softeer2nd.chess.exception.InvalidPositionException;
 import softeer2nd.chess.pieces.Piece;
+import softeer2nd.chess.utils.PositionUtils;
+
+import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static softeer2nd.chess.utils.StringUtils.appendNewLine;
 
 class BoardTest {
     Board board;
@@ -25,7 +28,7 @@ class BoardTest {
 
         board.initialize();
 
-        assertEquals(32, board.pieceCount());
+        assertEquals(32, board.getPieceCount());
         String blankRank = appendNewLine("........");
         assertEquals(
                 appendNewLine("RNBQKBNR") +
@@ -33,11 +36,11 @@ class BoardTest {
                         blankRank + blankRank + blankRank + blankRank +
                         appendNewLine("pppppppp") +
                         appendNewLine("rnbqkbnr"),
-                board.showBoard());
+                board.getBoardRepresentation());
     }
 
     @Test
-    @DisplayName("입력한 색깔을 가진 기물의 개수가 제대로 반환되어야 한다")
+    @DisplayName("보드 내의 입력한 색깔을 가진 기물의 개수가 제대로 반환되어야 한다")
     public void countSpecificPiece(){
 
         board.initialize();
@@ -58,7 +61,7 @@ class BoardTest {
     }
 
     @Test
-    @DisplayName("입력한 좌표에 해당하는 기물을 반환해야 한다.")
+    @DisplayName("보드 내의 입력한 좌표에 해당하는 기물을 반환해야 한다.")
     public void findPiece() throws InvalidPositionException{
 
         board.initialize();
@@ -82,30 +85,23 @@ class BoardTest {
     public void add() throws InvalidPositionException{
         //빈 체스판 생성
         board.emptyInitialize();
-        verifyMove(Piece.createWhiteKing(),"b5");
-        verifyMove(Piece.createWhitePawn(),"c8");
-        verifyMove(Piece.createWhiteBishop(),"d4");
-        System.out.println(board.showBoard());
+        verifyAdd(Piece.createWhiteKing(),"b5");
+        verifyAdd(Piece.createWhitePawn(),"c8");
+        verifyAdd(Piece.createWhiteBishop(),"d4");
     }
 
-    private void verifyMove(Piece piece, String position) throws InvalidPositionException{
-        board.addPiece(position,piece);
+    private void verifyAdd(Piece piece, String position) throws InvalidPositionException{
+        HashMap<String,Integer> targetRowAndCol= PositionUtils.getRowAndCol(position);
+
+        int row=targetRowAndCol.get("row").intValue();
+        int column=targetRowAndCol.get("column").intValue();
+
+        board.setPiece(row,column,piece);
         assertEquals(piece,board.findPiece(position));
     }
 
     @Test
-    @DisplayName("체스판에 임의로 말을 생성하고 색깔별로 점수 계산을 할 수 있어야 한다")
-    public void calculatePoint() throws InvalidPositionException{
-
-        initEmptyBoard();
-
-        assertEquals(15.0, board.calculatePoint(Piece.Color.BLACK), 0.01);
-        assertEquals(7.0, board.calculatePoint(Piece.Color.WHITE), 0.01);
-
-    }
-
-    @Test
-    @DisplayName("색깔별로 기물을 저장하고 기물의 점수별로 정렬하여 출력할 수 있어야 한다.")
+    @DisplayName("보드 내의 기물을 색깔별로 저장하고 기물의 점수별로 정렬하여 출력할 수 있어야 한다.")
     public void divideColor(){
         board.initialize();
 
@@ -114,51 +110,6 @@ class BoardTest {
         assertEquals("KPPPPPPPPNNBBRRQ",board.ascendingBlackPieces());
         assertEquals("kppppppppnnbbrrq",board.ascendingWhitePieces());
 
-    }
-
-    private void initEmptyBoard() throws InvalidPositionException {
-
-        board.emptyInitialize();
-
-        board.addPiece("b6", Piece.createBlackPawn());
-        board.addPiece("e6", Piece.createBlackQueen());
-        board.addPiece("b8", Piece.createBlackKing());
-        board.addPiece("c8", Piece.createBlackRook());
-
-        board.addPiece("f2", Piece.createWhitePawn());
-        board.addPiece("g2", Piece.createWhitePawn());
-        board.addPiece("e1", Piece.createWhiteRook());
-        board.addPiece("f1", Piece.createWhiteKing());
-    }
-
-    @Test
-    @DisplayName("체스말이 제대로 이동하는지확인")
-    public void move() throws Exception {
-        board.initialize();
-
-        String blankRank = appendNewLine("........");
-        assertEquals(
-                appendNewLine("RNBQKBNR") +
-                        appendNewLine("PPPPPPPP") +
-                        blankRank + blankRank + blankRank + blankRank +
-                        appendNewLine("pppppppp") +
-                        appendNewLine("rnbqkbnr"),
-                board.showBoard());
-
-        String sourcePosition = "b2";
-        String targetPosition = "b3";
-        board.move(sourcePosition, targetPosition);
-        assertEquals(Piece.createBlank(), board.findPiece(sourcePosition));
-        assertEquals(Piece.createWhitePawn(), board.findPiece(targetPosition));
-        ;
-        assertEquals(
-                appendNewLine("RNBQKBNR") +
-                        appendNewLine("PPPPPPPP") +
-                        blankRank + blankRank + blankRank +
-                        appendNewLine(".p......") +
-                        appendNewLine("p.pppppp") +
-                        appendNewLine("rnbqkbnr"),
-                board.showBoard());
     }
 
 }

@@ -22,11 +22,13 @@ import java.util.*;
 }
 
 public class Board {
-    private ArrayList<Rank> board;
+    private List<Rank> ranks;
 
-    private ArrayList<Piece> whitePieces;
+    private List<Piece> whitePieces;
 
-    private ArrayList<Piece> blackPieces;
+    private List<Piece> blackPieces;
+
+
 
 
     //보드 초기화 메소드
@@ -40,166 +42,31 @@ public class Board {
     public void emptyInitialize(){
         initList();
         for (int i = 0; i < 8; i++) {
-            board.add(Rank.createEmpty());
+            ranks.add(Rank.createEmpty());
         }
     }
 
     private void initList(){
-        board =new ArrayList<>();
+        ranks =new ArrayList<>();
     }
 
     private void addBlackPieces(){//하드코딩 스러움,0 1 별로
-        board.add(Rank.createBlackPieces());
-        board.add(Rank.createBlackPawns());
+        ranks.add(Rank.createBlackPieces());
+        ranks.add(Rank.createBlackPawns());
     }
 
     private void addWhitePieces(){
-        board.add(Rank.createWhitePawns());
-        board.add(Rank.createWhitePieces());
+        ranks.add(Rank.createWhitePawns());
+        ranks.add(Rank.createWhitePieces());
     }
 
     private void addBlanks(){
         for (int i = 0; i < 4; i++) {
-            board.add(Rank.createEmpty());
+            ranks.add(Rank.createEmpty());
         }
     }
-
-
-    //보드의 동작 모음
     
-    public int pieceCount(){
-        int count=0;
 
-        for (Rank rank : board) {
-            count+=rank.getPieceCount();
-        }
-
-        return count;
-    }
-
-    public String showBoard(){
-        StringBuilder boardBuilder=new StringBuilder();
-
-        for (Rank rank : board) {
-            boardBuilder.append(rank.getRankRepresentation());
-        }
-
-        return  boardBuilder.toString();
-    }
-
-    public int getSpecificPieceCount(Piece.Color color, Piece.Type type){
-        int count=0;
-
-        for (Rank rank : board) {
-            count+=rank.getSpecificPieceCount(color, type);
-        }
-
-        return count;
-    }
-
-    //기물 이동, 배치 관련 메소드
-
-    public void move(String sourcePosition, String targetPosition) throws InvalidPositionException {
-
-        putPieceOnTarget(targetPosition, findPiece(sourcePosition));
-        initSourcePiece(sourcePosition);
-
-    }
-    public Piece findPiece(String position) throws InvalidPositionException{
-
-        HashMap<String,Integer> rowAndCol= PositionUtils.getRowAndCol(position);
-
-        int row=rowAndCol.get("row").intValue();
-        int column=rowAndCol.get("column").intValue();
-
-        return board.get(row).findPiece(column);
-    }
-
-    public void addPiece(String position, Piece piece) throws InvalidPositionException {
-
-        HashMap<String,Integer> rowAndCol= PositionUtils.getRowAndCol(position);
-
-        int row=rowAndCol.get("row").intValue();
-        int column=rowAndCol.get("column").intValue();
-
-        board.get(row).move(column, piece);
-    }
-
-
-    private void initSourcePiece(String sourcePosition) throws InvalidPositionException{
-
-        addPiece(sourcePosition,Piece.createBlank());
-
-    }
-
-    private void putPieceOnTarget(String targetPosition, Piece piece) throws InvalidPositionException{
-
-        HashMap<String,Integer> targetRowAndCol= PositionUtils.getRowAndCol(targetPosition);
-
-        int targetRow=targetRowAndCol.get("row").intValue();
-        int targetColumn=targetRowAndCol.get("column").intValue();
-
-        board.get(targetRow).move(targetColumn, piece);
-
-    }
-
-    //점수 관련 메소드
-
-    public double calculatePoint(Piece.Color color){
-        return calculatePiecesPoint(color) + calculatePawnsPoint(color);
-    }
-
-    private double calculatePiecesPoint(Piece.Color color){
-
-        double point=0;
-
-        for (Rank rank : board) {
-            point+=rank.calculatePiecesPoint(color);
-        }
-
-        return point;
-    }
-
-    private double calculatePawnsPoint(Piece.Color color){
-
-        ArrayList<Integer> columns=new ArrayList<>(Arrays.asList(0,0,0,0,0,0,0,0));
-        findPawns(columns,color);
-
-        return getPawnsPoint(columns);
-    }
-
-    private void findPawns(ArrayList<Integer> columns, Piece.Color color){
-
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-
-                Piece piece=board.get(i).findPiece(j);
-
-                if(piece.isEqualColorAndType(color, Piece.Type.PAWN)){
-
-                    columns.set(j,columns.get(j)+1);
-                }
-            }
-        }
-    }
-
-    private double getPawnsPoint(ArrayList<Integer> columns){
-
-        double point=0;
-
-        for (Integer count : columns) {
-            double columnPoint=count.doubleValue();
-
-            if(count>1){
-                columnPoint/=2.0;
-            }
-
-            point+=columnPoint;
-
-        }
-
-        return point;
-    }
 
     //기물 리스트 정렬
 
@@ -227,10 +94,32 @@ public class Board {
         return getPiecesRepresentation(whitePieces);
     }
 
+
+
+
+    //get, set
+    public void setPiece(int targetRow, int targetColumn, Piece piece){
+        ranks.get(targetRow).setPiece(targetColumn,piece);
+    }
+
+    public Piece getPiece(int row, int column){
+        return ranks.get(row).getPiece(column);
+    }
+
+    public Piece findPiece(String position) throws InvalidPositionException{
+
+        HashMap<String,Integer> rowAndCol= PositionUtils.getRowAndCol(position);
+
+        int row=rowAndCol.get("row").intValue();
+        int column=rowAndCol.get("column").intValue();
+
+        return ranks.get(row).getPiece(column);
+    }
+
     private void getBlackPieces(){
         blackPieces=new ArrayList<>();
 
-        for (Rank rank : board) {
+        for (Rank rank : ranks) {
             blackPieces.addAll(rank.getBlackPieces());
         }
     }
@@ -238,12 +127,22 @@ public class Board {
     private void getWhitePieces(){
         whitePieces=new ArrayList<>();
 
-        for (Rank rank : board) {
+        for (Rank rank : ranks) {
             whitePieces.addAll(rank.getWhitePieces());
         }
     }
 
-    private String getPiecesRepresentation(ArrayList<Piece> pieces){
+    public String getBoardRepresentation(){
+        StringBuilder boardBuilder=new StringBuilder();
+
+        for (Rank rank : ranks) {
+            boardBuilder.append(rank.getRankRepresentation());
+        }
+
+        return boardBuilder.toString();
+    }
+
+    private String getPiecesRepresentation(List<Piece> pieces){
 
         StringBuilder representationBuilder=new StringBuilder();
 
@@ -252,5 +151,25 @@ public class Board {
         }
 
         return representationBuilder.toString();
+    }
+
+    public int getPieceCount(){
+        int count=0;
+
+        for (Rank rank : ranks) {
+            count+=rank.getPieceCount();
+        }
+
+        return count;
+    }
+
+    public int getSpecificPieceCount(Piece.Color color, Piece.Type type){
+        int count=0;
+
+        for (Rank rank : ranks) {
+            count+=rank.getSpecificPieceCount(color, type);
+        }
+
+        return count;
     }
 }

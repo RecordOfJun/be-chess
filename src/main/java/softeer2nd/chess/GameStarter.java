@@ -7,7 +7,8 @@ import java.util.Scanner;
 
 public class GameStarter {
     private Scanner scanner;
-    private Board board;
+
+    private Game game;
 
     private boolean isContinue;
 
@@ -22,8 +23,8 @@ public class GameStarter {
     }
 
     private void initialize(){
-        board=new Board();
-        board.initialize();
+        game=new Game();
+        game.start();
     }
 
     private String getCommand(){
@@ -38,7 +39,7 @@ public class GameStarter {
     private void selectFunction(String command){
 
         if(command.equals("start")){
-            System.out.println(board.showBoard());
+            System.out.println(game.showBoard());
             isContinue=true;
 
             return;
@@ -60,9 +61,9 @@ public class GameStarter {
                 String sourcePosition=commands[1];
                 String targetPosition=commands[2];
 
-                board.move(sourcePosition,targetPosition);
+                game.move(sourcePosition,targetPosition);
 
-                System.out.println(board.showBoard());
+                System.out.println(game.showBoard());
 
                 return;
             }
