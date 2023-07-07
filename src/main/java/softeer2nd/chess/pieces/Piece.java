@@ -7,8 +7,6 @@ public class Piece {
     public final static String WHITE_COLOR="white";
     public final static String BLACK_COLOR="black";
 
-    private Type type;
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -23,6 +21,9 @@ public class Piece {
     }
 
     private Color color;
+
+    private Type type;
+
     public enum Color {
         WHITE, BLACK, NOCOLOR;
     }

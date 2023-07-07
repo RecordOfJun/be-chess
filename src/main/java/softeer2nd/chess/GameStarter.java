@@ -1,5 +1,8 @@
 package softeer2nd.chess;
 
+import softeer2nd.chess.exception.InvalidCommandException;
+import softeer2nd.chess.exception.InvalidPositionException;
+
 import java.util.Scanner;
 
 public class GameStarter {
@@ -34,21 +37,56 @@ public class GameStarter {
 
     private void selectFunction(String command){
 
-        switch (command){
-            case "start":
+        if(command.equals("start")){
+            System.out.println(board.showBoard());
+            isContinue=true;
+
+            return;
+        }
+
+        if(command.equals("end")){
+            System.out.println("게임이 종료되었습니다");
+            isContinue=false;
+
+            return;
+        }
+
+        if(command.startsWith("move")){
+            try{
+
+                String[] commands=command.split(" ");
+                checkMoveCommands(commands);
+
+                String sourcePosition=commands[1];
+                String targetPosition=commands[2];
+
+                board.move(sourcePosition,targetPosition);
+
                 System.out.println(board.showBoard());
-                isContinue=true;
-                break;
 
-            case "end":
-                System.out.println("게임이 종료되었습니다");
-                isContinue=false;
-                break;
-
-            default:
-                System.out.println("다시 입력해주세요.");
+                return;
+            }
+            catch (InvalidCommandException exception){
+                System.out.println(exception.getMessage());
                 isContinue=true;
-                break;
+                return;
+            }
+            catch (InvalidPositionException exception){
+                System.out.println(exception.getMessage());
+                isContinue=true;
+                return;
+            }
+        }
+
+
+        System.out.println("다시 입력해주세요.");
+        isContinue=true;
+    }
+
+    private void checkMoveCommands(String[] commands) throws InvalidCommandException,InvalidPositionException{
+
+        if(commands.length != 3 || commands[0].length() != 4){
+            throw new InvalidCommandException("명령의 형식이 잘못되었습니다. 다시 입력해주세요.");
         }
 
     }
