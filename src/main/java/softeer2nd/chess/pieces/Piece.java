@@ -49,7 +49,7 @@ public class Piece {
 
     }
 
-    private Piece(){
+    protected Piece(){
         this.color=Color.NOCOLOR;
         this.type=Type.NO_PIECE;
     }

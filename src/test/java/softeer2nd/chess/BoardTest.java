@@ -4,7 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import softeer2nd.chess.exception.InvalidPositionException;
-import softeer2nd.chess.pieces.Piece;
+import softeer2nd.chess.pieces.*;
 import softeer2nd.chess.utils.PositionUtils;
 
 import java.util.HashMap;

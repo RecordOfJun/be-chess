@@ -1,6 +1,6 @@
 package softeer2nd.chess;
 
-import softeer2nd.chess.pieces.Piece;
+import softeer2nd.chess.pieces.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -103,7 +103,7 @@ public class Rank {
     //팩토리 메소드 구현 부분
     private static Rank buildEmptyRank() {
         List<Piece> rankBuilder = IntStream.range(RANK_FIRST_INDEX, RANK_SIZE)
-                .mapToObj(index -> Piece.createBlank())
+                .mapToObj(index -> Blank.create())
                 .collect(Collectors.toList());
 
         return new Rank(rankBuilder);
@@ -136,50 +136,50 @@ public class Rank {
 
     //기물 생성 메소드
     private static void addBlackRook(List<Piece> rank) {
-        rank.add(ROOK_SEQUENCE, Piece.createBlackRook());
-        rank.add(ROOK_SEQUENCE, Piece.createBlackRook());
+        rank.add(ROOK_SEQUENCE, Rook.createBlack());
+        rank.add(ROOK_SEQUENCE, Rook.createBlack());
     }
 
     private static void addBlackKnight(List<Piece> rank) {
-        rank.add(KNIGHT_SEQUENCE, Piece.createBlackKnight());
-        rank.add(KNIGHT_SEQUENCE, Piece.createBlackKnight());
+        rank.add(KNIGHT_SEQUENCE, Knight.createBlack());
+        rank.add(KNIGHT_SEQUENCE, Knight.createBlack());
     }
 
     private static void addBlackBishop(List<Piece> rank) {
-        rank.add(BISHOP_SEQUENCE, Piece.createBlackBishop());
-        rank.add(BISHOP_SEQUENCE, Piece.createBlackBishop());
+        rank.add(BISHOP_SEQUENCE, Bishop.createBlack());
+        rank.add(BISHOP_SEQUENCE, Bishop.createBlack());
     }
 
     private static void addBlackQueenAndKing(List<Piece> rank) {
-        rank.add(QUEEN_SEQUENCE, Piece.createBlackQueen());
-        rank.add(KING_SEQUENCE, Piece.createBlackKing());
+        rank.add(QUEEN_SEQUENCE, Queen.createBlack());
+        rank.add(KING_SEQUENCE, King.createBlack());
     }
 
     private static void addWhiteRook(List<Piece> rank) {
-        rank.add(ROOK_SEQUENCE, Piece.createWhiteRook());
-        rank.add(ROOK_SEQUENCE, Piece.createWhiteRook());
+        rank.add(ROOK_SEQUENCE, Rook.createWhite());
+        rank.add(ROOK_SEQUENCE, Rook.createWhite());
     }
 
     private static void addWhiteKnight(List<Piece> rank) {
-        rank.add(KNIGHT_SEQUENCE, Piece.createWhiteKnight());
-        rank.add(KNIGHT_SEQUENCE, Piece.createWhiteKnight());
+        rank.add(KNIGHT_SEQUENCE, Knight.createWhite());
+        rank.add(KNIGHT_SEQUENCE, Knight.createWhite());
     }
 
     private static void addWhiteBishop(List<Piece> rank) {
-        rank.add(BISHOP_SEQUENCE, Piece.createWhiteBishop());
-        rank.add(BISHOP_SEQUENCE, Piece.createWhiteBishop());
+        rank.add(BISHOP_SEQUENCE, Bishop.createWhite());
+        rank.add(BISHOP_SEQUENCE, Bishop.createWhite());
     }
 
     private static void addWhiteQueenAndKing(List<Piece> rank) {
-        rank.add(QUEEN_SEQUENCE, Piece.createWhiteQueen());
-        rank.add(KING_SEQUENCE, Piece.createWhiteKing());
+        rank.add(QUEEN_SEQUENCE, Queen.createWhite());
+        rank.add(KING_SEQUENCE, King.createWhite());
     }
 
 
     //폰 생성 메소드
     private static Rank buildBlackPawnsRank() {
         List<Piece> rankBuilder = IntStream.range(RANK_FIRST_INDEX, RANK_SIZE)
-                .mapToObj(index -> Piece.createBlackPawn())
+                .mapToObj(index -> Pawn.createBlack())
                 .collect(Collectors.toList());
 
         return new Rank(rankBuilder);
@@ -187,7 +187,7 @@ public class Rank {
 
     private static Rank buildWhitePawnsRank() {
         List<Piece> rankBuilder = IntStream.range(RANK_FIRST_INDEX, RANK_SIZE)
-                .mapToObj(index -> Piece.createWhitePawn())
+                .mapToObj(index -> Pawn.createWhite())
                 .collect(Collectors.toList());
 
         return new Rank(rankBuilder);

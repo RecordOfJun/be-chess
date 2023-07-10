@@ -1,6 +1,7 @@
 package softeer2nd.chess;
 
 import softeer2nd.chess.exception.InvalidPositionException;
+import softeer2nd.chess.pieces.Blank;
 import softeer2nd.chess.pieces.Piece;
 import softeer2nd.chess.utils.PositionUtils;
 
@@ -47,7 +48,7 @@ public class Game {
 
     private void initSourcePiece(String sourcePosition) throws InvalidPositionException {
 
-        putPieceOnTarget(sourcePosition, Piece.createBlank());
+        putPieceOnTarget(sourcePosition, Blank.create());
 
     }
 

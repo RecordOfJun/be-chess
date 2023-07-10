@@ -5,7 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import softeer2nd.chess.exception.InvalidPositionException;
 import softeer2nd.chess.Game;
-import softeer2nd.chess.pieces.Piece;
+import softeer2nd.chess.pieces.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static softeer2nd.chess.utils.StringUtils.appendNewLine;
@@ -68,10 +68,10 @@ class GameTest {
         game.putPieceOnTarget("b8", King.createBlack());
         game.putPieceOnTarget("c8", Rook.createBlack());
 
-        game.putPieceOnTarget("f2", Pawn.createWhitePawn());
+        game.putPieceOnTarget("f2", Pawn.createWhite());
         game.putPieceOnTarget("g2", Pawn.createWhite());
         game.putPieceOnTarget("e1", Rook.createWhite());
-        game.putPieceOnTarget("f1", King.createWhiteKing());
+        game.putPieceOnTarget("f1", King.createWhite());
     }
 
 }
