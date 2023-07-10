@@ -63,15 +63,15 @@ class GameTest {
 
         game.initEmpty();
 
-        game.putPieceOnTarget("b6", Piece.createBlackPawn());
-        game.putPieceOnTarget("e6", Piece.createBlackQueen());
-        game.putPieceOnTarget("b8", Piece.createBlackKing());
-        game.putPieceOnTarget("c8", Piece.createBlackRook());
+        game.putPieceOnTarget("b6", Pawn.createBlack());
+        game.putPieceOnTarget("e6", Queen.createBlack());
+        game.putPieceOnTarget("b8", King.createBlack());
+        game.putPieceOnTarget("c8", Rook.createBlack());
 
-        game.putPieceOnTarget("f2", Piece.createWhitePawn());
-        game.putPieceOnTarget("g2", Piece.createWhitePawn());
-        game.putPieceOnTarget("e1", Piece.createWhiteRook());
-        game.putPieceOnTarget("f1", Piece.createWhiteKing());
+        game.putPieceOnTarget("f2", Pawn.createWhitePawn());
+        game.putPieceOnTarget("g2", Pawn.createWhite());
+        game.putPieceOnTarget("e1", Rook.createWhite());
+        game.putPieceOnTarget("f1", King.createWhiteKing());
     }
 
 }

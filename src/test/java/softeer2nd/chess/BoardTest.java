@@ -66,17 +66,17 @@ class BoardTest {
 
         board.initialize();
 
-        assertEquals(Piece.createBlackRook(),board.findPiece("a8"));
-        assertEquals(Piece.createBlackPawn(),board.findPiece("c7"));
-        assertEquals(Piece.createWhitePawn(),board.findPiece("e2"));
-        assertEquals(Piece.createBlackKnight(),board.findPiece("g8"));
-        assertEquals(Piece.createWhiteKnight(),board.findPiece("b1"));
-        assertEquals(Piece.createBlackBishop(),board.findPiece("c8"));
-        assertEquals(Piece.createWhiteBishop(),board.findPiece("f1"));
-        assertEquals(Piece.createBlackQueen(),board.findPiece("d8"));
-        assertEquals(Piece.createWhiteQueen(),board.findPiece("d1"));
-        assertEquals(Piece.createBlackKing(),board.findPiece("e8"));
-        assertEquals(Piece.createWhiteKing(),board.findPiece("e1"));
+        assertEquals(Rook.createBlack(),board.findPiece("a8"));
+        assertEquals(Pawn.createBlack(),board.findPiece("c7"));
+        assertEquals(Pawn.createWhite(),board.findPiece("e2"));
+        assertEquals(Knight.createBlack(),board.findPiece("g8"));
+        assertEquals(Knight.createWhite(),board.findPiece("b1"));
+        assertEquals(Bishop.createBlack(),board.findPiece("c8"));
+        assertEquals(Bishop.createWhite(),board.findPiece("f1"));
+        assertEquals(Queen.createBlack(),board.findPiece("d8"));
+        assertEquals(Queen.createWhite(),board.findPiece("d1"));
+        assertEquals(King.createBlack(),board.findPiece("e8"));
+        assertEquals(King.createWhite(),board.findPiece("e1"));
 
     }
 
@@ -85,9 +85,9 @@ class BoardTest {
     public void add() throws InvalidPositionException{
         //빈 체스판 생성
         board.emptyInitialize();
-        verifyAdd(Piece.createWhiteKing(),"b5");
-        verifyAdd(Piece.createWhitePawn(),"c8");
-        verifyAdd(Piece.createWhiteBishop(),"d4");
+        verifyAdd(King.createWhite(),"b5");
+        verifyAdd(Pawn.createWhite(),"c8");
+        verifyAdd(Bishop.createWhite(),"d4");
     }
 
     private void verifyAdd(Piece piece, String position) throws InvalidPositionException{
