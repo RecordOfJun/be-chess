@@ -5,12 +5,15 @@ import softeer2nd.chess.pieces.Piece;
 import softeer2nd.chess.utils.PositionUtils;
 
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
- class PieceComparator implements Comparator<Piece> {
+class PieceComparator implements Comparator<Piece> {
     @Override
-    public int compare(Piece p1, Piece p2){
-        double point1=p1.getType().getPoint();
-        double point2=p2.getType().getPoint();
+    public int compare(Piece p1, Piece p2) {
+        double point1 = p1.getType().getPoint();
+        double point2 = p2.getType().getPoint();
 
         if (point1 > point2) {
             return 1;
@@ -29,146 +32,132 @@ public class Board {
     private List<Piece> blackPieces;
 
 
-
-
     //보드 초기화 메소드
-    public void initialize(){
+    public void initialize() {
         initList();
         addBlackPieces();
         addBlanks();
         addWhitePieces();
     }
 
-    public void emptyInitialize(){
+    public void emptyInitialize() {
         initList();
-        for (int i = 0; i < 8; i++) {
-            ranks.add(Rank.createEmpty());
-        }
+        IntStream.range(0, 8)
+                .forEach(row -> ranks.add(Rank.createEmpty()));
     }
 
-    private void initList(){
-        ranks =new ArrayList<>();
+    private void initList() {
+        ranks = new ArrayList<>();
     }
 
-    private void addBlackPieces(){//하드코딩 스러움,0 1 별로
+    private void addBlackPieces() {//하드코딩 스러움,0 1 별로
         ranks.add(Rank.createBlackPieces());
         ranks.add(Rank.createBlackPawns());
     }
 
-    private void addWhitePieces(){
+    private void addWhitePieces() {
         ranks.add(Rank.createWhitePawns());
         ranks.add(Rank.createWhitePieces());
     }
 
-    private void addBlanks(){
-        for (int i = 0; i < 4; i++) {
-            ranks.add(Rank.createEmpty());
-        }
+    private void addBlanks() {
+        IntStream.range(0,4)
+                .mapToObj(index->Rank.createEmpty())
+                .forEach(ranks::add);
     }
-    
 
 
     //기물 리스트 정렬
 
-    public String ascendingBlackPieces(){
+    public String ascendingBlackPieces() {
         getBlackPieces();
-        Collections.sort(blackPieces,new PieceComparator());
+        Collections.sort(blackPieces, new PieceComparator());
         return getPiecesRepresentation(blackPieces);
     }
 
-    public String ascendingWhitePieces(){
+    public String ascendingWhitePieces() {
         getWhitePieces();
-        Collections.sort(whitePieces,new PieceComparator());
+        Collections.sort(whitePieces, new PieceComparator());
         return getPiecesRepresentation(whitePieces);
     }
 
-    public String descendingBlackPieces(){
+    public String descendingBlackPieces() {
         getBlackPieces();
-        Collections.sort(blackPieces,new PieceComparator().reversed());
+        Collections.sort(blackPieces, new PieceComparator().reversed());
         return getPiecesRepresentation(blackPieces);
     }
 
-    public String descendingWhitePieces(){
+    public String descendingWhitePieces() {
         getWhitePieces();
-        Collections.sort(whitePieces,new PieceComparator().reversed());
+        Collections.sort(whitePieces, new PieceComparator().reversed());
         return getPiecesRepresentation(whitePieces);
     }
-
-
 
 
     //get, set
-    public void setPiece(int targetRow, int targetColumn, Piece piece){
-        ranks.get(targetRow).setPiece(targetColumn,piece);
+    public void setPiece(int targetRow, int targetColumn, Piece piece) {
+        ranks.get(targetRow).setPiece(targetColumn, piece);
     }
 
-    public Piece getPiece(int row, int column){
+    public Piece getPiece(int row, int column) {
         return ranks.get(row).getPiece(column);
     }
 
-    public Piece findPiece(String position) throws InvalidPositionException{
+    public Piece findPiece(String position) throws InvalidPositionException {
 
-        HashMap<String,Integer> rowAndCol= PositionUtils.getRowAndCol(position);
+        HashMap<String, Integer> rowAndCol = PositionUtils.getRowAndCol(position);
 
-        int row=rowAndCol.get("row").intValue();
-        int column=rowAndCol.get("column").intValue();
+        int row = rowAndCol.get("row").intValue();
+        int column = rowAndCol.get("column").intValue();
 
         return ranks.get(row).getPiece(column);
     }
 
-    private void getBlackPieces(){
-        blackPieces=new ArrayList<>();
-
-        for (Rank rank : ranks) {
-            blackPieces.addAll(rank.getBlackPieces());
-        }
+    private void getBlackPieces() {
+        blackPieces = ranks.stream()
+                .flatMap(rank -> rank.getBlackPieces().stream())
+                .collect(Collectors.toList());
     }
 
-    private void getWhitePieces(){
-        whitePieces=new ArrayList<>();
-
-        for (Rank rank : ranks) {
-            whitePieces.addAll(rank.getWhitePieces());
-        }
+    private void getWhitePieces() {
+        whitePieces = ranks.stream()
+                .flatMap(rank -> rank.getWhitePieces().stream())
+                .collect(Collectors.toList());
     }
 
-    public String getBoardRepresentation(){
-        StringBuilder boardBuilder=new StringBuilder();
+    public String getBoardRepresentation() {
+        StringBuilder boardBuilder = new StringBuilder();
 
-        for (Rank rank : ranks) {
-            boardBuilder.append(rank.getRankRepresentation());
-        }
+        ranks.stream()
+                .map(Rank::getRankRepresentation)
+                .forEach(boardBuilder::append);
 
         return boardBuilder.toString();
     }
 
-    private String getPiecesRepresentation(List<Piece> pieces){
+    private String getPiecesRepresentation(List<Piece> pieces) {
 
-        StringBuilder representationBuilder=new StringBuilder();
+        StringBuilder representationBuilder = new StringBuilder();
 
-        for (Piece piece : pieces) {
-            representationBuilder.append(piece.getRepresentation());
-        }
+        pieces.stream()
+                .map(Piece::getRepresentation)
+                .forEach(representationBuilder::append);
 
         return representationBuilder.toString();
     }
 
-    public int getPieceCount(){
-        int count=0;
-
-        for (Rank rank : ranks) {
-            count+=rank.getPieceCount();
-        }
+    public int getPieceCount() {
+        int count = ranks.stream()
+                .mapToInt(Rank::getPieceCount)
+                .sum();
 
         return count;
     }
 
-    public int getSpecificPieceCount(Piece.Color color, Piece.Type type){
-        int count=0;
-
-        for (Rank rank : ranks) {
-            count+=rank.getSpecificPieceCount(color, type);
-        }
+    public int getSpecificPieceCount(Piece.Color color, Piece.Type type) {
+        int count = ranks.stream()
+                .mapToInt(rank -> rank.getSpecificPieceCount(color,type))
+                .sum();
 
         return count;
     }

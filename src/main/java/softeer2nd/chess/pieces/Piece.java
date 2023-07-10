@@ -3,8 +3,6 @@ package softeer2nd.chess.pieces;
 import java.util.Objects;
 
 public class Piece {
-    public final static String WHITE_COLOR="white";
-    public final static String BLACK_COLOR="black";
 
     @Override
     public boolean equals(Object o) {
@@ -27,8 +25,8 @@ public class Piece {
         WHITE, BLACK, NOCOLOR;
     }
     public enum Type {
-        PAWN('p',1), ROOK('r',5), KNIGHT('n',2.5),
-        BISHOP('b',3), QUEEN('q',9), KING('k',0), NO_PIECE('.',0);
+        PAWN('p',1.0), ROOK('r',5.0), KNIGHT('n',2.5),
+        BISHOP('b',3.0), QUEEN('q',9.0), KING('k',0.0), NO_PIECE('.',0.0);
 
         private char representation;
 

@@ -12,6 +12,15 @@ public class GameStarter {
 
     private boolean isContinue;
 
+    private final static int SOURCE_POSITION_INDEX=1;
+    private final static int TARGET_POSITION_INDEX=2;
+    private final static int MOVE_COMMAND_LENGTH=3;
+    private final static int MOVE_COMMAND_INDEX=0;
+    private final static String MOVE_STRING="move";
+
+    private final static String START_STRING="start";
+    private final static String END_STRING="end";
+
 
     public void playGame(){
         initialize();
@@ -38,28 +47,28 @@ public class GameStarter {
 
     private void selectFunction(String command){
 
-        if(command.equals("start")){
+        if(command.equals(START_STRING)){
             System.out.println(game.showBoard());
             isContinue=true;
 
             return;
         }
 
-        if(command.equals("end")){
+        if(command.equals(END_STRING)){
             System.out.println("게임이 종료되었습니다");
             isContinue=false;
 
             return;
         }
 
-        if(command.startsWith("move")){
+        if(command.startsWith(MOVE_STRING)){
             try{
 
                 String[] commands=command.split(" ");
                 checkMoveCommands(commands);
 
-                String sourcePosition=commands[1];
-                String targetPosition=commands[2];
+                String sourcePosition=commands[SOURCE_POSITION_INDEX];
+                String targetPosition=commands[TARGET_POSITION_INDEX];
 
                 game.move(sourcePosition,targetPosition);
 
@@ -86,7 +95,7 @@ public class GameStarter {
 
     private void checkMoveCommands(String[] commands) throws InvalidCommandException,InvalidPositionException{
 
-        if(commands.length != 3 || commands[0].length() != 4){
+        if(commands.length != MOVE_COMMAND_LENGTH || !commands[MOVE_COMMAND_INDEX].equals(MOVE_STRING)){
             throw new InvalidCommandException("명령의 형식이 잘못되었습니다. 다시 입력해주세요.");
         }
 
