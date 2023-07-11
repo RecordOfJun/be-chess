@@ -2,9 +2,13 @@ package softeer2nd.chess.pieces;
 
 import softeer2nd.chess.exception.InvalidDirectionException;
 import softeer2nd.chess.exception.InvalidPositionException;
+import softeer2nd.chess.utils.Constants;
 import softeer2nd.chess.utils.PositionUtils;
 
 import java.util.Map;
+
+import static softeer2nd.chess.utils.Constants.X_DEGREE;
+import static softeer2nd.chess.utils.Constants.Y_DEGREE;
 
 public class Knight extends Piece {
     private Knight(Color color) {
@@ -24,6 +28,6 @@ public class Knight extends Piece {
 
         Map<String, Integer> degrees = PositionUtils.getDirection(sourcePosition, targetPosition);
 
-        checkNonSliding(degrees.get("xDegree"), degrees.get("yDegree"), getRepresentation());
+        checkNonSliding(degrees.get(X_DEGREE), degrees.get(Y_DEGREE), getRepresentation());
     }
 }

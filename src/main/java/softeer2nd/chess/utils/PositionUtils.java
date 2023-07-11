@@ -1,40 +1,43 @@
 package softeer2nd.chess.utils;
 
+import softeer2nd.chess.Rank;
 import softeer2nd.chess.exception.InvalidPositionException;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import static softeer2nd.chess.utils.Constants.*;
+
 public class PositionUtils {
 
-    public static HashMap<String,Integer> getRowAndCol(String position) throws InvalidPositionException{
-        if(position.length() != 2){
+    public static HashMap<String, Integer> getRowAndCol(String position) throws InvalidPositionException {
+        if (position.length() != 2) {
             throw new InvalidPositionException("좌표 형식에 맞지 않습니다!");
         }
 
-        if(position.charAt(0) < 'a' || position.charAt(0) > 'h' || position.charAt(1) < '1' || position.charAt(1) > '8'){
+        if (position.charAt(0) < 'a' || position.charAt(0) > 'h' || position.charAt(1) < '1' || position.charAt(1) > '8') {
             throw new InvalidPositionException("보드의 범위를 벗어난 좌표입니다!");
         }
 
-        HashMap<String,Integer> rowAndCol=new HashMap<String,Integer>(2);
+        HashMap<String, Integer> rowAndCol = new HashMap<String, Integer>(2);
 
-        Integer column=position.charAt(0) - 'a';
-        Integer row= '8' - position.charAt(1);
+        Integer column = position.charAt(0) - 'a';
+        Integer row = '8' - position.charAt(1);
 
-        rowAndCol.put("column",column);
-        rowAndCol.put("row", row);
+        rowAndCol.put(COLUMN, column);
+        rowAndCol.put(ROW, row);
 
         return rowAndCol;
     }
 
-    public static HashMap<String,Integer> getDirection(String sourcePosition, String targetPosition) throws InvalidPositionException{
-        Map<String,Integer> sourceRowAndCol=getRowAndCol(sourcePosition);
-        Map<String,Integer> targetRowAndCol=getRowAndCol(targetPosition);
+    public static HashMap<String, Integer> getDirection(String sourcePosition, String targetPosition) throws InvalidPositionException {
+        Map<String, Integer> sourceRowAndCol = getRowAndCol(sourcePosition);
+        Map<String, Integer> targetRowAndCol = getRowAndCol(targetPosition);
 
-        HashMap<String,Integer> direction=new HashMap<String,Integer>(2);
+        HashMap<String, Integer> direction = new HashMap<String, Integer>(2);
 
-        direction.put("xDegree",targetRowAndCol.get("column")-sourceRowAndCol.get("column"));
-        direction.put("yDegree",sourceRowAndCol.get("row")-targetRowAndCol.get("row"));
+        direction.put(X_DEGREE, targetRowAndCol.get(COLUMN) - sourceRowAndCol.get(COLUMN));
+        direction.put(Y_DEGREE, sourceRowAndCol.get(ROW) - targetRowAndCol.get(ROW));
 
         return direction;
     }

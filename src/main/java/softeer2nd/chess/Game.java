@@ -12,16 +12,18 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.stream.IntStream;
 
+import static softeer2nd.chess.utils.Constants.COLUMN;
+import static softeer2nd.chess.utils.Constants.ROW;
+
 public class Game {
 
     private Board board;
-    private final static String ROW = "row";
-    private final static String COLUMN = "column";
     private final static int ROW_LENGTH = 8;
     private final static int COLUMN_LENGTH = 8;
 
     public void start() {
         board = new Board();
+        initBoard();
     }
 
     public void initBoard() {

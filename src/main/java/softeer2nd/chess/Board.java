@@ -10,6 +10,9 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+import static softeer2nd.chess.utils.Constants.COLUMN;
+import static softeer2nd.chess.utils.Constants.ROW;
+
 class PieceComparator implements Comparator<Piece> {
     @Override
     public int compare(Piece p1, Piece p2) {
@@ -108,8 +111,8 @@ public class Board {
 
         HashMap<String, Integer> rowAndCol = PositionUtils.getRowAndCol(position);
 
-        int row = rowAndCol.get("row").intValue();
-        int column = rowAndCol.get("column").intValue();
+        int row = rowAndCol.get(ROW).intValue();
+        int column = rowAndCol.get(COLUMN).intValue();
 
         return ranks.get(row).getPiece(column);
     }

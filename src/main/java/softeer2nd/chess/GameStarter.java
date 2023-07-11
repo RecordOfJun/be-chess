@@ -88,7 +88,8 @@ public class GameStarter {
                 return;
             }
             catch (InvalidDirectionException exception){
-
+                System.out.println(exception.getMessage());
+                isContinue=true;
                 return;
             }
         }

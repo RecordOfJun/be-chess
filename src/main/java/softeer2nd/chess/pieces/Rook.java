@@ -6,6 +6,9 @@ import softeer2nd.chess.utils.PositionUtils;
 
 import java.util.Map;
 
+import static softeer2nd.chess.utils.Constants.X_DEGREE;
+import static softeer2nd.chess.utils.Constants.Y_DEGREE;
+
 public class Rook extends Piece{
 
     private Rook(Color color){
@@ -25,6 +28,6 @@ public class Rook extends Piece{
 
         Map<String ,Integer> degrees= PositionUtils.getDirection(sourcePosition, targetPosition);
 
-        checkSliding(degrees.get("xDegree"),degrees.get("yDegree"),this.getRepresentation());
+        checkSliding(degrees.get(X_DEGREE),degrees.get(Y_DEGREE),this.getRepresentation());
     }
 }
