@@ -78,21 +78,24 @@ public class GameStarter {
 
                 return;
             }
-            catch (InvalidCommandException exception){
+            catch (Exception exception){
                 System.out.println(exception.getMessage());
-                isContinue=true;
-                return;
             }
-            catch (InvalidPositionException exception){
-                System.out.println(exception.getMessage());
-                isContinue=true;
-                return;
-            }
-            catch (InvalidDirectionException exception){
-                System.out.println(exception.getMessage());
-                isContinue=true;
-                return;
-            }
+//            catch (InvalidCommandException exception){
+//                System.out.println(exception.getMessage());
+//                isContinue=true;
+//                return;
+//            }
+//            catch (InvalidPositionException exception){
+//                System.out.println(exception.getMessage());
+//                isContinue=true;
+//                return;
+//            }
+//            catch (InvalidDirectionException exception){
+//                System.out.println(exception.getMessage());
+//                isContinue=true;
+//                return;
+//            }
         }
 
 

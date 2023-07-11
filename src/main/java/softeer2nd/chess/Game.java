@@ -2,6 +2,8 @@ package softeer2nd.chess;
 
 import softeer2nd.chess.exception.InvalidDirectionException;
 import softeer2nd.chess.exception.InvalidPositionException;
+import softeer2nd.chess.exception.InvalidSequenceException;
+import softeer2nd.chess.exception.PieceDuplicationException;
 import softeer2nd.chess.pieces.Blank;
 import softeer2nd.chess.pieces.Piece;
 import softeer2nd.chess.pieces.Type;
@@ -13,6 +15,7 @@ import java.util.stream.IntStream;
 public class Game {
 
     private Board board;
+    private Piece.Color sequence;
     private final static int ROW_LENGTH = 8;
     private final static int COLUMN_LENGTH = 8;
 
@@ -22,6 +25,7 @@ public class Game {
 
     public void initBoard() {
         board.initialize();
+        sequence= Piece.Color.WHITE;
     }
 
     public void initEmpty() {
@@ -34,16 +38,18 @@ public class Game {
 
     //기물 이동, 배치 관련 메소드
 
-    public void move(String source, String target) throws InvalidPositionException, InvalidDirectionException {
+    public void move(String source, String target) throws InvalidPositionException, InvalidDirectionException, InvalidSequenceException, PieceDuplicationException {
         Position sourcePosition=new Position(source);
         Position targetPosition=new Position(target);
 
         Piece piece = board.findPiece(sourcePosition);
-
         piece.checkPieceMove(sourcePosition,targetPosition);
+        checkSequence(piece);
+        checkTargetPosition(targetPosition);
+        //중간에 knight를 제외하고는 경로상에 기물이 존재해서는 안된다.
         putPieceOnTarget(targetPosition, piece);
         initSourcePiece(sourcePosition);
-
+        convertSequence();
     }
 
 
@@ -104,6 +110,29 @@ public class Game {
                 .sum();
 
         return point;
+    }
+
+    private void checkSequence(Piece piece) throws InvalidSequenceException{
+
+        if(!piece.isPiece()){
+            throw new InvalidSequenceException("빈 칸은 이동시킬 수 없습니다");
+        }
+
+        if(!piece.isEqualColor(sequence)){
+            throw new InvalidSequenceException("해당 색상을 움직일 차례가 아닙니다!");
+        }
+    }
+
+    private void convertSequence(){
+        sequence=sequence.getOppositeColor();
+    }
+
+    private void checkTargetPosition(Position targetPosition) throws  PieceDuplicationException{
+        Piece piece=board.findPiece(targetPosition);
+
+        if(piece.isEqualColor(sequence)){
+            throw new PieceDuplicationException("해당 좌표에 이미 같은 색의 기물이 존재합니다!");
+        }
     }
 
 }

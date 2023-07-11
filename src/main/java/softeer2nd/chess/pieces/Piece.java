@@ -30,6 +30,14 @@ public abstract class Piece {
 
     public enum Color {
         WHITE, BLACK, NOCOLOR;
+
+        public Color getOppositeColor(){
+            if(this.equals(WHITE)){
+                return BLACK;
+            }
+
+            return WHITE;
+        }
     }
 
     protected Piece() {
@@ -101,7 +109,7 @@ public abstract class Piece {
         return isEqualColor(Color.BLACK);
     }
 
-    private boolean isEqualColor(Color color) {
+    public boolean isEqualColor(Color color) {
         if (this.color.equals(color)) {
             return true;
         }

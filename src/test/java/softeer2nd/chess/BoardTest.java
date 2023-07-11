@@ -9,8 +9,6 @@ import softeer2nd.chess.pieces.*;
 import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static softeer2nd.chess.utils.Constants.COLUMN;
-import static softeer2nd.chess.utils.Constants.ROW;
 import static softeer2nd.chess.utils.StringUtils.appendNewLine;
 
 class BoardTest {
