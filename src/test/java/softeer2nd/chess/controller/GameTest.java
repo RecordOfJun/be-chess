@@ -3,6 +3,7 @@ package softeer2nd.chess.controller;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import softeer2nd.chess.Position;
 import softeer2nd.chess.exception.InvalidPositionException;
 import softeer2nd.chess.Game;
 import softeer2nd.chess.pieces.*;
@@ -62,15 +63,15 @@ class GameTest {
 
         game.initEmpty();
 
-        game.putPieceOnTarget("b6", Pawn.createBlack());
-        game.putPieceOnTarget("e6", Queen.createBlack());
-        game.putPieceOnTarget("b8", King.createBlack());
-        game.putPieceOnTarget("c8", Rook.createBlack());
+        game.putPieceOnTarget(new Position("b6"), Pawn.createBlack());
+        game.putPieceOnTarget(new Position("e6"), Queen.createBlack());
+        game.putPieceOnTarget(new Position("b8"), King.createBlack());
+        game.putPieceOnTarget(new Position("c8"), Rook.createBlack());
 
-        game.putPieceOnTarget("f2", Pawn.createWhite());
-        game.putPieceOnTarget("g2", Pawn.createWhite());
-        game.putPieceOnTarget("e1", Rook.createWhite());
-        game.putPieceOnTarget("f1", King.createWhite());
+        game.putPieceOnTarget(new Position("f2"), Pawn.createWhite());
+        game.putPieceOnTarget(new Position("g2"), Pawn.createWhite());
+        game.putPieceOnTarget(new Position("e1"), Rook.createWhite());
+        game.putPieceOnTarget(new Position("f1"), King.createWhite());
     }
 
 }

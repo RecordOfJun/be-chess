@@ -2,6 +2,7 @@ package softeer2nd.chess.pieces;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import softeer2nd.chess.Position;
 import softeer2nd.chess.exception.InvalidDirectionException;
 import softeer2nd.chess.exception.InvalidPositionException;
 
@@ -16,37 +17,37 @@ class KingTest {
         Piece whiteKing=King.createWhite();
         Piece blackKing=King.createBlack();
 
-        whiteKing.checkPieceMove("d5","e5");
-        whiteKing.checkPieceMove("e5","e4");
-        whiteKing.checkPieceMove("e4","d4");
-        whiteKing.checkPieceMove("d4","d5");
-        whiteKing.checkPieceMove("d5","c6");
-        whiteKing.checkPieceMove("c6","d7");
-        whiteKing.checkPieceMove("d7","e6");
-        whiteKing.checkPieceMove("e6","d5");
+        whiteKing.checkPieceMove(new Position("d5"),new Position("e5"));
+        whiteKing.checkPieceMove(new Position("e5"),new Position("e4"));
+        whiteKing.checkPieceMove(new Position("e4"),new Position("d4"));
+        whiteKing.checkPieceMove(new Position("d4"),new Position("d5"));
+        whiteKing.checkPieceMove(new Position("d5"),new Position("c6"));
+        whiteKing.checkPieceMove(new Position("c6"),new Position("d7"));
+        whiteKing.checkPieceMove(new Position("d7"),new Position("e6"));
+        whiteKing.checkPieceMove(new Position("e6"),new Position("d5"));
 
 
-        assertThrows(InvalidDirectionException.class,()->whiteKing.checkPieceMove("c1","g1"));
-        assertThrows(InvalidDirectionException.class,()->whiteKing.checkPieceMove("d4","d8"));
-        assertThrows(InvalidDirectionException.class,()->whiteKing.checkPieceMove("f2","b4"));
-        assertThrows(InvalidDirectionException.class,()->whiteKing.checkPieceMove("h5","c8"));
-        assertThrows(InvalidDirectionException.class,()->whiteKing.checkPieceMove("a7","g4"));
+        assertThrows(InvalidDirectionException.class,()->whiteKing.checkPieceMove(new Position("c1"),new Position("g1")));
+        assertThrows(InvalidDirectionException.class,()->whiteKing.checkPieceMove(new Position("d4"),new Position("d8")));
+        assertThrows(InvalidDirectionException.class,()->whiteKing.checkPieceMove(new Position("f2"),new Position("b4")));
+        assertThrows(InvalidDirectionException.class,()->whiteKing.checkPieceMove(new Position("h5"),new Position("c8")));
+        assertThrows(InvalidDirectionException.class,()->whiteKing.checkPieceMove(new Position("a7"),new Position("g4")));
 
 
-        whiteKing.checkPieceMove("d5","e5");
-        whiteKing.checkPieceMove("e5","e4");
-        whiteKing.checkPieceMove("e4","d4");
-        whiteKing.checkPieceMove("d4","d5");
-        whiteKing.checkPieceMove("d5","c6");
-        whiteKing.checkPieceMove("c6","d7");
-        whiteKing.checkPieceMove("d7","e6");
-        whiteKing.checkPieceMove("e6","d5");
+        whiteKing.checkPieceMove(new Position("d5"),new Position("e5"));
+        whiteKing.checkPieceMove(new Position("e5"),new Position("e4"));
+        whiteKing.checkPieceMove(new Position("e4"),new Position("d4"));
+        whiteKing.checkPieceMove(new Position("d4"),new Position("d5"));
+        whiteKing.checkPieceMove(new Position("d5"),new Position("c6"));
+        whiteKing.checkPieceMove(new Position("c6"),new Position("d7"));
+        whiteKing.checkPieceMove(new Position("d7"),new Position("e6"));
+        whiteKing.checkPieceMove(new Position("e6"),new Position("d5"));
 
-        assertThrows(InvalidDirectionException.class,()->blackKing.checkPieceMove("c1","g1"));
-        assertThrows(InvalidDirectionException.class,()->blackKing.checkPieceMove("d4","d8"));
-        assertThrows(InvalidDirectionException.class,()->blackKing.checkPieceMove("f2","b4"));
-        assertThrows(InvalidDirectionException.class,()->blackKing.checkPieceMove("h5","c8"));
-        assertThrows(InvalidDirectionException.class,()->blackKing.checkPieceMove("a7","g4"));
+        assertThrows(InvalidDirectionException.class,()->blackKing.checkPieceMove(new Position("c1"),new Position("g1")));
+        assertThrows(InvalidDirectionException.class,()->blackKing.checkPieceMove(new Position("d4"),new Position("d8")));
+        assertThrows(InvalidDirectionException.class,()->blackKing.checkPieceMove(new Position("f2"),new Position("b4")));
+        assertThrows(InvalidDirectionException.class,()->blackKing.checkPieceMove(new Position("h5"),new Position("c8")));
+        assertThrows(InvalidDirectionException.class,()->blackKing.checkPieceMove(new Position("a7"),new Position("g4")));
     }
 
 }

@@ -2,6 +2,7 @@ package softeer2nd.chess.pieces;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import softeer2nd.chess.Position;
 import softeer2nd.chess.exception.InvalidDirectionException;
 import softeer2nd.chess.exception.InvalidPositionException;
 
@@ -16,37 +17,37 @@ class KnightTest {
         Piece whiteKnight=Knight.createWhite();
         Piece blackKnight=Knight.createBlack();
 
-        whiteKnight.checkPieceMove("b8","c6");//SSE
-        whiteKnight.checkPieceMove("c6","b4");//SSW
-        whiteKnight.checkPieceMove("b4","d3");//EEW
-        whiteKnight.checkPieceMove("d3","f4");//EEN
-        whiteKnight.checkPieceMove("f4","g6");//NNE
-        whiteKnight.checkPieceMove("g6","f8");//NNW
-        whiteKnight.checkPieceMove("f8","d7");//WWS
-        whiteKnight.checkPieceMove("d7","b8");//WWN
+        whiteKnight.checkPieceMove(new Position("b8"), new Position("c6"));//SSE
+        whiteKnight.checkPieceMove(new Position("c6"), new Position("b4"));//SSW
+        whiteKnight.checkPieceMove(new Position("b4"), new Position("d3"));//EEW
+        whiteKnight.checkPieceMove(new Position("d3"), new Position("f4"));//EEN
+        whiteKnight.checkPieceMove(new Position("f4"), new Position("g6"));//NNE
+        whiteKnight.checkPieceMove(new Position("g6"), new Position("f8"));//NNW
+        whiteKnight.checkPieceMove(new Position("f8"), new Position("d7"));//WWS
+        whiteKnight.checkPieceMove(new Position("d7"), new Position("b8"));//WWN
 
 
-        assertThrows(InvalidDirectionException.class,()->whiteKnight.checkPieceMove("c1","g1"));
-        assertThrows(InvalidDirectionException.class,()->whiteKnight.checkPieceMove("d4","d8"));
-        assertThrows(InvalidDirectionException.class,()->whiteKnight.checkPieceMove("f2","b4"));
-        assertThrows(InvalidDirectionException.class,()->whiteKnight.checkPieceMove("h5","c8"));
-        assertThrows(InvalidDirectionException.class,()->whiteKnight.checkPieceMove("a7","g4"));
+        assertThrows(InvalidDirectionException.class,()->whiteKnight.checkPieceMove(new Position("c1"), new Position("g1")));
+        assertThrows(InvalidDirectionException.class,()->whiteKnight.checkPieceMove(new Position("d4"), new Position("d8")));
+        assertThrows(InvalidDirectionException.class,()->whiteKnight.checkPieceMove(new Position("f2"), new Position("b4")));
+        assertThrows(InvalidDirectionException.class,()->whiteKnight.checkPieceMove(new Position("h5"), new Position("c8")));
+        assertThrows(InvalidDirectionException.class,()->whiteKnight.checkPieceMove(new Position("a7"), new Position("g4")));
 
 
-        blackKnight.checkPieceMove("b8","c6");//SSE
-        blackKnight.checkPieceMove("c6","b4");//SSW
-        blackKnight.checkPieceMove("b4","d3");//EEW
-        blackKnight.checkPieceMove("d3","f4");//EEN
-        blackKnight.checkPieceMove("f4","g6");//NNE
-        blackKnight.checkPieceMove("g6","f8");//NNW
-        blackKnight.checkPieceMove("f8","d7");//WWS
-        blackKnight.checkPieceMove("d7","b8");//WWN
+        blackKnight.checkPieceMove(new Position("b8"), new Position("c6"));//SSE
+        blackKnight.checkPieceMove(new Position("c6"), new Position("b4"));//SSW
+        blackKnight.checkPieceMove(new Position("b4"), new Position("d3"));//EEW
+        blackKnight.checkPieceMove(new Position("d3"), new Position("f4"));//EEN
+        blackKnight.checkPieceMove(new Position("f4"), new Position("g6"));//NNE
+        blackKnight.checkPieceMove(new Position("g6"), new Position("f8"));//NNW
+        blackKnight.checkPieceMove(new Position("f8"), new Position("d7"));//WWS
+        blackKnight.checkPieceMove(new Position("d7"), new Position("b8"));//WWN
 
-        assertThrows(InvalidDirectionException.class,()->blackKnight.checkPieceMove("c1","g1"));
-        assertThrows(InvalidDirectionException.class,()->blackKnight.checkPieceMove("d4","d8"));
-        assertThrows(InvalidDirectionException.class,()->blackKnight.checkPieceMove("f2","b4"));
-        assertThrows(InvalidDirectionException.class,()->blackKnight.checkPieceMove("h5","c8"));
-        assertThrows(InvalidDirectionException.class,()->blackKnight.checkPieceMove("a7","g4"));
+        assertThrows(InvalidDirectionException.class,()->blackKnight.checkPieceMove(new Position("c1"), new Position("g1")));
+        assertThrows(InvalidDirectionException.class,()->blackKnight.checkPieceMove(new Position("d4"), new Position("d8")));
+        assertThrows(InvalidDirectionException.class,()->blackKnight.checkPieceMove(new Position("f2"), new Position("b4")));
+        assertThrows(InvalidDirectionException.class,()->blackKnight.checkPieceMove(new Position("h5"), new Position("c8")));
+        assertThrows(InvalidDirectionException.class,()->blackKnight.checkPieceMove(new Position("a7"), new Position("g4")));
     }
 
 }

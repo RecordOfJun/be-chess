@@ -1,5 +1,6 @@
 package softeer2nd.chess.pieces;
 
+import softeer2nd.chess.Position;
 import softeer2nd.chess.exception.InvalidDirectionException;
 import softeer2nd.chess.exception.InvalidPositionException;
 
@@ -42,7 +43,7 @@ public abstract class Piece {
         this.directions = directions;
     }
 
-    public abstract void checkPieceMove(String sourcePosition, String targetPosition) throws InvalidDirectionException,InvalidPositionException;
+    public abstract void checkPieceMove(Position sourcePosition, Position targetPosition) throws InvalidDirectionException;
 
 
     protected void checkSliding(int xDegree, int yDegree, char representation) throws InvalidDirectionException{
@@ -61,7 +62,7 @@ public abstract class Piece {
         }
 
         for (Direction direction : getDirections()) {
-            if(direction.isEqualDegree(xDegree, yDegree, largerDegree)){
+            if(direction.getXDegree()*largerDegree==xDegree && direction.getYDegree()*largerDegree==yDegree){
                 return;
             }
         }

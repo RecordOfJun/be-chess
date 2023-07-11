@@ -2,6 +2,7 @@ package softeer2nd.chess.pieces;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import softeer2nd.chess.Position;
 import softeer2nd.chess.exception.InvalidDirectionException;
 import softeer2nd.chess.exception.InvalidPositionException;
 
@@ -16,29 +17,29 @@ class BishopTest {
         Piece whiteBishop = Bishop.createWhite();
         Piece blackBishop = Bishop.createBlack();
 
-        whiteBishop.checkPieceMove("c1","f4");
-        whiteBishop.checkPieceMove("f4","d6");
-        whiteBishop.checkPieceMove("d6","a3");
-        whiteBishop.checkPieceMove("a3","c1");
+        whiteBishop.checkPieceMove(new Position("c1"),new Position("f4"));
+        whiteBishop.checkPieceMove(new Position("f4"),new Position("d6"));
+        whiteBishop.checkPieceMove(new Position("d6"),new Position("a3"));
+        whiteBishop.checkPieceMove(new Position("a3"),new Position("c1"));
 
 
-        assertThrows(InvalidDirectionException.class,()->whiteBishop.checkPieceMove("c1","g1"));
-        assertThrows(InvalidDirectionException.class,()->whiteBishop.checkPieceMove("d4","d8"));
-        assertThrows(InvalidDirectionException.class,()->whiteBishop.checkPieceMove("f2","b4"));
-        assertThrows(InvalidDirectionException.class,()->whiteBishop.checkPieceMove("h5","c8"));
-        assertThrows(InvalidDirectionException.class,()->whiteBishop.checkPieceMove("a7","g4"));
+        assertThrows(InvalidDirectionException.class,()->whiteBishop.checkPieceMove(new Position("c1"),new Position("g1")));
+        assertThrows(InvalidDirectionException.class,()->whiteBishop.checkPieceMove(new Position("d4"),new Position("d8")));
+        assertThrows(InvalidDirectionException.class,()->whiteBishop.checkPieceMove(new Position("f2"),new Position("b4")));
+        assertThrows(InvalidDirectionException.class,()->whiteBishop.checkPieceMove(new Position("h5"),new Position("c8")));
+        assertThrows(InvalidDirectionException.class,()->whiteBishop.checkPieceMove(new Position("a7"),new Position("g4")));
 
 
-        blackBishop.checkPieceMove("c1","f4");
-        blackBishop.checkPieceMove("f4","d6");
-        blackBishop.checkPieceMove("d6","a3");
-        blackBishop.checkPieceMove("a3","c1");
+        blackBishop.checkPieceMove(new Position("c1"),new Position("f4"));
+        blackBishop.checkPieceMove(new Position("f4"),new Position("d6"));
+        blackBishop.checkPieceMove(new Position("d6"),new Position("a3"));
+        blackBishop.checkPieceMove(new Position("a3"),new Position("c1"));
 
-        assertThrows(InvalidDirectionException.class,()->blackBishop.checkPieceMove("c1","g1"));
-        assertThrows(InvalidDirectionException.class,()->blackBishop.checkPieceMove("d4","d8"));
-        assertThrows(InvalidDirectionException.class,()->blackBishop.checkPieceMove("f2","b4"));
-        assertThrows(InvalidDirectionException.class,()->blackBishop.checkPieceMove("h5","c8"));
-        assertThrows(InvalidDirectionException.class,()->blackBishop.checkPieceMove("a7","g4"));
+        assertThrows(InvalidDirectionException.class,()->blackBishop.checkPieceMove(new Position("c1"),new Position("g1")));
+        assertThrows(InvalidDirectionException.class,()->blackBishop.checkPieceMove(new Position("d4"),new Position("d8")));
+        assertThrows(InvalidDirectionException.class,()->blackBishop.checkPieceMove(new Position("f2"),new Position("b4")));
+        assertThrows(InvalidDirectionException.class,()->blackBishop.checkPieceMove(new Position("h5"),new Position("c8")));
+        assertThrows(InvalidDirectionException.class,()->blackBishop.checkPieceMove(new Position("a7"),new Position("g4")));
     }
 
 

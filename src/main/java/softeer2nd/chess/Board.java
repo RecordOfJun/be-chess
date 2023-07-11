@@ -1,17 +1,11 @@
 package softeer2nd.chess;
 
-import softeer2nd.chess.exception.InvalidPositionException;
 import softeer2nd.chess.pieces.Piece;
 import softeer2nd.chess.pieces.Type;
-import softeer2nd.chess.utils.PositionUtils;
 
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
-
-import static softeer2nd.chess.utils.Constants.COLUMN;
-import static softeer2nd.chess.utils.Constants.ROW;
 
 class PieceComparator implements Comparator<Piece> {
     @Override
@@ -107,14 +101,8 @@ public class Board {
         return ranks.get(row).getPiece(column);
     }
 
-    public Piece findPiece(String position) throws InvalidPositionException {
-
-        HashMap<String, Integer> rowAndCol = PositionUtils.getRowAndCol(position);
-
-        int row = rowAndCol.get(ROW).intValue();
-        int column = rowAndCol.get(COLUMN).intValue();
-
-        return ranks.get(row).getPiece(column);
+    public Piece findPiece(Position sourcePosition) {
+        return ranks.get(sourcePosition.getY()).getPiece(sourcePosition.getX());
     }
 
     private void getBlackPieces() {

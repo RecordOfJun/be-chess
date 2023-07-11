@@ -5,15 +5,10 @@ import softeer2nd.chess.exception.InvalidPositionException;
 import softeer2nd.chess.pieces.Blank;
 import softeer2nd.chess.pieces.Piece;
 import softeer2nd.chess.pieces.Type;
-import softeer2nd.chess.utils.PositionUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.stream.IntStream;
-
-import static softeer2nd.chess.utils.Constants.COLUMN;
-import static softeer2nd.chess.utils.Constants.ROW;
 
 public class Game {
 
@@ -39,7 +34,10 @@ public class Game {
 
     //기물 이동, 배치 관련 메소드
 
-    public void move(String sourcePosition, String targetPosition) throws InvalidPositionException, InvalidDirectionException {
+    public void move(String source, String target) throws InvalidPositionException, InvalidDirectionException {
+        Position sourcePosition=new Position(source);
+        Position targetPosition=new Position(target);
+
         Piece piece = board.findPiece(sourcePosition);
 
         piece.checkPieceMove(sourcePosition,targetPosition);
@@ -49,21 +47,12 @@ public class Game {
     }
 
 
-    private void initSourcePiece(String sourcePosition) throws InvalidPositionException {
-
+    private void initSourcePiece(Position sourcePosition) throws InvalidPositionException {
         putPieceOnTarget(sourcePosition, Blank.create());
-
     }
 
-    public void putPieceOnTarget(String targetPosition, Piece piece) throws InvalidPositionException {
-
-        HashMap<String, Integer> targetRowAndCol = PositionUtils.getRowAndCol(targetPosition);
-
-        int targetRow = targetRowAndCol.get(ROW).intValue();
-        int targetColumn = targetRowAndCol.get(COLUMN).intValue();
-
-        board.setPiece(targetRow, targetColumn, piece);
-
+    public void putPieceOnTarget(Position targetPosition, Piece piece) {
+        board.setPiece(targetPosition.getY(), targetPosition.getX(), piece);
     }
 
     //점수 관련 메소드

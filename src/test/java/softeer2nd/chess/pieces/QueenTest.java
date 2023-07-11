@@ -2,6 +2,7 @@ package softeer2nd.chess.pieces;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import softeer2nd.chess.Position;
 import softeer2nd.chess.exception.InvalidDirectionException;
 import softeer2nd.chess.exception.InvalidPositionException;
 
@@ -17,26 +18,26 @@ class QueenTest {
         Piece whiteQueen=Queen.createWhite();
         Piece blackQueen=Queen.createBlack();
 
-        whiteQueen.checkPieceMove("d8","d1");
-        whiteQueen.checkPieceMove("d8","a8");
-        whiteQueen.checkPieceMove("d8","h8");
-        whiteQueen.checkPieceMove("d1","d8");
-        whiteQueen.checkPieceMove("d8","a5");
-        whiteQueen.checkPieceMove("d8","h4");
-        whiteQueen.checkPieceMove("d8","a5");
-        whiteQueen.checkPieceMove("h4","d8");
-        whiteQueen.checkPieceMove("a5","d8");
+        whiteQueen.checkPieceMove(new Position("d8"),new Position("d1"));
+        whiteQueen.checkPieceMove(new Position("d8"),new Position("a8"));
+        whiteQueen.checkPieceMove(new Position("d8"),new Position("h8"));
+        whiteQueen.checkPieceMove(new Position("d1"),new Position("d8"));
+        whiteQueen.checkPieceMove(new Position("d8"),new Position("a5"));
+        whiteQueen.checkPieceMove(new Position("d8"),new Position("h4"));
+        whiteQueen.checkPieceMove(new Position("d8"),new Position("a5"));
+        whiteQueen.checkPieceMove(new Position("h4"),new Position("d8"));
+        whiteQueen.checkPieceMove(new Position("a5"),new Position("d8"));
 
 
-        blackQueen.checkPieceMove("d8","d1");
-        blackQueen.checkPieceMove("d8","a8");
-        blackQueen.checkPieceMove("d8","h8");
-        blackQueen.checkPieceMove("d1","d8");
-        blackQueen.checkPieceMove("d8","a5");
-        blackQueen.checkPieceMove("d8","h4");
-        blackQueen.checkPieceMove("d8","a5");
-        blackQueen.checkPieceMove("h4","d8");
-        blackQueen.checkPieceMove("a5","d8");
+        blackQueen.checkPieceMove(new Position("d8"),new Position("d1"));
+        blackQueen.checkPieceMove(new Position("d8"),new Position("a8"));
+        blackQueen.checkPieceMove(new Position("d8"),new Position("h8"));
+        blackQueen.checkPieceMove(new Position("d1"),new Position("d8"));
+        blackQueen.checkPieceMove(new Position("d8"),new Position("a5"));
+        blackQueen.checkPieceMove(new Position("d8"),new Position("h4"));
+        blackQueen.checkPieceMove(new Position("d8"),new Position("a5"));
+        blackQueen.checkPieceMove(new Position("h4"),new Position("d8"));
+        blackQueen.checkPieceMove(new Position("a5"),new Position("d8"));
 
 
     }

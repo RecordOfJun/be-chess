@@ -5,7 +5,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import softeer2nd.chess.exception.InvalidPositionException;
 import softeer2nd.chess.pieces.*;
-import softeer2nd.chess.utils.PositionUtils;
 
 import java.util.HashMap;
 
@@ -66,17 +65,17 @@ class BoardTest {
 
         board.initialize();
 
-        assertEquals(Rook.createBlack(), board.findPiece("a8"));
-        assertEquals(Pawn.createBlack(), board.findPiece("c7"));
-        assertEquals(Pawn.createWhite(), board.findPiece("e2"));
-        assertEquals(Knight.createBlack(), board.findPiece("g8"));
-        assertEquals(Knight.createWhite(), board.findPiece("b1"));
-        assertEquals(Bishop.createBlack(), board.findPiece("c8"));
-        assertEquals(Bishop.createWhite(), board.findPiece("f1"));
-        assertEquals(Queen.createBlack(), board.findPiece("d8"));
-        assertEquals(Queen.createWhite(), board.findPiece("d1"));
-        assertEquals(King.createBlack(), board.findPiece("e8"));
-        assertEquals(King.createWhite(), board.findPiece("e1"));
+        assertEquals(Rook.createBlack(), board.findPiece(new Position("a8")));
+        assertEquals(Pawn.createBlack(), board.findPiece(new Position("c7")));
+        assertEquals(Pawn.createWhite(), board.findPiece(new Position("e2")));
+        assertEquals(Knight.createBlack(), board.findPiece(new Position("g8")));
+        assertEquals(Knight.createWhite(), board.findPiece(new Position("b1")));
+        assertEquals(Bishop.createBlack(), board.findPiece(new Position("c8")));
+        assertEquals(Bishop.createWhite(), board.findPiece(new Position("f1")));
+        assertEquals(Queen.createBlack(), board.findPiece(new Position("d8")));
+        assertEquals(Queen.createWhite(), board.findPiece(new Position("d1")));
+        assertEquals(King.createBlack(), board.findPiece(new Position("e8")));
+        assertEquals(King.createWhite(), board.findPiece(new Position("e1")));
 
     }
 
@@ -91,13 +90,10 @@ class BoardTest {
     }
 
     private void verifyAdd(Piece piece, String position) throws InvalidPositionException {
-        HashMap<String, Integer> targetRowAndCol = PositionUtils.getRowAndCol(position);
+        Position target = new Position(position);
 
-        int row = targetRowAndCol.get(ROW).intValue();
-        int column = targetRowAndCol.get(COLUMN).intValue();
-
-        board.setPiece(row, column, piece);
-        assertEquals(piece, board.findPiece(position));
+        board.setPiece(target.getY(), target.getX(), piece);
+        assertEquals(piece, board.findPiece(target));
     }
 
     @Test

@@ -2,6 +2,7 @@ package softeer2nd.chess.pieces;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import softeer2nd.chess.Position;
 import softeer2nd.chess.exception.InvalidDirectionException;
 import softeer2nd.chess.exception.InvalidPositionException;
 
@@ -15,16 +16,16 @@ class RookTest {
         Piece whiteRook=Rook.createWhite();
         Piece blackRook=Rook.createBlack();
 
-        whiteRook.checkPieceMove("d8","d1");
-        whiteRook.checkPieceMove("d8","a8");
-        whiteRook.checkPieceMove("d8","h8");
-        whiteRook.checkPieceMove("d1","d8");
+        whiteRook.checkPieceMove(new Position("d8"),new Position("d1"));
+        whiteRook.checkPieceMove(new Position("d8"),new Position("a8"));
+        whiteRook.checkPieceMove(new Position("d8"),new Position("h8"));
+        whiteRook.checkPieceMove(new Position("d1"),new Position("d8"));
 
 
-        blackRook.checkPieceMove("d8","d1");
-        blackRook.checkPieceMove("d8","a8");
-        blackRook.checkPieceMove("d8","h8");
-        blackRook.checkPieceMove("d1","d8");
+        blackRook.checkPieceMove(new Position("d8"),new Position("d1"));
+        blackRook.checkPieceMove(new Position("d8"),new Position("a8"));
+        blackRook.checkPieceMove(new Position("d8"),new Position("h8"));
+        blackRook.checkPieceMove(new Position("d1"),new Position("d8"));
 
 
     }

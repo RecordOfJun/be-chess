@@ -1,13 +1,7 @@
 package softeer2nd.chess.pieces;
 
+import softeer2nd.chess.Position;
 import softeer2nd.chess.exception.InvalidDirectionException;
-import softeer2nd.chess.exception.InvalidPositionException;
-import softeer2nd.chess.utils.PositionUtils;
-
-import java.util.Map;
-
-import static softeer2nd.chess.utils.Constants.X_DEGREE;
-import static softeer2nd.chess.utils.Constants.Y_DEGREE;
 
 public class Rook extends Piece{
 
@@ -24,10 +18,10 @@ public class Rook extends Piece{
     }
 
     @Override
-    public void checkPieceMove(String sourcePosition, String targetPosition) throws InvalidPositionException,InvalidDirectionException {
+    public void checkPieceMove(Position sourcePosition, Position targetPosition) throws InvalidDirectionException {
 
-        Map<String ,Integer> degrees= PositionUtils.getDirection(sourcePosition, targetPosition);
+        Position degrees = Position.getDirection(sourcePosition, targetPosition);
 
-        checkSliding(degrees.get(X_DEGREE),degrees.get(Y_DEGREE),this.getRepresentation());
+        checkSliding(degrees.getX(), degrees.getY(), getRepresentation());
     }
 }
