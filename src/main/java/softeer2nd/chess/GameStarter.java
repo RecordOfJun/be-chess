@@ -35,6 +35,7 @@ public class GameStarter {
     private void initialize(){
         game=new Game();
         game.start();
+        game.initBoard();
     }
 
     private String getCommand(){

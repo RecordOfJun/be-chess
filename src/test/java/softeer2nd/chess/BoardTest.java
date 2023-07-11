@@ -10,6 +10,8 @@ import softeer2nd.chess.utils.PositionUtils;
 import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static softeer2nd.chess.utils.Constants.COLUMN;
+import static softeer2nd.chess.utils.Constants.ROW;
 import static softeer2nd.chess.utils.StringUtils.appendNewLine;
 
 class BoardTest {
@@ -91,8 +93,8 @@ class BoardTest {
     private void verifyAdd(Piece piece, String position) throws InvalidPositionException {
         HashMap<String, Integer> targetRowAndCol = PositionUtils.getRowAndCol(position);
 
-        int row = targetRowAndCol.get("row").intValue();
-        int column = targetRowAndCol.get("column").intValue();
+        int row = targetRowAndCol.get(ROW).intValue();
+        int column = targetRowAndCol.get(COLUMN).intValue();
 
         board.setPiece(row, column, piece);
         assertEquals(piece, board.findPiece(position));

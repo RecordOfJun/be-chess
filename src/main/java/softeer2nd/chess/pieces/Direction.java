@@ -38,6 +38,14 @@ public enum Direction {
         return yDegree;
     }
 
+    public boolean isEqualDegree(int xDegree, int yDegree, int largerDegree){
+        if(this.xDegree*largerDegree==xDegree && this.yDegree*largerDegree==yDegree){
+            return true;
+        }
+
+        return false;
+    }
+
     public static List<Direction> linearDirection() {
         return Arrays.asList(NORTH, EAST, SOUTH, WEST);
     }

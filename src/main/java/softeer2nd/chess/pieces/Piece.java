@@ -48,27 +48,20 @@ public abstract class Piece {
     protected void checkSliding(int xDegree, int yDegree, char representation) throws InvalidDirectionException{
         int largerDegree=Math.max(Math.abs(xDegree), Math.abs(yDegree));
 
-        if(xDegree==0 && yDegree==0){
-            throw new InvalidDirectionException("제자리 이동은 불가능합니다!");
-        }
-
-        for (Direction direction : getDirections()) {
-            if(direction.getYDegree()*largerDegree==xDegree && direction.getXDegree()*largerDegree==yDegree){
-                return;
-            }
-        }
-
-        throw new InvalidDirectionException(representation+"(은)는 해당 위치로 이동할 수 없습니다!");
+        checkDirection(xDegree,yDegree,representation,largerDegree);
     }
 
     protected void checkNonSliding(int xDegree, int yDegree, char representation) throws InvalidDirectionException{
+        checkDirection(xDegree,yDegree,representation,1);
+    }
 
+    private void checkDirection(int xDegree, int yDegree, char representation, int largerDegree) throws InvalidDirectionException {
         if(xDegree==0 && yDegree==0){
             throw new InvalidDirectionException("제자리 이동은 불가능합니다!");
         }
 
         for (Direction direction : getDirections()) {
-            if(direction.getXDegree()==xDegree && direction.getYDegree()==yDegree){
+            if(direction.isEqualDegree(xDegree, yDegree, largerDegree)){
                 return;
             }
         }

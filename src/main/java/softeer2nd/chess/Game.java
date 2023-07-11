@@ -23,7 +23,6 @@ public class Game {
 
     public void start() {
         board = new Board();
-        initBoard();
     }
 
     public void initBoard() {
