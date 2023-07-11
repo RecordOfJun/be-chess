@@ -117,6 +117,14 @@ public abstract class Piece {
         return false;
     }
 
+    public boolean isEqualType(Type type) {
+        if (this.type.equals(type)) {
+            return true;
+        }
+
+        return false;
+    }
+
     public boolean isPiece() {
 
         if (this.type.equals(Type.NO_PIECE)) {

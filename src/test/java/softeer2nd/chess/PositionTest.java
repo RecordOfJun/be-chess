@@ -5,6 +5,9 @@ import org.junit.jupiter.api.Test;
 import softeer2nd.chess.Position;
 import softeer2nd.chess.exception.InvalidPositionException;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class PositionTest {
@@ -29,5 +32,20 @@ class PositionTest {
         assertEquals(yDegree,degree.getY());
 
     }
-
+    @Test
+    @DisplayName("source와 target을 넣으면 그 사이의 경로가 반환되어야 한다")
+    void path() throws InvalidPositionException{
+        List<Position> positions=new ArrayList<>();
+        positions.add(new Position("a7"));
+        positions.add(new Position("a6"));
+        positions.add(new Position("a5"));
+        positions.add(new Position("a4"));
+        positions.add(new Position("a3"));
+        positions.add(new Position("a2"));
+//        Position.getPath(new Position("a8"),new Position("a1")).stream().forEach(position -> {
+//            System.out.println(position.getX());
+//            System.out.println(position.getY());
+//        });
+        assertTrue(Position.getPath(new Position("a8"),new Position("a1")).equals(positions));
+    }
 }

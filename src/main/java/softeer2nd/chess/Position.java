@@ -2,16 +2,22 @@ package softeer2nd.chess;
 
 import softeer2nd.chess.exception.InvalidPositionException;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 public class Position {
     private int x;
     private int y;
 
-    private Position(int x, int y){
-        this.x=x;
-        this.y=y;
+    private Position(int x, int y) {
+        this.x = x;
+        this.y = y;
     }
 
-    public Position(String position) throws InvalidPositionException{
+    public Position(String position) throws InvalidPositionException {
         if (position.length() != 2) {
             throw new InvalidPositionException("좌표 형식에 맞지 않습니다!");
         }
@@ -23,23 +29,47 @@ public class Position {
         int x = position.charAt(0) - 'a';
         int y = '8' - position.charAt(1);
 
-        this.x=x;
-        this.y=y;
+        this.x = x;
+        this.y = y;
     }
 
-    public int getX(){
+    public int getX() {
         return this.x;
     }
 
-    public int getY(){
+    public int getY() {
         return this.y;
     }
 
     public static Position getDirection(Position sourcePosition, Position targetPosition) {
 
-        int xDegree=targetPosition.getX() - sourcePosition.getX();
-        int yDegree=sourcePosition.getY() - targetPosition.getY();
+        int xDegree = targetPosition.getX() - sourcePosition.getX();
+        int yDegree = sourcePosition.getY() - targetPosition.getY();
 
-        return new Position(xDegree,yDegree);
+        return new Position(xDegree, yDegree);
+    }
+
+    public static List<Position> getPath(Position sourcePosition, Position targetPosition) {
+        Position degree = getDirection(sourcePosition, targetPosition);
+        int size = Math.max(Math.abs(degree.getX()), Math.abs(degree.getY()));
+        int x = degree.getX() / size;
+        int y = degree.getY() / size;
+
+        return IntStream.range(1, size)
+                .mapToObj(index -> new Position(sourcePosition.getX() + x * index, sourcePosition.getY() - y * index))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Position position = (Position) o;
+        return x == position.x && y == position.y;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(x, y);
     }
 }

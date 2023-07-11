@@ -1,8 +1,6 @@
 package softeer2nd.chess;
 
-import softeer2nd.chess.exception.InvalidCommandException;
-import softeer2nd.chess.exception.InvalidDirectionException;
-import softeer2nd.chess.exception.InvalidPositionException;
+import softeer2nd.chess.exception.*;
 
 import java.util.Scanner;
 
@@ -78,24 +76,36 @@ public class GameStarter {
 
                 return;
             }
-            catch (Exception exception){
+            catch (InvalidCommandException exception){
                 System.out.println(exception.getMessage());
+                isContinue=true;
+                return;
             }
-//            catch (InvalidCommandException exception){
-//                System.out.println(exception.getMessage());
-//                isContinue=true;
-//                return;
-//            }
-//            catch (InvalidPositionException exception){
-//                System.out.println(exception.getMessage());
-//                isContinue=true;
-//                return;
-//            }
-//            catch (InvalidDirectionException exception){
-//                System.out.println(exception.getMessage());
-//                isContinue=true;
-//                return;
-//            }
+            catch (InvalidPositionException exception){
+                System.out.println(exception.getMessage());
+                isContinue=true;
+                return;
+            }
+            catch (InvalidDirectionException exception){
+                System.out.println(exception.getMessage());
+                isContinue=true;
+                return;
+            }
+            catch (InvalidPathException exception){
+                System.out.println(exception.getMessage());
+                isContinue=true;
+                return;
+            }
+            catch (InvalidSequenceException exception){
+                System.out.println(exception.getMessage());
+                isContinue=true;
+                return;
+            }
+            catch (PieceDuplicationException exception){
+                System.out.println(exception.getMessage());
+                isContinue=true;
+                return;
+            }
         }
 
 

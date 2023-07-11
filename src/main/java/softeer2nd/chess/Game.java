@@ -1,15 +1,13 @@
 package softeer2nd.chess;
 
-import softeer2nd.chess.exception.InvalidDirectionException;
-import softeer2nd.chess.exception.InvalidPositionException;
-import softeer2nd.chess.exception.InvalidSequenceException;
-import softeer2nd.chess.exception.PieceDuplicationException;
+import softeer2nd.chess.exception.*;
 import softeer2nd.chess.pieces.Blank;
 import softeer2nd.chess.pieces.Piece;
 import softeer2nd.chess.pieces.Type;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.IntStream;
 
 public class Game {
@@ -25,7 +23,7 @@ public class Game {
 
     public void initBoard() {
         board.initialize();
-        sequence= Piece.Color.WHITE;
+        sequence = Piece.Color.WHITE;
     }
 
     public void initEmpty() {
@@ -38,22 +36,30 @@ public class Game {
 
     //기물 이동, 배치 관련 메소드
 
-    public void move(String source, String target) throws InvalidPositionException, InvalidDirectionException, InvalidSequenceException, PieceDuplicationException {
-        Position sourcePosition=new Position(source);
-        Position targetPosition=new Position(target);
+    public void move(String source, String target) throws InvalidPositionException, InvalidDirectionException, InvalidSequenceException, PieceDuplicationException,InvalidPathException {
+        Position sourcePosition = new Position(source);
+        Position targetPosition = new Position(target);
 
         Piece piece = board.findPiece(sourcePosition);
-        piece.checkPieceMove(sourcePosition,targetPosition);
+        checkMoveExceptions(piece,sourcePosition,targetPosition);
+        movePiece(piece, sourcePosition, targetPosition);
+    }
+
+    private void checkMoveExceptions(Piece piece, Position sourcePosition, Position targetPosition) throws InvalidDirectionException, InvalidSequenceException, PieceDuplicationException,InvalidPathException{
+        piece.checkPieceMove(sourcePosition, targetPosition);
         checkSequence(piece);
         checkTargetPosition(targetPosition);
-        //중간에 knight를 제외하고는 경로상에 기물이 존재해서는 안된다.
+        checkPath(piece, sourcePosition, targetPosition);
+    }
+
+    private void movePiece(Piece piece, Position sourcePosition, Position targetPosition){
         putPieceOnTarget(targetPosition, piece);
         initSourcePiece(sourcePosition);
         convertSequence();
     }
 
 
-    private void initSourcePiece(Position sourcePosition) throws InvalidPositionException {
+    private void initSourcePiece(Position sourcePosition) {
         putPieceOnTarget(sourcePosition, Blank.create());
     }
 
@@ -106,32 +112,43 @@ public class Game {
 
         double point = columns.stream()
                 .mapToDouble(Integer::doubleValue)
-                .map(columnPoint-> columnPoint>1? columnPoint/2.0:columnPoint)
+                .map(columnPoint -> columnPoint > 1 ? columnPoint / 2.0 : columnPoint)
                 .sum();
 
         return point;
     }
 
-    private void checkSequence(Piece piece) throws InvalidSequenceException{
+    private void checkSequence(Piece piece) throws InvalidSequenceException {
 
-        if(!piece.isPiece()){
+        if (!piece.isPiece()) {
             throw new InvalidSequenceException("빈 칸은 이동시킬 수 없습니다");
         }
 
-        if(!piece.isEqualColor(sequence)){
+        if (!piece.isEqualColor(sequence)) {
             throw new InvalidSequenceException("해당 색상을 움직일 차례가 아닙니다!");
         }
     }
 
-    private void convertSequence(){
-        sequence=sequence.getOppositeColor();
+    private void convertSequence() {
+        sequence = sequence.getOppositeColor();
     }
 
-    private void checkTargetPosition(Position targetPosition) throws  PieceDuplicationException{
-        Piece piece=board.findPiece(targetPosition);
+    private void checkTargetPosition(Position targetPosition) throws PieceDuplicationException {
+        Piece piece = board.findPiece(targetPosition);
 
-        if(piece.isEqualColor(sequence)){
+        if (piece.isEqualColor(sequence)) {
             throw new PieceDuplicationException("해당 좌표에 이미 같은 색의 기물이 존재합니다!");
+        }
+    }
+
+    private void checkPath(Piece piece, Position sourcePosition, Position targetPosition) throws InvalidPathException {
+        if (piece.isEqualType(Type.KNIGHT)) {
+            return;
+        }
+
+        List<Position> path = Position.getPath(sourcePosition, targetPosition);
+        if (path.stream().anyMatch(position -> board.findPiece(position).isPiece())) {
+            throw new InvalidPathException("해당 경로상에 기물이 위치해 있습니다!");
         }
     }
 
