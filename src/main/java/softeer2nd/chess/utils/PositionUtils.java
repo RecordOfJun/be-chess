@@ -34,7 +34,7 @@ public class PositionUtils {
         HashMap<String,Integer> direction=new HashMap<String,Integer>(2);
 
         direction.put("xDegree",targetRowAndCol.get("column")-sourceRowAndCol.get("column"));
-        direction.put("yDegree",targetRowAndCol.get("row")-sourceRowAndCol.get("row"));
+        direction.put("yDegree",sourceRowAndCol.get("row")-targetRowAndCol.get("row"));
 
         return direction;
     }

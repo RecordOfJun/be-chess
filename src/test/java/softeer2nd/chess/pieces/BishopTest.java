@@ -11,7 +11,7 @@ class BishopTest {
 
     @Test
     @DisplayName("비숍은 대각선 이동만이 가능하다")
-    void moveBishopWhite() throws InvalidDirectionException, InvalidPositionException {
+    void checkBishopMove() throws InvalidDirectionException, InvalidPositionException {
 
         Piece whiteBishop = Bishop.createWhite();
         Piece blackBishop = Bishop.createBlack();
@@ -20,6 +20,7 @@ class BishopTest {
         whiteBishop.checkPieceMove("f4","d6");
         whiteBishop.checkPieceMove("d6","a3");
         whiteBishop.checkPieceMove("a3","c1");
+
 
         assertThrows(InvalidDirectionException.class,()->whiteBishop.checkPieceMove("c1","g1"));
         assertThrows(InvalidDirectionException.class,()->whiteBishop.checkPieceMove("d4","d8"));
