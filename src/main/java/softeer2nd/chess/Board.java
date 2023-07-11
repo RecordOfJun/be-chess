@@ -2,6 +2,7 @@ package softeer2nd.chess;
 
 import softeer2nd.chess.exception.InvalidPositionException;
 import softeer2nd.chess.pieces.Piece;
+import softeer2nd.chess.pieces.Type;
 import softeer2nd.chess.utils.PositionUtils;
 
 import java.util.*;
@@ -154,7 +155,7 @@ public class Board {
         return count;
     }
 
-    public int getSpecificPieceCount(Piece.Color color, Piece.Type type) {
+    public int getSpecificPieceCount(Piece.Color color, Type type) {
         int count = ranks.stream()
                 .mapToInt(rank -> rank.getSpecificPieceCount(color,type))
                 .sum();

@@ -1,8 +1,12 @@
 package softeer2nd.chess.pieces;
 
+import softeer2nd.chess.exception.InvalidDirectionException;
+import softeer2nd.chess.exception.InvalidPositionException;
+
+import java.util.List;
 import java.util.Objects;
 
-public class Piece {
+public abstract class Piece {
 
     @Override
     public boolean equals(Object o) {
@@ -21,152 +25,105 @@ public class Piece {
 
     private Type type;
 
+    private List<Direction> directions;
+
     public enum Color {
         WHITE, BLACK, NOCOLOR;
     }
-    public enum Type {
-        PAWN('p',1.0), ROOK('r',5.0), KNIGHT('n',2.5),
-        BISHOP('b',3.0), QUEEN('q',9.0), KING('k',0.0), NO_PIECE('.',0.0);
 
-        private char representation;
-
-        private double point;
-
-        Type(char representation, double point){
-            this.representation=representation;
-            this.point=point;
-        }
-
-        public char getWhiteRepresentation(){
-            return this.representation;
-        }
-
-        public char getBlackRepresentation(){
-            return Character.toUpperCase(this.representation);
-        }
-
-        public double getPoint(){ return this.point; }
-
+    protected Piece() {
+        this.color = Piece.Color.NOCOLOR;
+        this.type = Type.NO_PIECE;
     }
 
-    protected Piece(){
-        this.color=Color.NOCOLOR;
-        this.type=Type.NO_PIECE;
+    protected Piece(Piece.Color color, Type type, List<Direction> directions) {
+        this.color = color;
+        this.type = type;
+        this.directions = directions;
     }
 
-    protected Piece(Color color, Type type){
-        this.color=color;
-        this.type=type;
+    public abstract void checkPieceMove(String sourcePosition, String targetPosition) throws InvalidDirectionException,InvalidPositionException;
+
+
+    protected void checkSliding(int xDegree, int yDegree, char representation) throws InvalidDirectionException{
+        int largerDegree=Math.max(xDegree, yDegree);
+
+        for (Direction direction : getDirections()) {
+            if(direction.getYDegree()*largerDegree==xDegree && direction.getXDegree()*largerDegree==yDegree){
+                return;
+            }
+        }
+
+        throw new InvalidDirectionException(representation+"(은)는 해당 위치로 이동할 수 없습니다!");
     }
 
-    public Color getColor(){
+    protected void checkNonSliding(int xDegree, int yDegree, char representation) throws InvalidDirectionException{
+
+        for (Direction direction : getDirections()) {
+            if(direction.getXDegree()==xDegree && direction.getYDegree()==yDegree){
+                return;
+            }
+        }
+
+        throw new InvalidDirectionException(representation+"(은)는 해당 위치로 이동할 수 없습니다!");
+    }
+
+
+
+    public Color getColor() {
         return this.color;
     }
 
-    public Type getType(){return  this.type;}
+    public Type getType() {
+        return this.type;
+    }
 
-    public char getRepresentation(){
+    public List<Direction> getDirections() {
+        return this.directions;
+    }
 
-        if(this.color.equals(Color.BLACK)){
+    public char getRepresentation() {
+
+        if (this.color.equals(Color.BLACK)) {
             return type.getBlackRepresentation();
         }
 
         return type.getWhiteRepresentation();
     }
 
-    public boolean isWhite(){
+    public boolean isWhite() {
         return isEqualColor(Color.WHITE);
     }
 
-    public boolean isBlack(){
+    public boolean isBlack() {
         return isEqualColor(Color.BLACK);
     }
 
-    private boolean isEqualColor(Color color){
-        if(this.color.equals(color)){
+    private boolean isEqualColor(Color color) {
+        if (this.color.equals(color)) {
             return true;
         }
 
         return false;
     }
 
-    public boolean isPiece(){
+    public boolean isPiece() {
 
-        if(this.type.equals(Type.NO_PIECE)){
+        if (this.type.equals(Type.NO_PIECE)) {
             return false;
         }
 
         return true;
     }
 
-    public boolean isEqualColorAndType(Color color,Type type){
+    public boolean isEqualColorAndType(Color color, Type type) {
 
-        if(this.color.equals(color) && this.type.equals(type)){
+        if (this.color.equals(color) && this.type.equals(type)) {
             return true;
         }
 
         return false;
     }
-
-//    private static Piece createWhite(Type type){
-//        return new Piece(Color.WHITE,type);
-//    }
-//
-//    private static Piece createBlack(Type type){
-//        return new Piece(Color.BLACK,type);
-//    }
-//
-//    public static Piece createWhitePawn(){
-//        return createWhite(Type.PAWN);
-//    }
-//
-//    public static Piece createBlackPawn(){
-//        return createBlack(Type.PAWN);
-//    }
-//
-//    public static Piece createWhiteKnight(){
-//        return createWhite(Type.KNIGHT);
-//    }
-//
-//    public static Piece createBlackKnight(){
-//        return createBlack(Type.KNIGHT);
-//    }
-//    public static Piece createWhiteRook(){
-//        return createWhite(Type.ROOK);
-//    }
-//
-//    public static Piece createBlackRook(){
-//        return createBlack(Type.ROOK);
-//    }
-//
-//    public static Piece createWhiteBishop(){
-//        return createWhite(Type.BISHOP);
-//    }
-//
-//    public static Piece createBlackBishop(){
-//        return createBlack(Type.BISHOP);
-//    }
-//    public static Piece createWhiteQueen(){
-//        return createWhite(Type.QUEEN);
-//    }
-//
-//    public static Piece createBlackQueen(){
-//        return createBlack(Type.QUEEN);
-//    }
-//
-//    public static Piece createWhiteKing(){
-//        return createWhite(Type.KING);
-//    }
-//
-//    public static Piece createBlackKing(){
-//        return createBlack(Type.KING);
-//    }
-//
-//    public static Piece createBlank(){
-//        return new Piece();
-//    }
-
-
 
 
 }

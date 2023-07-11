@@ -1,6 +1,7 @@
 package softeer2nd.chess;
 
 import softeer2nd.chess.exception.InvalidCommandException;
+import softeer2nd.chess.exception.InvalidDirectionException;
 import softeer2nd.chess.exception.InvalidPositionException;
 
 import java.util.Scanner;
@@ -84,6 +85,10 @@ public class GameStarter {
             catch (InvalidPositionException exception){
                 System.out.println(exception.getMessage());
                 isContinue=true;
+                return;
+            }
+            catch (InvalidDirectionException exception){
+
                 return;
             }
         }

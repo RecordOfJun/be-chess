@@ -37,7 +37,6 @@ class GameTest {
         String sourcePosition = "b2";
         String targetPosition = "b3";
         game.move(sourcePosition, targetPosition);
-        ;
         assertEquals(
                 appendNewLine("RNBQKBNR") +
                         appendNewLine("PPPPPPPP") +

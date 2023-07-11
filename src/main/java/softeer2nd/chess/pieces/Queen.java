@@ -1,16 +1,31 @@
 package softeer2nd.chess.pieces;
 
-public class Queen extends Piece{
+import softeer2nd.chess.exception.InvalidDirectionException;
+import softeer2nd.chess.exception.InvalidPositionException;
+import softeer2nd.chess.utils.PositionUtils;
 
-    private Queen(Color color){
-        super(color,Type.QUEEN);
+import java.util.Map;
+
+public class Queen extends Piece {
+
+    private Queen(Color color) {
+        super(color, Type.QUEEN, Direction.everyDirection());
     }
 
-    public static Piece createWhite(){
+    public static Piece createWhite() {
         return new Queen(Color.WHITE);
     }
 
-    public static Piece createBlack(){
+    public static Piece createBlack() {
         return new Queen(Color.BLACK);
+    }
+
+    @Override
+    public void checkPieceMove(String sourcePosition, String targetPosition) throws InvalidPositionException, InvalidDirectionException {
+
+        Map<String ,Integer> degrees= PositionUtils.getDirection(sourcePosition, targetPosition);
+
+        checkSliding(degrees.get("xDegree"),degrees.get("yDegree"),this.getRepresentation());
+
     }
 }

@@ -42,7 +42,7 @@ public class Rank {
         return count;
     }
 
-    public int getSpecificPieceCount(Piece.Color color, Piece.Type type) {
+    public int getSpecificPieceCount(Piece.Color color, Type type) {
         int count = (int) row.stream()
                 .filter(piece -> piece.isEqualColorAndType(color, type))
                 .count();

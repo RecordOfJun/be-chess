@@ -1,8 +1,10 @@
 package softeer2nd.chess;
 
+import softeer2nd.chess.exception.InvalidDirectionException;
 import softeer2nd.chess.exception.InvalidPositionException;
 import softeer2nd.chess.pieces.Blank;
 import softeer2nd.chess.pieces.Piece;
+import softeer2nd.chess.pieces.Type;
 import softeer2nd.chess.utils.PositionUtils;
 
 import java.util.ArrayList;
@@ -36,10 +38,10 @@ public class Game {
 
     //기물 이동, 배치 관련 메소드
 
-    public void move(String sourcePosition, String targetPosition) throws InvalidPositionException {
+    public void move(String sourcePosition, String targetPosition) throws InvalidPositionException, InvalidDirectionException {
         Piece piece = board.findPiece(sourcePosition);
 
-
+        piece.checkPieceMove(sourcePosition,targetPosition);
         putPieceOnTarget(targetPosition, piece);
         initSourcePiece(sourcePosition);
 
@@ -76,10 +78,10 @@ public class Game {
         for (int row = 0; row < ROW_LENGTH; row++) {
             for (int col = 0; col < COLUMN_LENGTH; col++) {
                 Piece piece = board.getPiece(row, col);
-                Piece.Type pieceType = piece.getType();
+                Type pieceType = piece.getType();
                 Piece.Color pieceColor = piece.getColor();
 
-                if (!pieceType.equals(Piece.Type.PAWN) && pieceColor.equals(color)) {
+                if (!pieceType.equals(Type.PAWN) && pieceColor.equals(color)) {
                     point += pieceType.getPoint();
                 }
             }
@@ -100,7 +102,7 @@ public class Game {
 
         IntStream.range(0, ROW_LENGTH)
                 .forEach(row -> IntStream.range(0, COLUMN_LENGTH)
-                        .filter(col -> board.getPiece(row, col).isEqualColorAndType(color, Piece.Type.PAWN))
+                        .filter(col -> board.getPiece(row, col).isEqualColorAndType(color, Type.PAWN))
                         .forEach(col -> columns.set(col, columns.get(col) + 1)));
     }
 

@@ -3,6 +3,7 @@ package softeer2nd.chess.utils;
 import softeer2nd.chess.exception.InvalidPositionException;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class PositionUtils {
 
@@ -24,5 +25,17 @@ public class PositionUtils {
         rowAndCol.put("row", row);
 
         return rowAndCol;
+    }
+
+    public static HashMap<String,Integer> getDirection(String sourcePosition, String targetPosition) throws InvalidPositionException{
+        Map<String,Integer> sourceRowAndCol=getRowAndCol(sourcePosition);
+        Map<String,Integer> targetRowAndCol=getRowAndCol(targetPosition);
+
+        HashMap<String,Integer> direction=new HashMap<String,Integer>(2);
+
+        direction.put("xDegree",targetRowAndCol.get("column")-sourceRowAndCol.get("column"));
+        direction.put("yDegree",targetRowAndCol.get("row")-sourceRowAndCol.get("row"));
+
+        return direction;
     }
 }
