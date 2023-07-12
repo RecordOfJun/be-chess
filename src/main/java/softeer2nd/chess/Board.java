@@ -153,4 +153,10 @@ public class Board {
 
         return count;
     }
+
+    public double getPiecesPoint(Piece.Color color){
+        return ranks.stream()
+                .mapToDouble(rank-> rank.getRankPoint(color))
+                .sum();
+    }
 }

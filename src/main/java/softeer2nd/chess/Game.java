@@ -36,23 +36,23 @@ public class Game {
 
     //기물 이동, 배치 관련 메소드
 
-    public void move(String source, String target) throws InvalidPositionException, InvalidDirectionException, InvalidSequenceException, PieceDuplicationException,InvalidPathException {
+    public void move(String source, String target) throws InvalidPositionException, InvalidDirectionException, InvalidSequenceException, PieceDuplicationException, InvalidPathException {
         Position sourcePosition = new Position(source);
         Position targetPosition = new Position(target);
 
         Piece piece = board.findPiece(sourcePosition);
-        checkMoveExceptions(piece,sourcePosition,targetPosition);
+        checkMoveExceptions(piece, sourcePosition, targetPosition);
         movePiece(piece, sourcePosition, targetPosition);
     }
 
-    private void checkMoveExceptions(Piece piece, Position sourcePosition, Position targetPosition) throws InvalidDirectionException, InvalidSequenceException, PieceDuplicationException,InvalidPathException{
+    private void checkMoveExceptions(Piece piece, Position sourcePosition, Position targetPosition) throws InvalidDirectionException, InvalidSequenceException, PieceDuplicationException, InvalidPathException {
         piece.checkPieceMove(sourcePosition, targetPosition);
         checkSequence(piece);
         checkTargetPosition(targetPosition);
         checkPath(piece, sourcePosition, targetPosition);
     }
 
-    private void movePiece(Piece piece, Position sourcePosition, Position targetPosition){
+    private void movePiece(Piece piece, Position sourcePosition, Position targetPosition) {
         putPieceOnTarget(targetPosition, piece);
         initSourcePiece(sourcePosition);
         convertSequence();
@@ -73,24 +73,7 @@ public class Game {
         return calculatePiecesPoint(color) + calculatePawnsPoint(color);
     }
 
-    private double calculatePiecesPoint(Piece.Color color) {
-
-        double point = 0;
-
-        for (int row = 0; row < ROW_LENGTH; row++) {
-            for (int col = 0; col < COLUMN_LENGTH; col++) {
-                Piece piece = board.getPiece(row, col);
-                Type pieceType = piece.getType();
-                Piece.Color pieceColor = piece.getColor();
-
-                if (!pieceType.equals(Type.PAWN) && pieceColor.equals(color)) {
-                    point += pieceType.getPoint();
-                }
-            }
-        }
-
-        return point;
-    }
+    private double calculatePiecesPoint(Piece.Color color) { return board.getPiecesPoint(color);}
 
     private double calculatePawnsPoint(Piece.Color color) {
 

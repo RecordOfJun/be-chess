@@ -88,6 +88,8 @@ public abstract class Piece {
         return this.type;
     }
 
+    public double getPoint(){return this.type.getPoint();}
+
     public List<Direction> getDirections() {
         return this.directions;
     }

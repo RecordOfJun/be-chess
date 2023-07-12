@@ -61,6 +61,15 @@ public class Rank {
         return appendNewLine(lineBuilder.toString());
     }
 
+    public double getRankPoint(Piece.Color color){
+        return row.stream()
+                .filter(piece -> !piece.isEqualType(Type.PAWN) && piece.isEqualColor(color))
+                .mapToDouble(Piece::getPoint)
+                .sum();
+    }
+
+
+
     public List<Piece> getBlackPieces() {
         return getSpecificColorPieces(Piece.Color.BLACK);
     }
