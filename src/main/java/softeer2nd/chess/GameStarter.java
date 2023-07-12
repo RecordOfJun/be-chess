@@ -1,6 +1,7 @@
 package softeer2nd.chess;
 
 import softeer2nd.chess.exception.*;
+import softeer2nd.chess.pieces.Piece;
 
 import java.util.Scanner;
 
@@ -11,111 +12,106 @@ public class GameStarter {
 
     private boolean isContinue;
 
-    private final static int SOURCE_POSITION_INDEX=1;
-    private final static int TARGET_POSITION_INDEX=2;
-    private final static int MOVE_COMMAND_LENGTH=3;
-    private final static int MOVE_COMMAND_INDEX=0;
-    private final static String MOVE_STRING="move";
+    private final static int SOURCE_POSITION_INDEX = 1;
+    private final static int TARGET_POSITION_INDEX = 2;
+    private final static int MOVE_COMMAND_LENGTH = 3;
+    private final static int MOVE_COMMAND_INDEX = 0;
+    private final static String MOVE_STRING = "move";
 
-    private final static String START_STRING="start";
-    private final static String END_STRING="end";
+    private final static String START_STRING = "start";
+    private final static String END_STRING = "end";
 
 
-    public void playGame(){
+    public void playGame() {
         initialize();
-        isContinue=true;
+        isContinue = true;
 
-        while (isContinue){
+        while (isContinue) {
             selectFunction(getCommand());
         }
     }
 
-    private void initialize(){
-        game=new Game();
+    private void initialize() {
+        game = new Game();
         game.start();
         game.initBoard();
     }
 
-    private String getCommand(){
+    private String getCommand() {
         System.out.println("---------------------");
         System.out.print("명령어를 입력해주세요 : ");
-        scanner=new Scanner(System.in);
-        String command=scanner.nextLine();
+        scanner = new Scanner(System.in);
+        String command = scanner.nextLine();
 
         return command;
     }
 
-    private void selectFunction(String command){
+    private void selectFunction(String command) {
 
-        if(command.equals(START_STRING)){
+        if (command.equals(START_STRING)) {
             System.out.println(game.showBoard());
-            isContinue=true;
+            isContinue = true;
 
             return;
         }
 
-        if(command.equals(END_STRING)){
+        if (command.equals(END_STRING)) {
             System.out.println("게임이 종료되었습니다");
-            isContinue=false;
+            isContinue = false;
 
             return;
         }
 
-        if(command.startsWith(MOVE_STRING)){
-            try{
+        if (command.startsWith(MOVE_STRING)) {
+            try {
 
-                String[] commands=command.split(" ");
+                String[] commands = command.split(" ");
                 checkMoveCommands(commands);
 
-                String sourcePosition=commands[SOURCE_POSITION_INDEX];
-                String targetPosition=commands[TARGET_POSITION_INDEX];
+                String sourcePosition = commands[SOURCE_POSITION_INDEX];
+                String targetPosition = commands[TARGET_POSITION_INDEX];
 
-                game.move(sourcePosition,targetPosition);
+                game.move(sourcePosition, targetPosition);
 
                 System.out.println(game.showBoard());
+                System.out.println("흰색 점수:" + game.calculatePoint(Piece.Color.WHITE) + " , 검은색 점수:" + game.calculatePoint(Piece.Color.BLACK));
 
                 return;
-            }
-            catch (InvalidCommandException exception){
+            } catch (InvalidCommandException exception) {
                 System.out.println(exception.getMessage());
-                isContinue=true;
+                isContinue = true;
                 return;
-            }
-            catch (InvalidPositionException exception){
+            } catch (InvalidPositionException exception) {
                 System.out.println(exception.getMessage());
-                isContinue=true;
+                isContinue = true;
                 return;
-            }
-            catch (InvalidDirectionException exception){
+            } catch (InvalidDirectionException exception) {
                 System.out.println(exception.getMessage());
-                isContinue=true;
+                isContinue = true;
                 return;
-            }
-            catch (InvalidPathException exception){
+            } catch (InvalidPathException exception) {
                 System.out.println(exception.getMessage());
-                isContinue=true;
+                isContinue = true;
                 return;
-            }
-            catch (InvalidSequenceException exception){
+            } catch (InvalidSequenceException exception) {
                 System.out.println(exception.getMessage());
-                isContinue=true;
+                isContinue = true;
                 return;
-            }
-            catch (PieceDuplicationException exception){
+            } catch (PieceDuplicationException exception) {
                 System.out.println(exception.getMessage());
-                isContinue=true;
+                isContinue = true;
                 return;
             }
         }
 
 
         System.out.println("다시 입력해주세요.");
-        isContinue=true;
+        isContinue = true;
     }
 
-    private void checkMoveCommands(String[] commands) throws InvalidCommandException,InvalidPositionException{
+    private void checkMoveCommands(String[] commands) throws InvalidCommandException, InvalidPositionException {
 
-        if(commands.length != MOVE_COMMAND_LENGTH || !commands[MOVE_COMMAND_INDEX].equals(MOVE_STRING)){
+        if (commands.length != MOVE_COMMAND_LENGTH || !commands[MOVE_COMMAND_INDEX].equals(MOVE_STRING)) {
             throw new InvalidCommandException("명령의 형식이 잘못되었습니다. 다시 입력해주세요.");
         }
 

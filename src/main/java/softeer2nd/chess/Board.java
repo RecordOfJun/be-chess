@@ -44,26 +44,29 @@ public class Board {
                 .forEach(row -> ranks.add(Rank.createEmpty()));
     }
 
-    private void initList() {
-        ranks = new ArrayList<>();
+    //count,point get
+
+    public int getPieceCount() {
+        int count = ranks.stream()
+                .mapToInt(Rank::getPieceCount)
+                .sum();
+
+        return count;
     }
 
-    private void addBlackPieces() {//하드코딩 스러움,0 1 별로
-        ranks.add(Rank.createBlackPieces());
-        ranks.add(Rank.createBlackPawns());
+    public int getSpecificPieceCount(Piece.Color color, Type type) {
+        int count = ranks.stream()
+                .mapToInt(rank -> rank.getSpecificPieceCount(color,type))
+                .sum();
+
+        return count;
     }
 
-    private void addWhitePieces() {
-        ranks.add(Rank.createWhitePawns());
-        ranks.add(Rank.createWhitePieces());
+    public double getPiecesPoint(Piece.Color color){
+        return ranks.stream()
+                .mapToDouble(rank-> rank.getRankPoint(color))
+                .sum();
     }
-
-    private void addBlanks() {
-        IntStream.range(0,4)
-                .mapToObj(index->Rank.createEmpty())
-                .forEach(ranks::add);
-    }
-
 
     //기물 리스트 정렬
 
@@ -91,7 +94,6 @@ public class Board {
         return getPiecesRepresentation(whitePieces);
     }
 
-
     //get, set
     public void setPiece(int targetRow, int targetColumn, Piece piece) {
         ranks.get(targetRow).setPiece(targetColumn, piece);
@@ -103,6 +105,27 @@ public class Board {
 
     public Piece findPiece(Position sourcePosition) {
         return ranks.get(sourcePosition.getY()).getPiece(sourcePosition.getX());
+    }
+
+
+    private void initList() {
+        ranks = new ArrayList<>();
+    }
+
+    private void addBlackPieces() {//하드코딩 스러움,0 1 별로
+        ranks.add(Rank.createBlackPieces());
+        ranks.add(Rank.createBlackPawns());
+    }
+
+    private void addWhitePieces() {
+        ranks.add(Rank.createWhitePawns());
+        ranks.add(Rank.createWhitePieces());
+    }
+
+    private void addBlanks() {
+        IntStream.range(0,4)
+                .mapToObj(index->Rank.createEmpty())
+                .forEach(ranks::add);
     }
 
     private void getBlackPieces() {
@@ -136,27 +159,5 @@ public class Board {
                 .forEach(representationBuilder::append);
 
         return representationBuilder.toString();
-    }
-
-    public int getPieceCount() {
-        int count = ranks.stream()
-                .mapToInt(Rank::getPieceCount)
-                .sum();
-
-        return count;
-    }
-
-    public int getSpecificPieceCount(Piece.Color color, Type type) {
-        int count = ranks.stream()
-                .mapToInt(rank -> rank.getSpecificPieceCount(color,type))
-                .sum();
-
-        return count;
-    }
-
-    public double getPiecesPoint(Piece.Color color){
-        return ranks.stream()
-                .mapToDouble(rank-> rank.getRankPoint(color))
-                .sum();
     }
 }
