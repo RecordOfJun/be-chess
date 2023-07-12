@@ -54,23 +54,23 @@ public abstract class Piece {
     public abstract void checkPieceMove(Position sourcePosition, Position targetPosition) throws InvalidDirectionException;
 
 
-    protected void checkSliding(int xDegree, int yDegree, char representation) throws InvalidDirectionException{
-        int largerDegree=Math.max(Math.abs(xDegree), Math.abs(yDegree));
+    protected void checkSliding(Position position, char representation) throws InvalidDirectionException{
+        int largerDegree=Math.max(Math.abs(position.getX()), Math.abs(position.getY()));
 
-        checkDirection(xDegree,yDegree,representation,largerDegree);
+        checkDirection(position,representation,largerDegree);
     }
 
-    protected void checkNonSliding(int xDegree, int yDegree, char representation) throws InvalidDirectionException{
-        checkDirection(xDegree,yDegree,representation,1);
+    protected void checkNonSliding(Position position, char representation) throws InvalidDirectionException{
+        checkDirection(position,representation,1);
     }
 
-    private void checkDirection(int xDegree, int yDegree, char representation, int largerDegree) throws InvalidDirectionException {
-        if(xDegree==0 && yDegree==0){
+    private void checkDirection(Position position, char representation, int largerDegree) throws InvalidDirectionException {
+        if(position.getX()==0 && position.getY()==0){
             throw new InvalidDirectionException("제자리 이동은 불가능합니다!");
         }
 
         for (Direction direction : getDirections()) {
-            if(direction.getXDegree()*largerDegree==xDegree && direction.getYDegree()*largerDegree==yDegree){
+            if(direction.getXDegree()*largerDegree==position.getX() && direction.getYDegree()*largerDegree==position.getY()){
                 return;
             }
         }

@@ -8,6 +8,7 @@ import softeer2nd.chess.pieces.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Game {
@@ -45,6 +46,12 @@ public class Game {
         movePiece(piece, sourcePosition, targetPosition);
     }
 
+    //점수 관련 메소드
+
+    public double calculatePoint(Piece.Color color) {
+        return calculatePiecesPoint(color) + calculatePawnsPoint(color);
+    }
+
     private void checkMoveExceptions(Piece piece, Position sourcePosition, Position targetPosition) throws InvalidDirectionException, InvalidSequenceException, PieceDuplicationException, InvalidPathException {
         piece.checkPieceMove(sourcePosition, targetPosition);
         checkSequence(piece);
@@ -58,43 +65,33 @@ public class Game {
         convertSequence();
     }
 
-
     private void initSourcePiece(Position sourcePosition) {
         putPieceOnTarget(sourcePosition, Blank.create());
     }
 
-    public void putPieceOnTarget(Position targetPosition, Piece piece) {
+    private void putPieceOnTarget(Position targetPosition, Piece piece) {
         board.setPiece(targetPosition.getY(), targetPosition.getX(), piece);
     }
 
-    //점수 관련 메소드
-
-    public double calculatePoint(Piece.Color color) {
-        return calculatePiecesPoint(color) + calculatePawnsPoint(color);
+    private double calculatePiecesPoint(Piece.Color color) {
+        return board.getPiecesPoint(color);
     }
-
-    private double calculatePiecesPoint(Piece.Color color) { return board.getPiecesPoint(color);}
 
     private double calculatePawnsPoint(Piece.Color color) {
-
-        ArrayList<Integer> columns = new ArrayList<>(Arrays.asList(0, 0, 0, 0, 0, 0, 0, 0));
-        findPawns(columns, color);
-
-        return getPawnsPoint(columns);
+        return getPawnsPoint(findPawns(color));
     }
 
-    private void findPawns(ArrayList<Integer> columns, Piece.Color color) {
-
-        IntStream.range(0, ROW_LENGTH)
-                .forEach(row -> IntStream.range(0, COLUMN_LENGTH)
-                        .filter(col -> board.getPiece(row, col).isEqualColorAndType(color, Type.PAWN))
-                        .forEach(col -> columns.set(col, columns.get(col) + 1)));
+    private List<Long> findPawns(Piece.Color color) {
+        return IntStream.range(0, COLUMN_LENGTH)
+                .mapToObj(col -> IntStream.range(0, ROW_LENGTH)
+                        .filter(row -> board.getPiece(row, col).isEqualColorAndType(color, Type.PAWN))
+                        .count())
+                .collect(Collectors.toList());
     }
 
-    private double getPawnsPoint(ArrayList<Integer> columns) {
-
+    private double getPawnsPoint(List<Long> columns) {
         double point = columns.stream()
-                .mapToDouble(Integer::doubleValue)
+                .mapToDouble(Long::doubleValue)
                 .map(columnPoint -> columnPoint > 1 ? columnPoint / 2.0 : columnPoint)
                 .sum();
 
@@ -102,7 +99,6 @@ public class Game {
     }
 
     private void checkSequence(Piece piece) throws InvalidSequenceException {
-
         if (!piece.isPiece()) {
             throw new InvalidSequenceException("빈 칸은 이동시킬 수 없습니다");
         }
