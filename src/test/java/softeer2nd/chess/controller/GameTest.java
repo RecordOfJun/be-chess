@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import softeer2nd.chess.Position;
+import softeer2nd.chess.exception.InvalidPathException;
 import softeer2nd.chess.exception.InvalidPositionException;
 import softeer2nd.chess.Game;
 import softeer2nd.chess.exception.InvalidSequenceException;
@@ -97,7 +98,13 @@ class GameTest {
 
     @Test
     @DisplayName("나이트를 제외한 기물이 이동할 때 경로상에 다른 기물이 있으면 이동할 수 없다.")
-    void checkPath(){
+    void checkPath() throws Exception{
+        game.initBoard();
+        assertThrows(InvalidPathException.class, () -> game.move("a1", "a3"));
+        game.move("a2","a3");
+        game.move("a7","b6");
+        game.move("b2","b3");
+        assertThrows(InvalidPathException.class, () -> game.move("a8", "a1"));
     }
 
 }
