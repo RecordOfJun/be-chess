@@ -2,15 +2,14 @@ package softeer2nd.chess;
 
 import softeer2nd.chess.exception.InvalidPositionException;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Position {
-    private int x;
-    private int y;
+    private final int x;
+    private final int y;
 
     private Position(int x, int y) {
         this.x = x;
@@ -41,8 +40,7 @@ public class Position {
         return this.y;
     }
 
-    public static Position getDirection(Position sourcePosition, Position targetPosition) {
-
+    public static Position getPositionDiff(Position sourcePosition, Position targetPosition) {
         int xDegree = targetPosition.getX() - sourcePosition.getX();
         int yDegree = sourcePosition.getY() - targetPosition.getY();
 
@@ -50,10 +48,10 @@ public class Position {
     }
 
     public static List<Position> getPath(Position sourcePosition, Position targetPosition) {
-        Position degree = getDirection(sourcePosition, targetPosition);
-        int size = Math.max(Math.abs(degree.getX()), Math.abs(degree.getY()));
-        int x = degree.getX() / size;
-        int y = degree.getY() / size;
+        Position positionDiff = getPositionDiff(sourcePosition, targetPosition);
+        int size = Math.max(Math.abs(positionDiff.getX()), Math.abs(positionDiff.getY()));
+        int x = positionDiff.getX() / size;
+        int y = positionDiff.getY() / size;
 
         return IntStream.range(1, size)
                 .mapToObj(index -> new Position(sourcePosition.getX() + x * index, sourcePosition.getY() - y * index))

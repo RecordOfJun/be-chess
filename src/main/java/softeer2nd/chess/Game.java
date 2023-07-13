@@ -2,6 +2,7 @@ package softeer2nd.chess;
 
 import softeer2nd.chess.exception.*;
 import softeer2nd.chess.pieces.Blank;
+import softeer2nd.chess.pieces.Color;
 import softeer2nd.chess.pieces.Piece;
 import softeer2nd.chess.pieces.Type;
 
@@ -12,9 +13,8 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Game {
-
     private Board board;
-    private Piece.Color sequence;
+    private Color sequence;
     private final static int ROW_LENGTH = 8;
     private final static int COLUMN_LENGTH = 8;
 
@@ -24,7 +24,7 @@ public class Game {
 
     public void initBoard() {
         board.initialize();
-        sequence = Piece.Color.WHITE;
+        sequence = Color.WHITE;
     }
 
     public void initEmpty() {
@@ -37,7 +37,7 @@ public class Game {
 
     //기물 이동, 배치 관련 메소드
 
-    public void move(String source, String target) throws InvalidPositionException, InvalidDirectionException, InvalidSequenceException, PieceDuplicationException, InvalidPathException {
+    public void move(String source, String target) throws ChessException {
         Position sourcePosition = new Position(source);
         Position targetPosition = new Position(target);
 
@@ -48,11 +48,12 @@ public class Game {
 
     //점수 관련 메소드
 
-    public double calculatePoint(Piece.Color color) {
+    public double calculatePoint(Color color) {
         return calculatePiecesPoint(color) + calculatePawnsPoint(color);
     }
 
-    private void checkMoveExceptions(Piece piece, Position sourcePosition, Position targetPosition) throws InvalidDirectionException, InvalidSequenceException, PieceDuplicationException, InvalidPathException {
+    private void checkMoveExceptions(Piece piece, Position sourcePosition, Position targetPosition) throws ChessException {
+        checkNonMove(sourcePosition,targetPosition);
         piece.checkPieceMove(sourcePosition, targetPosition);
         checkSequence(piece);
         checkTargetPosition(targetPosition);
@@ -69,19 +70,19 @@ public class Game {
         putPieceOnTarget(sourcePosition, Blank.create());
     }
 
-    private void putPieceOnTarget(Position targetPosition, Piece piece) {
+    public void putPieceOnTarget(Position targetPosition, Piece piece) {
         board.setPiece(targetPosition.getY(), targetPosition.getX(), piece);
     }
 
-    private double calculatePiecesPoint(Piece.Color color) {
+    private double calculatePiecesPoint(Color color) {
         return board.getPiecesPoint(color);
     }
 
-    private double calculatePawnsPoint(Piece.Color color) {
+    private double calculatePawnsPoint(Color color) {
         return getPawnsPoint(findPawns(color));
     }
 
-    private List<Long> findPawns(Piece.Color color) {
+    private List<Long> findPawns(Color color) {
         return IntStream.range(0, COLUMN_LENGTH)
                 .mapToObj(col -> IntStream.range(0, ROW_LENGTH)
                         .filter(row -> board.getPiece(row, col).isEqualColorAndType(color, Type.PAWN))
@@ -90,12 +91,10 @@ public class Game {
     }
 
     private double getPawnsPoint(List<Long> columns) {
-        double point = columns.stream()
+        return columns.stream()
                 .mapToDouble(Long::doubleValue)
                 .map(columnPoint -> columnPoint > 1 ? columnPoint / 2.0 : columnPoint)
                 .sum();
-
-        return point;
     }
 
     private void checkSequence(Piece piece) throws InvalidSequenceException {
@@ -131,4 +130,9 @@ public class Game {
         }
     }
 
+    private void checkNonMove(Position sourcePosition, Position targetPosition) throws InvalidDirectionException{
+        if(sourcePosition.equals(targetPosition)){
+            throw new InvalidDirectionException("제자리 이동은 불가능합니다!");
+        }
+    }
 }

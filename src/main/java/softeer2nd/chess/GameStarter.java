@@ -1,6 +1,7 @@
 package softeer2nd.chess;
 
 import softeer2nd.chess.exception.*;
+import softeer2nd.chess.pieces.Color;
 import softeer2nd.chess.pieces.Piece;
 
 import java.util.Scanner;
@@ -47,73 +48,57 @@ public class GameStarter {
     }
 
     private void selectFunction(String command) {
-
         if (command.equals(START_STRING)) {
-            System.out.println(game.showBoard());
-            isContinue = true;
-
+            start();
             return;
         }
 
         if (command.equals(END_STRING)) {
-            System.out.println("게임이 종료되었습니다");
-            isContinue = false;
-
+            end();
             return;
         }
 
         if (command.startsWith(MOVE_STRING)) {
-            try {
-
-                String[] commands = command.split(" ");
-                checkMoveCommands(commands);
-
-                String sourcePosition = commands[SOURCE_POSITION_INDEX];
-                String targetPosition = commands[TARGET_POSITION_INDEX];
-
-                game.move(sourcePosition, targetPosition);
-
-                System.out.println(game.showBoard());
-                System.out.println("흰색 점수:" + game.calculatePoint(Piece.Color.WHITE) + " , 검은색 점수:" + game.calculatePoint(Piece.Color.BLACK));
-
-                return;
-            } catch (InvalidCommandException exception) {
-                System.out.println(exception.getMessage());
-                isContinue = true;
-                return;
-            } catch (InvalidPositionException exception) {
-                System.out.println(exception.getMessage());
-                isContinue = true;
-                return;
-            } catch (InvalidDirectionException exception) {
-                System.out.println(exception.getMessage());
-                isContinue = true;
-                return;
-            } catch (InvalidPathException exception) {
-                System.out.println(exception.getMessage());
-                isContinue = true;
-                return;
-            } catch (InvalidSequenceException exception) {
-                System.out.println(exception.getMessage());
-                isContinue = true;
-                return;
-            } catch (PieceDuplicationException exception) {
-                System.out.println(exception.getMessage());
-                isContinue = true;
-                return;
-            }
+            move(command);
+            return;
         }
-
 
         System.out.println("다시 입력해주세요.");
         isContinue = true;
     }
 
-    private void checkMoveCommands(String[] commands) throws InvalidCommandException, InvalidPositionException {
+    private void start(){
+        System.out.println(game.showBoard());
+        isContinue = true;
+    }
 
+    private void end(){
+        System.out.println("게임이 종료되었습니다");
+        isContinue = false;
+    }
+
+    private void move(String command){
+        try {
+            String[] commands = command.split(" ");
+            checkMoveCommands(commands);
+
+            String sourcePosition = commands[SOURCE_POSITION_INDEX];
+            String targetPosition = commands[TARGET_POSITION_INDEX];
+
+            game.move(sourcePosition, targetPosition);
+
+            System.out.println(game.showBoard());
+            System.out.println("흰색 점수:" + game.calculatePoint(Color.WHITE) + " , 검은색 점수:" + game.calculatePoint(Color.BLACK));
+
+        } catch (ChessException exception) {
+            System.out.println(exception.getMessage());
+            isContinue = true;
+        }
+    }
+
+    private void checkMoveCommands(String[] commands) throws InvalidCommandException, InvalidPositionException {
         if (commands.length != MOVE_COMMAND_LENGTH || !commands[MOVE_COMMAND_INDEX].equals(MOVE_STRING)) {
             throw new InvalidCommandException("명령의 형식이 잘못되었습니다. 다시 입력해주세요.");
         }
-
     }
 }

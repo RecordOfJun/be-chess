@@ -10,7 +10,7 @@ import java.util.stream.IntStream;
 import static softeer2nd.chess.utils.StringUtils.appendNewLine;
 
 public class Rank {
-    private List<Piece> row;
+    private final List<Piece> row;
 
     private final static int RANK_FIRST_INDEX = 0;
     private final static int RANK_SIZE = 8;
@@ -20,13 +20,11 @@ public class Rank {
     private final static int QUEEN_SEQUENCE = 3;
     private final static int KING_SEQUENCE = 4;
 
-    public Rank(List<Piece> row) {
+    private Rank(List<Piece> row) {
         this.row = row;
     }
 
-
     //get,set
-
     public Piece getPiece(int column) {
         return row.get(column);
     }
@@ -36,22 +34,17 @@ public class Rank {
     }
 
     public int getPieceCount() {
-        int count = (int) row.stream()
-                .filter(piece -> piece.isPiece()).count();
-
-        return count;
+        return (int) row.stream()
+                .filter(Piece::isPiece).count();
     }
 
-    public int getSpecificPieceCount(Piece.Color color, Type type) {
-        int count = (int) row.stream()
+    public int getSpecificPieceCount(Color color, Type type) {
+        return (int) row.stream()
                 .filter(piece -> piece.isEqualColorAndType(color, type))
                 .count();
-
-        return count;
     }
 
     public String getRankRepresentation() {
-
         StringBuilder lineBuilder = new StringBuilder();
 
         row.stream()
@@ -61,56 +54,30 @@ public class Rank {
         return appendNewLine(lineBuilder.toString());
     }
 
-    public double getRankPoint(Piece.Color color){
+    public double getRankPoint(Color color){
         return row.stream()
                 .filter(piece -> !piece.isEqualType(Type.PAWN) && piece.isEqualColor(color))
                 .mapToDouble(Piece::getPoint)
                 .sum();
     }
 
-
-
     public List<Piece> getBlackPieces() {
-        return getSpecificColorPieces(Piece.Color.BLACK);
+        return getSpecificColorPieces(Color.BLACK);
     }
 
     public List<Piece> getWhitePieces() {
-        return getSpecificColorPieces(Piece.Color.WHITE);
+        return getSpecificColorPieces(Color.WHITE);
     }
 
-    private List<Piece> getSpecificColorPieces(Piece.Color color) {
-        List<Piece> pieces = row.stream()
+    private List<Piece> getSpecificColorPieces(Color color) {
+        return row.stream()
                 .filter(piece -> piece.isPiece() && piece.getColor().equals(color))
                 .collect(Collectors.toList());
-
-        return pieces;
-    }
-
-
-    //Rank 한줄을 생성하는 팩토리 메소드
-    public static Rank createEmpty() {
-        return buildEmptyRank();
-    }
-
-    public static Rank createBlackPawns() {
-        return buildBlackPawnsRank();
-    }
-
-    public static Rank createBlackPieces() {
-        return buildBlackPiecesRank();
-    }
-
-    public static Rank createWhitePawns() {
-        return buildWhitePawnsRank();
-    }
-
-    public static Rank createWhitePieces() {
-        return buildWhitePiecesRank();
     }
 
 
     //팩토리 메소드 구현 부분
-    private static Rank buildEmptyRank() {
+    public static Rank createEmpty() {
         List<Piece> rankBuilder = IntStream.range(RANK_FIRST_INDEX, RANK_SIZE)
                 .mapToObj(index -> Blank.create())
                 .collect(Collectors.toList());
@@ -118,7 +85,26 @@ public class Rank {
         return new Rank(rankBuilder);
     }
 
-    private static Rank buildBlackPiecesRank() {
+    //폰 생성 메소드
+    public static Rank createBlackPawns() {
+        List<Piece> rankBuilder = IntStream.range(RANK_FIRST_INDEX, RANK_SIZE)
+                .mapToObj(index -> Pawn.createBlack())
+                .collect(Collectors.toList());
+
+        return new Rank(rankBuilder);
+    }
+
+    public static Rank createWhitePawns() {
+        List<Piece> rankBuilder = IntStream.range(RANK_FIRST_INDEX, RANK_SIZE)
+                .mapToObj(index -> Pawn.createWhite())
+                .collect(Collectors.toList());
+
+        return new Rank(rankBuilder);
+    }
+
+    //pieces 생성 메소드
+
+    public static Rank createBlackPieces() {
 
         List<Piece> rank = new ArrayList<>();
 
@@ -130,7 +116,7 @@ public class Rank {
         return new Rank(rank);
     }
 
-    private static Rank buildWhitePiecesRank() {
+    public static Rank createWhitePieces() {
 
         List<Piece> rank = new ArrayList<>();
 
@@ -182,24 +168,6 @@ public class Rank {
     private static void addWhiteQueenAndKing(List<Piece> rank) {
         rank.add(QUEEN_SEQUENCE, Queen.createWhite());
         rank.add(KING_SEQUENCE, King.createWhite());
-    }
-
-
-    //폰 생성 메소드
-    private static Rank buildBlackPawnsRank() {
-        List<Piece> rankBuilder = IntStream.range(RANK_FIRST_INDEX, RANK_SIZE)
-                .mapToObj(index -> Pawn.createBlack())
-                .collect(Collectors.toList());
-
-        return new Rank(rankBuilder);
-    }
-
-    private static Rank buildWhitePawnsRank() {
-        List<Piece> rankBuilder = IntStream.range(RANK_FIRST_INDEX, RANK_SIZE)
-                .mapToObj(index -> Pawn.createWhite())
-                .collect(Collectors.toList());
-
-        return new Rank(rankBuilder);
     }
 
 

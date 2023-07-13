@@ -19,6 +19,6 @@ public class King extends Piece {
 
     @Override
     public void checkPieceMove(Position sourcePosition, Position targetPosition) throws InvalidDirectionException {
-        checkNonSliding(Position.getDirection(sourcePosition, targetPosition), getRepresentation());
+        checkNonSliding(Position.getPositionDiff(sourcePosition, targetPosition), getRepresentation());
     }
 }

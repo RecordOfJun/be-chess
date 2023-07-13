@@ -1,26 +1,12 @@
 package softeer2nd.chess;
 
+import softeer2nd.chess.pieces.Color;
 import softeer2nd.chess.pieces.Piece;
 import softeer2nd.chess.pieces.Type;
 
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-
-class PieceComparator implements Comparator<Piece> {
-    @Override
-    public int compare(Piece p1, Piece p2) {
-        double point1 = p1.getType().getPoint();
-        double point2 = p2.getType().getPoint();
-
-        if (point1 > point2) {
-            return 1;
-        } else if (point1 < point2) {
-            return -1;
-        }
-        return 0;
-    }
-}
 
 public class Board {
     private List<Rank> ranks;
@@ -47,22 +33,18 @@ public class Board {
     //count,point get
 
     public int getPieceCount() {
-        int count = ranks.stream()
+        return ranks.stream()
                 .mapToInt(Rank::getPieceCount)
                 .sum();
-
-        return count;
     }
 
-    public int getSpecificPieceCount(Piece.Color color, Type type) {
-        int count = ranks.stream()
+    public int getSpecificPieceCount(Color color, Type type) {
+        return ranks.stream()
                 .mapToInt(rank -> rank.getSpecificPieceCount(color,type))
                 .sum();
-
-        return count;
     }
 
-    public double getPiecesPoint(Piece.Color color){
+    public double getPiecesPoint(Color color){
         return ranks.stream()
                 .mapToDouble(rank-> rank.getRankPoint(color))
                 .sum();
@@ -72,25 +54,25 @@ public class Board {
 
     public String ascendingBlackPieces() {
         getBlackPieces();
-        Collections.sort(blackPieces, new PieceComparator());
+        blackPieces.sort(Comparator.comparingDouble(Piece::getPoint));
         return getPiecesRepresentation(blackPieces);
     }
 
     public String ascendingWhitePieces() {
         getWhitePieces();
-        Collections.sort(whitePieces, new PieceComparator());
+        whitePieces.sort(Comparator.comparingDouble(Piece::getPoint));
         return getPiecesRepresentation(whitePieces);
     }
 
     public String descendingBlackPieces() {
         getBlackPieces();
-        Collections.sort(blackPieces, new PieceComparator().reversed());
+        blackPieces.sort(Comparator.comparingDouble(Piece::getPoint).reversed());
         return getPiecesRepresentation(blackPieces);
     }
 
     public String descendingWhitePieces() {
         getWhitePieces();
-        Collections.sort(whitePieces, new PieceComparator().reversed());
+        whitePieces.sort(Comparator.comparingDouble(Piece::getPoint).reversed());
         return getPiecesRepresentation(whitePieces);
     }
 
@@ -151,7 +133,6 @@ public class Board {
     }
 
     private String getPiecesRepresentation(List<Piece> pieces) {
-
         StringBuilder representationBuilder = new StringBuilder();
 
         pieces.stream()

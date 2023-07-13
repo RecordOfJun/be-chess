@@ -19,6 +19,6 @@ public class Bishop extends Piece {
 
     @Override
     public void checkPieceMove(Position sourcePosition, Position targetPosition) throws InvalidDirectionException {
-        checkSliding(Position.getDirection(sourcePosition, targetPosition), getRepresentation());
+        checkSliding(Position.getPositionDiff(sourcePosition, targetPosition), getRepresentation());
     }
 }

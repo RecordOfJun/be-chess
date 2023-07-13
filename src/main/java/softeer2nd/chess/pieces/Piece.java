@@ -22,30 +22,19 @@ public abstract class Piece {
         return Objects.hash(type, color);
     }
 
-    private Color color;
+    private final Color color;
 
-    private Type type;
+    private final Type type;
 
-    private List<Direction> directions;
-
-    public enum Color {
-        WHITE, BLACK, NOCOLOR;
-
-        public Color getOppositeColor(){
-            if(this.equals(WHITE)){
-                return BLACK;
-            }
-
-            return WHITE;
-        }
-    }
+    private final List<Direction> directions;
 
     protected Piece() {
-        this.color = Piece.Color.NOCOLOR;
+        this.color = Color.NOCOLOR;
         this.type = Type.NO_PIECE;
+        this.directions=null;
     }
 
-    protected Piece(Piece.Color color, Type type, List<Direction> directions) {
+    protected Piece(Color color, Type type, List<Direction> directions) {
         this.color = color;
         this.type = type;
         this.directions = directions;
@@ -64,13 +53,9 @@ public abstract class Piece {
         checkDirection(position,representation,1);
     }
 
-    private void checkDirection(Position position, char representation, int largerDegree) throws InvalidDirectionException {
-        if(position.getX()==0 && position.getY()==0){
-            throw new InvalidDirectionException("제자리 이동은 불가능합니다!");
-        }
-
+    private void checkDirection(Position moveDirection, char representation, int largerDegree) throws InvalidDirectionException {
         for (Direction direction : getDirections()) {
-            if(direction.getXDegree()*largerDegree==position.getX() && direction.getYDegree()*largerDegree==position.getY()){
+            if(direction.getXDegree()*largerDegree==moveDirection.getX() && direction.getYDegree()*largerDegree==moveDirection.getY()){
                 return;
             }
         }
@@ -88,14 +73,15 @@ public abstract class Piece {
         return this.type;
     }
 
-    public double getPoint(){return this.type.getPoint();}
+    public double getPoint(){
+        return this.type.getPoint();
+    }
 
     public List<Direction> getDirections() {
         return this.directions;
     }
 
     public char getRepresentation() {
-
         if (this.color.equals(Color.BLACK)) {
             return type.getBlackRepresentation();
         }
@@ -112,37 +98,19 @@ public abstract class Piece {
     }
 
     public boolean isEqualColor(Color color) {
-        if (this.color.equals(color)) {
-            return true;
-        }
-
-        return false;
+        return this.color.equals(color);
     }
 
     public boolean isEqualType(Type type) {
-        if (this.type.equals(type)) {
-            return true;
-        }
-
-        return false;
+        return this.type.equals(type);
     }
 
     public boolean isPiece() {
-
-        if (this.type.equals(Type.NO_PIECE)) {
-            return false;
-        }
-
-        return true;
+        return !this.type.equals(Type.NO_PIECE);
     }
 
     public boolean isEqualColorAndType(Color color, Type type) {
-
-        if (this.color.equals(color) && this.type.equals(type)) {
-            return true;
-        }
-
-        return false;
+        return this.color.equals(color) && this.type.equals(type);
     }
 
 

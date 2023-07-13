@@ -42,18 +42,18 @@ class BoardTest {
 
         board.initialize();
 
-        assertEquals(8, board.getSpecificPieceCount(Piece.Color.BLACK, Type.PAWN));
-        assertEquals(8, board.getSpecificPieceCount(Piece.Color.WHITE, Type.PAWN));
-        assertEquals(2, board.getSpecificPieceCount(Piece.Color.BLACK, Type.ROOK));
-        assertEquals(2, board.getSpecificPieceCount(Piece.Color.WHITE, Type.ROOK));
-        assertEquals(2, board.getSpecificPieceCount(Piece.Color.BLACK, Type.KNIGHT));
-        assertEquals(2, board.getSpecificPieceCount(Piece.Color.WHITE, Type.KNIGHT));
-        assertEquals(2, board.getSpecificPieceCount(Piece.Color.BLACK, Type.BISHOP));
-        assertEquals(2, board.getSpecificPieceCount(Piece.Color.WHITE, Type.BISHOP));
-        assertEquals(1, board.getSpecificPieceCount(Piece.Color.BLACK, Type.QUEEN));
-        assertEquals(1, board.getSpecificPieceCount(Piece.Color.WHITE, Type.QUEEN));
-        assertEquals(1, board.getSpecificPieceCount(Piece.Color.BLACK, Type.KING));
-        assertEquals(1, board.getSpecificPieceCount(Piece.Color.WHITE, Type.KING));
+        assertEquals(8, board.getSpecificPieceCount(Color.BLACK, Type.PAWN));
+        assertEquals(8, board.getSpecificPieceCount(Color.WHITE, Type.PAWN));
+        assertEquals(2, board.getSpecificPieceCount(Color.BLACK, Type.ROOK));
+        assertEquals(2, board.getSpecificPieceCount(Color.WHITE, Type.ROOK));
+        assertEquals(2, board.getSpecificPieceCount(Color.BLACK, Type.KNIGHT));
+        assertEquals(2, board.getSpecificPieceCount(Color.WHITE, Type.KNIGHT));
+        assertEquals(2, board.getSpecificPieceCount(Color.BLACK, Type.BISHOP));
+        assertEquals(2, board.getSpecificPieceCount(Color.WHITE, Type.BISHOP));
+        assertEquals(1, board.getSpecificPieceCount(Color.BLACK, Type.QUEEN));
+        assertEquals(1, board.getSpecificPieceCount(Color.WHITE, Type.QUEEN));
+        assertEquals(1, board.getSpecificPieceCount(Color.BLACK, Type.KING));
+        assertEquals(1, board.getSpecificPieceCount(Color.WHITE, Type.KING));
 
     }
 
