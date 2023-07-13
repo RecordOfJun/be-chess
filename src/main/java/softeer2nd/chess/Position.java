@@ -40,21 +40,16 @@ public class Position {
         return this.y;
     }
 
-    public static Position getPositionDiff(Position sourcePosition, Position targetPosition) {
-        int xDegree = targetPosition.getX() - sourcePosition.getX();
-        int yDegree = sourcePosition.getY() - targetPosition.getY();
-
-        return new Position(xDegree, yDegree);
-    }
-
     public static List<Position> getPath(Position sourcePosition, Position targetPosition) {
-        Position positionDiff = getPositionDiff(sourcePosition, targetPosition);
-        int size = Math.max(Math.abs(positionDiff.getX()), Math.abs(positionDiff.getY()));
-        int x = positionDiff.getX() / size;
-        int y = positionDiff.getY() / size;
+        int xDiff = targetPosition.getX() - sourcePosition.getX();
+        int yDiff = sourcePosition.getY() - targetPosition.getY();
+
+        int size = Math.max(Math.abs(xDiff), Math.abs(yDiff));
+        int xDirection = xDiff / size;
+        int yDirection = yDiff / size;
 
         return IntStream.range(1, size)
-                .mapToObj(index -> new Position(sourcePosition.getX() + x * index, sourcePosition.getY() - y * index))
+                .mapToObj(index -> new Position(sourcePosition.getX() + xDirection * index, sourcePosition.getY() - yDirection * index))
                 .collect(Collectors.toList());
     }
 

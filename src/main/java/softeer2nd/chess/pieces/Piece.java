@@ -31,7 +31,7 @@ public abstract class Piece {
     protected Piece() {
         this.color = Color.NOCOLOR;
         this.type = Type.NO_PIECE;
-        this.directions=null;
+        this.directions = null;
     }
 
     protected Piece(Color color, Type type, List<Direction> directions) {
@@ -43,26 +43,30 @@ public abstract class Piece {
     public abstract void checkPieceMove(Position sourcePosition, Position targetPosition) throws InvalidDirectionException;
 
 
-    protected void checkSliding(Position position, char representation) throws InvalidDirectionException{
-        int largerDegree=Math.max(Math.abs(position.getX()), Math.abs(position.getY()));
+    protected void checkSliding(Position sourcePosition, Position targetPosition, char representation) throws InvalidDirectionException {
+        int xDiff = targetPosition.getX() - sourcePosition.getX();
+        int yDiff = sourcePosition.getY() - targetPosition.getY();
 
-        checkDirection(position,representation,largerDegree);
+        int largerDegree = Math.max(Math.abs(xDiff), Math.abs(yDiff));
+
+        checkDirection(xDiff, yDiff, representation, largerDegree);
     }
 
-    protected void checkNonSliding(Position position, char representation) throws InvalidDirectionException{
-        checkDirection(position,representation,1);
+    protected void checkNonSliding(Position sourcePosition, Position targetPosition, char representation) throws InvalidDirectionException {
+        int xDiff = targetPosition.getX() - sourcePosition.getX();
+        int yDiff = sourcePosition.getY() - targetPosition.getY();
+        checkDirection(xDiff, yDiff, representation, 1);
     }
 
-    private void checkDirection(Position moveDirection, char representation, int largerDegree) throws InvalidDirectionException {
+    private void checkDirection(int xDiff, int yDiff, char representation, int largerDegree) throws InvalidDirectionException {
         for (Direction direction : getDirections()) {
-            if(direction.getXDegree()*largerDegree==moveDirection.getX() && direction.getYDegree()*largerDegree==moveDirection.getY()){
+            if (direction.getXDegree() * largerDegree == xDiff && direction.getYDegree() * largerDegree == yDiff) {
                 return;
             }
         }
 
-        throw new InvalidDirectionException(representation+"(은)는 해당 위치로 이동할 수 없습니다!");
+        throw new InvalidDirectionException(representation + "(은)는 해당 위치로 이동할 수 없습니다!");
     }
-
 
 
     public Color getColor() {
@@ -73,7 +77,7 @@ public abstract class Piece {
         return this.type;
     }
 
-    public double getPoint(){
+    public double getPoint() {
         return this.type.getPoint();
     }
 

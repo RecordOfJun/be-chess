@@ -19,6 +19,6 @@ public class Rook extends Piece{
 
     @Override
     public void checkPieceMove(Position sourcePosition, Position targetPosition) throws InvalidDirectionException {
-        checkSliding(Position.getPositionDiff(sourcePosition, targetPosition), getRepresentation());
+        checkSliding(sourcePosition, targetPosition, getRepresentation());
     }
 }

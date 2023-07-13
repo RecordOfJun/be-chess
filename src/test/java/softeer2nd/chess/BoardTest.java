@@ -63,18 +63,22 @@ class BoardTest {
 
         board.initialize();
 
-        assertEquals(Rook.createBlack(), board.findPiece(new Position("a8")));
-        assertEquals(Pawn.createBlack(), board.findPiece(new Position("c7")));
-        assertEquals(Pawn.createWhite(), board.findPiece(new Position("e2")));
-        assertEquals(Knight.createBlack(), board.findPiece(new Position("g8")));
-        assertEquals(Knight.createWhite(), board.findPiece(new Position("b1")));
-        assertEquals(Bishop.createBlack(), board.findPiece(new Position("c8")));
-        assertEquals(Bishop.createWhite(), board.findPiece(new Position("f1")));
-        assertEquals(Queen.createBlack(), board.findPiece(new Position("d8")));
-        assertEquals(Queen.createWhite(), board.findPiece(new Position("d1")));
-        assertEquals(King.createBlack(), board.findPiece(new Position("e8")));
-        assertEquals(King.createWhite(), board.findPiece(new Position("e1")));
+        assertTrue(Rook.createBlack().equals(findPiece(new Position("a8"))));
+        assertTrue(Pawn.createBlack().equals(findPiece(new Position("c7"))));
+        assertTrue(Pawn.createWhite().equals(findPiece(new Position("e2"))));
+        assertTrue(Knight.createBlack().equals(findPiece(new Position("g8"))));
+        assertTrue(Knight.createWhite().equals(findPiece(new Position("b1"))));
+        assertTrue(Bishop.createBlack().equals(findPiece(new Position("c8"))));
+        assertTrue(Bishop.createWhite().equals(findPiece(new Position("f1"))));
+        assertTrue(Queen.createBlack().equals(findPiece(new Position("d8"))));
+        assertTrue(Queen.createWhite().equals(findPiece(new Position("d1"))));
+        assertTrue(King.createBlack().equals(findPiece(new Position("e8"))));
+        assertTrue(King.createWhite().equals(findPiece(new Position("e1"))));
 
+    }
+
+    Piece findPiece(Position position){
+        return board.findPiece(position.getX(), position.getY());
     }
 
     @Test
@@ -91,19 +95,7 @@ class BoardTest {
         Position target = new Position(position);
 
         board.setPiece(target.getY(), target.getX(), piece);
-        assertEquals(piece, board.findPiece(target));
-    }
-
-    @Test
-    @DisplayName("보드 내의 기물을 색깔별로 저장하고 기물의 점수별로 정렬하여 출력할 수 있어야 한다.")
-    public void divideColor() {
-        board.initialize();
-
-        assertEquals("QRRBBNNPPPPPPPPK", board.descendingBlackPieces());
-        assertEquals("qrrbbnnppppppppk", board.descendingWhitePieces());
-        assertEquals("KPPPPPPPPNNBBRRQ", board.ascendingBlackPieces());
-        assertEquals("kppppppppnnbbrrq", board.ascendingWhitePieces());
-
+        assertEquals(piece, board.findPiece(target.getX(), target.getY()));
     }
 
 }

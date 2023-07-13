@@ -41,7 +41,7 @@ public class Game {
         Position sourcePosition = new Position(source);
         Position targetPosition = new Position(target);
 
-        Piece piece = board.findPiece(sourcePosition);
+        Piece piece = board.findPiece(sourcePosition.getX(), sourcePosition.getY());
         checkMoveExceptions(piece, sourcePosition, targetPosition);
         movePiece(piece, sourcePosition, targetPosition);
     }
@@ -85,7 +85,7 @@ public class Game {
     private List<Long> findPawns(Color color) {
         return IntStream.range(0, COLUMN_LENGTH)
                 .mapToObj(col -> IntStream.range(0, ROW_LENGTH)
-                        .filter(row -> board.getPiece(row, col).isEqualColorAndType(color, Type.PAWN))
+                        .filter(row -> board.findPiece(col, row).isEqualColorAndType(color, Type.PAWN))
                         .count())
                 .collect(Collectors.toList());
     }
@@ -112,7 +112,7 @@ public class Game {
     }
 
     private void checkTargetPosition(Position targetPosition) throws PieceDuplicationException {
-        Piece piece = board.findPiece(targetPosition);
+        Piece piece = board.findPiece(targetPosition.getX(), targetPosition.getY());
 
         if (piece.isEqualColor(sequence)) {
             throw new PieceDuplicationException("해당 좌표에 이미 같은 색의 기물이 존재합니다!");
@@ -125,7 +125,7 @@ public class Game {
         }
 
         List<Position> path = Position.getPath(sourcePosition, targetPosition);
-        if (path.stream().anyMatch(position -> board.findPiece(position).isPiece())) {
+        if (path.stream().anyMatch(position -> board.findPiece(position.getX(), position.getY()).isPiece())) {
             throw new InvalidPathException("해당 경로상에 기물이 위치해 있습니다!");
         }
     }

@@ -11,10 +11,6 @@ import java.util.stream.IntStream;
 public class Board {
     private List<Rank> ranks;
 
-    private List<Piece> whitePieces;
-
-    private List<Piece> blackPieces;
-
 
     //보드 초기화 메소드
     public void initialize() {
@@ -50,43 +46,13 @@ public class Board {
                 .sum();
     }
 
-    //기물 리스트 정렬
-
-    public String ascendingBlackPieces() {
-        getBlackPieces();
-        blackPieces.sort(Comparator.comparingDouble(Piece::getPoint));
-        return getPiecesRepresentation(blackPieces);
-    }
-
-    public String ascendingWhitePieces() {
-        getWhitePieces();
-        whitePieces.sort(Comparator.comparingDouble(Piece::getPoint));
-        return getPiecesRepresentation(whitePieces);
-    }
-
-    public String descendingBlackPieces() {
-        getBlackPieces();
-        blackPieces.sort(Comparator.comparingDouble(Piece::getPoint).reversed());
-        return getPiecesRepresentation(blackPieces);
-    }
-
-    public String descendingWhitePieces() {
-        getWhitePieces();
-        whitePieces.sort(Comparator.comparingDouble(Piece::getPoint).reversed());
-        return getPiecesRepresentation(whitePieces);
-    }
-
     //get, set
     public void setPiece(int targetRow, int targetColumn, Piece piece) {
         ranks.get(targetRow).setPiece(targetColumn, piece);
     }
 
-    public Piece getPiece(int row, int column) {
+    public Piece findPiece(int column, int row) {
         return ranks.get(row).getPiece(column);
-    }
-
-    public Piece findPiece(Position sourcePosition) {
-        return ranks.get(sourcePosition.getY()).getPiece(sourcePosition.getX());
     }
 
 
@@ -110,18 +76,6 @@ public class Board {
                 .forEach(ranks::add);
     }
 
-    private void getBlackPieces() {
-        blackPieces = ranks.stream()
-                .flatMap(rank -> rank.getBlackPieces().stream())
-                .collect(Collectors.toList());
-    }
-
-    private void getWhitePieces() {
-        whitePieces = ranks.stream()
-                .flatMap(rank -> rank.getWhitePieces().stream())
-                .collect(Collectors.toList());
-    }
-
     public String getBoardRepresentation() {
         StringBuilder boardBuilder = new StringBuilder();
 
@@ -130,15 +84,5 @@ public class Board {
                 .forEach(boardBuilder::append);
 
         return boardBuilder.toString();
-    }
-
-    private String getPiecesRepresentation(List<Piece> pieces) {
-        StringBuilder representationBuilder = new StringBuilder();
-
-        pieces.stream()
-                .map(Piece::getRepresentation)
-                .forEach(representationBuilder::append);
-
-        return representationBuilder.toString();
     }
 }

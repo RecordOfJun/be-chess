@@ -61,20 +61,6 @@ public class Rank {
                 .sum();
     }
 
-    public List<Piece> getBlackPieces() {
-        return getSpecificColorPieces(Color.BLACK);
-    }
-
-    public List<Piece> getWhitePieces() {
-        return getSpecificColorPieces(Color.WHITE);
-    }
-
-    private List<Piece> getSpecificColorPieces(Color color) {
-        return row.stream()
-                .filter(piece -> piece.isPiece() && piece.getColor().equals(color))
-                .collect(Collectors.toList());
-    }
-
 
     //팩토리 메소드 구현 부분
     public static Rank createEmpty() {

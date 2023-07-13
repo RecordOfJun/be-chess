@@ -21,6 +21,6 @@ public class Pawn extends Piece {
 
     @Override
     public void checkPieceMove(Position sourcePosition, Position targetPosition) throws InvalidDirectionException {
-        checkNonSliding(Position.getPositionDiff(sourcePosition, targetPosition), getRepresentation());
+        checkNonSliding(sourcePosition, targetPosition, getRepresentation());
     }
 }
