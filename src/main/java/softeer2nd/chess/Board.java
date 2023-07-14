@@ -46,6 +46,16 @@ public class Board {
                 .sum();
     }
 
+    public String getBoardRepresentation() {
+        StringBuilder boardBuilder = new StringBuilder();
+
+        ranks.stream()
+                .map(Rank::getRankRepresentation)
+                .forEach(boardBuilder::append);
+
+        return boardBuilder.toString();
+    }
+
     //get, set
     public void setPiece(int targetRow, int targetColumn, Piece piece) {
         ranks.get(targetRow).setPiece(targetColumn, piece);
@@ -60,7 +70,7 @@ public class Board {
         ranks = new ArrayList<>();
     }
 
-    private void addBlackPieces() {//하드코딩 스러움,0 1 별로
+    private void addBlackPieces() {
         ranks.add(Rank.createBlackPieces());
         ranks.add(Rank.createBlackPawns());
     }
@@ -74,15 +84,5 @@ public class Board {
         IntStream.range(0,4)
                 .mapToObj(index->Rank.createEmpty())
                 .forEach(ranks::add);
-    }
-
-    public String getBoardRepresentation() {
-        StringBuilder boardBuilder = new StringBuilder();
-
-        ranks.stream()
-                .map(Rank::getRankRepresentation)
-                .forEach(boardBuilder::append);
-
-        return boardBuilder.toString();
     }
 }

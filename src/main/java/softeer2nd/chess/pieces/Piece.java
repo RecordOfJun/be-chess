@@ -9,6 +9,12 @@ import java.util.Objects;
 
 public abstract class Piece {
 
+    private final Color color;
+
+    private final Type type;
+
+    private final List<Direction> directions;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -21,12 +27,6 @@ public abstract class Piece {
     public int hashCode() {
         return Objects.hash(type, color);
     }
-
-    private final Color color;
-
-    private final Type type;
-
-    private final List<Direction> directions;
 
     protected Piece() {
         this.color = Color.NOCOLOR;

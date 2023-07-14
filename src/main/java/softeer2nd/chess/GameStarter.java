@@ -7,12 +7,10 @@ import softeer2nd.chess.pieces.Piece;
 import java.util.Scanner;
 
 public class GameStarter {
-    private Scanner scanner;
 
     private Game game;
 
     private boolean isContinue;
-
     private final static int SOURCE_POSITION_INDEX = 1;
     private final static int TARGET_POSITION_INDEX = 2;
     private final static int MOVE_COMMAND_LENGTH = 3;
@@ -41,10 +39,9 @@ public class GameStarter {
     private String getCommand() {
         System.out.println("---------------------");
         System.out.print("명령어를 입력해주세요 : ");
-        scanner = new Scanner(System.in);
-        String command = scanner.nextLine();
+        Scanner scanner = new Scanner(System.in);
 
-        return command;
+        return scanner.nextLine();
     }
 
     private void selectFunction(String command) {
